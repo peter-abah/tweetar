@@ -13,9 +13,12 @@ export interface Tweet {
   id: number;
   user: User;
   created_at: number;
+  commentsNo: number;
+  likesNo: number;
+  retweetsNo: number;
 }
 
-const data = [];
+const randomNumber = (n = 100) => Math.floor(Math.random() * n);
 
 const generateUsers = (n = 25) => {
   const result = [];
@@ -38,6 +41,9 @@ const generateTweets = (users: User[], n = 25) => {
       id: i,
       user: users[i],
       created_at: new Date().getUTCMilliseconds(),
+      commentsNo: randomNumber(),
+      likesNo: randomNumber(),
+      retweetsNo: randomNumber(),
     };
     result.push(tweet);
   }
