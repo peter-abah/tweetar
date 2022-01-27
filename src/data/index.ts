@@ -25,11 +25,11 @@ const generateUsers = (n = 25) => {
 const generateTweets = (n = 25) => {
   const result = [];
   for (let i = 0; i < n; i++) {
-    const tweet = {
+    const tweet: Tweet = {
       body: faker.lorem.paragraph(),
       id: i,
       user_id: Math.floor(Math.random() * n),
-      created_at: new Date().getUTCMilliseconds,
+      created_at: new Date().getUTCMilliseconds(),
     };
     result.push(tweet);
   }
