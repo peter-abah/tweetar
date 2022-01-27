@@ -1,12 +1,11 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Layout } from './routes';
+import { Layout, Home } from './routes';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<p>Hello world</p>} />
+        <Route index element={<Home />} />
       </Route>
     </Routes>
   );
