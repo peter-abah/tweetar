@@ -15,6 +15,10 @@ interface Error {
 
 export type AuthResponse = User | Error;
 
+export const authHeader = (user: User) => {
+  return { 'Authorization': user.authentication_token };
+};
+
 export const loginUser = async (username: string, password: string) => {
   const requestBody = JSON.stringify({ username, password });
   const response = await fetch(`${baseUrl}/login`, {
