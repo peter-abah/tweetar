@@ -12,8 +12,8 @@ export interface Tweet {
 }
 
 interface RequestInteface {
-  params: Params;
-  user: User | null;
+  params?: Params;
+  user?: User | null;
 }
 
 const defaultParameter = { params: {}, user: null };

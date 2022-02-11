@@ -1,13 +1,16 @@
-import { Routes, Route } from 'react-router-dom';
-import { Layout, Home } from './routes';
+import { Routes, Route } from "react-router-dom";
+import { Layout, Home } from "./routes";
+import { AuthProvider } from "./contexts/authContext";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-      </Route>
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 
