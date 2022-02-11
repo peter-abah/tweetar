@@ -1,3 +1,4 @@
+import { string } from "yup/lib/locale";
 import { baseUrl, defaultHeaders } from ".";
 
 export interface User {
@@ -20,12 +21,18 @@ export const authHeader = (user: User) => {
   return { ...headers, defaultHeaders };
 };
 
-export const loginUser = async (username: string, password: string) => {
-  const requestBody = JSON.stringify({ username, password });
+export interface loginParams {
+  username: string;
+  password: string;
+}
+
+export const loginUser = async (userParams: loginParams) => {
+  const requestBody = JSON.stringify(userParams);
   const response = await fetch(`${baseUrl}/login`, {
     method: "POST",
     mode: "cors",
     body: requestBody,
+    headers: defaultHeaders,
   });
 
   return (await response.json()) as AuthResponse;

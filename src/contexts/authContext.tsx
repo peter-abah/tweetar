@@ -1,9 +1,16 @@
 import React, { useContext, useState } from "react";
-import { loginUser, signUpUser, AuthResponse, User, signUpParams } from "../api/auth";
+import {
+  loginUser,
+  signUpUser,
+  AuthResponse,
+  User,
+  signUpParams,
+  loginParams,
+} from "../api/auth";
 
 export interface ContextInterface {
   user: User | null;
-  login: (username: string, password: string) => Promise<AuthResponse>;
+  login: (userParams: loginParams) => Promise<AuthResponse>;
   signUp: (userParams: signUpParams) => Promise<AuthResponse>;
 }
 
@@ -16,10 +23,10 @@ interface ProviderProps {
 export const AuthProvider = ({ children }: ProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = async (username: string, password: string) => {
-    const data = await loginUser(username, password);
+  const login = async (userParams: loginParams) => {
+    const data = await loginUser(userParams);
 
-    if ('error' in data) throw data;
+    if ("error" in data) throw data;
 
     setUser(data);
     return data;
@@ -28,7 +35,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   const signUp = async (userParams: signUpParams) => {
     const data = await signUpUser(userParams);
 
-    if ('error' in data) throw data;
+    if ("error" in data) throw data;
 
     setUser(data);
     return data;
@@ -48,4 +55,4 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
 export const useAuth = () => {
   return useContext(AuthContext);
-}
+};
