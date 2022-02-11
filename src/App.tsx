@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Layout, Home } from "./routes";
+import { Layout, Home, SignUp } from "./routes";
 import { AuthProvider } from "./contexts/authContext";
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
         </Route>
+        <Route path="/register" element={<SignUp />} />
       </Routes>
     </AuthProvider>
   );

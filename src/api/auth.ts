@@ -1,4 +1,4 @@
-import { baseUrl } from ".";
+import { baseUrl, defaultHeaders } from ".";
 
 export interface User {
   name: string;
@@ -16,7 +16,8 @@ interface Error {
 export type AuthResponse = User | Error;
 
 export const authHeader = (user: User) => {
-  return { 'Authorization': user.authentication_token };
+  const headers = { Authorization: user.authentication_token };
+  return { ...headers, defaultHeaders };
 };
 
 export const loginUser = async (username: string, password: string) => {
@@ -30,16 +31,24 @@ export const loginUser = async (username: string, password: string) => {
   return (await response.json()) as AuthResponse;
 };
 
-export const signUpUser = async (
-  username: string,
-  password: string,
-  passwordConfirmation: string
-) => {
-  const requestBody = JSON.stringify({ username, password });
+export interface signUpParams {
+  user: {
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+  };
+}
+
+export const signUpUser = async (userParams: signUpParams) => {
+  const requestBody = JSON.stringify(userParams);
   const response = await fetch(`${baseUrl}/register`, {
     method: "POST",
     mode: "cors",
     body: requestBody,
+    headers: defaultHeaders,
   });
 
   return (await response.json()) as AuthResponse;

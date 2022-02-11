@@ -1,14 +1,10 @@
 import React, { useContext, useState } from "react";
-import { loginUser, signUpUser, AuthResponse, User } from "../api/auth";
+import { loginUser, signUpUser, AuthResponse, User, signUpParams } from "../api/auth";
 
 export interface ContextInterface {
   user: User | null;
   login: (username: string, password: string) => Promise<AuthResponse>;
-  signUp: (
-    username: string,
-    password: string,
-    passwordConfirmation: string
-  ) => Promise<AuthResponse>;
+  signUp: (userParams: signUpParams) => Promise<AuthResponse>;
 }
 
 const AuthContext = React.createContext<ContextInterface | null>(null);
@@ -23,24 +19,18 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   const login = async (username: string, password: string) => {
     const data = await loginUser(username, password);
 
-    if (!('error' in data)) {
-      setUser(data);
-    }
+    if ('error' in data) throw data;
 
+    setUser(data);
     return data;
   };
 
-  const signUp = async (
-    username: string,
-    password: string,
-    passwordConfirmation: string
-  ) => {
-    const data = await signUpUser(username, password, passwordConfirmation);
+  const signUp = async (userParams: signUpParams) => {
+    const data = await signUpUser(userParams);
 
-    if (!('error' in data)) {
-      setUser(data);
-    }
+    if ('error' in data) throw data;
 
+    setUser(data);
     return data;
   };
 
