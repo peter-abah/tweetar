@@ -1,4 +1,4 @@
-import { Tweet as Itweet } from "../data";
+import { Tweet as Itweet } from "../api/tweets";
 import Tweet from "./Tweet";
 
 const Tweets = ({ tweets }: { tweets: Itweet[] }) => {

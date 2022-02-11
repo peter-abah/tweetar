@@ -1,16 +1,18 @@
-import { Tweet as Itweet } from "../data";
+import { Tweet as Itweet } from "../api/tweets";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRetweet } from "@fortawesome/free-solid-svg-icons";
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Tweet = (props: { tweet: Itweet }) => {
-  const { body, user, commentsNo, retweetsNo, likesNo } = props.tweet;
+  const { body, user, replies_count, retweets_count, likes_count } =
+    props.tweet;
+
   return (
     <div className="flex p-2 w-full max-w-sm border-t border-neutral-600 last:border-b">
       <img
         className="w-1/6 h-1/6 rounded-full mr-2"
-        src={user.image}
+        src={user.profile_image_url}
         alt={user.name}
       />
       <div>
@@ -22,15 +24,15 @@ const Tweet = (props: { tweet: Itweet }) => {
         <div className="flex justify-between px-4">
           <button>
             <FontAwesomeIcon className="mr-2" icon={faComment} />
-            {commentsNo}
+            {replies_count}
           </button>
           <button>
             <FontAwesomeIcon className="mr-2" icon={faRetweet} />
-            {retweetsNo}
+            {retweets_count}
           </button>
           <button>
             <FontAwesomeIcon className="mr-2" icon={faHeart} />
-            {likesNo}
+            {likes_count}
           </button>
         </div>
       </div>
