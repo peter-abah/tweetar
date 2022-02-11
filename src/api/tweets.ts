@@ -1,11 +1,11 @@
 import { baseUrl } from ".";
-import { User, authHeader } from './auth'
+import { User, authHeader } from "./auth";
 import stringifyParams, { Params } from "./stringifyParams";
 
 export interface Tweet {
   id: string;
   body: string;
-  user: User
+  user: User;
   replies_count: number;
   retweets_count: number;
   likes_count: number;
@@ -16,15 +16,19 @@ interface RequestInteface {
   user: User | null;
 }
 
-export const getFeed = async ({ params = {}, user = null } : RequestInteface) => {
+const defaultParameter = { params: {}, user: null };
+export const getFeed = async ({
+  params = {},
+  user = null,
+}: RequestInteface = defaultParameter) => {
   const stringParams = stringifyParams(params);
-  const url = `${baseUrl}/feed/${stringParams}`
+  const url = `${baseUrl}/feed/${stringParams}`;
   const headers = user ? authHeader(user) : {};
 
   const res = await fetch(url, {
-    mode: 'cors',
+    mode: "cors",
     headers,
   });
-  
+
   return await res.json();
 };
