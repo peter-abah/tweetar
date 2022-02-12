@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   loginUser,
   signUpUser,
@@ -23,6 +23,19 @@ interface ProviderProps {
 export const AuthProvider = ({ children }: ProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
 
+  useEffect(() => {
+    const userJson = window.localStorage.getItem("user");
+
+    if (userJson) {
+      setUser(JSON.parse(userJson));
+    }
+  }, []);
+
+  useEffect(() => {
+    const userJson = JSON.stringify(user);
+    window.localStorage.setItem("user", userJson);
+  }, [user]);
+
   const login = async (userParams: loginParams) => {
     const data = await loginUser(userParams);
 
@@ -39,6 +52,11 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
     setUser(data);
     return data;
+  };
+
+  const logOut = () => {
+    setUser(null);
+    window.localStorage.removeItem("user");
   };
 
   const providerValue = {

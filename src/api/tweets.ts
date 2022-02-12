@@ -36,7 +36,7 @@ export const getFeed = async ({
 
 export const retweetTweet = async (user: User, tweet_id: string) => {
   const url = `${baseUrl}/retweets?tweet_id=${tweet_id}`;
-  const headers = user ? authHeader(user) : {};
+  const headers = authHeader(user);
 
   const res = await fetch(url, {
     mode: "cors",

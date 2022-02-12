@@ -1,32 +1,19 @@
-import { useState } from "react";
-
-import { ContextInterface, useAuth } from "../contexts/authContext";
-import { retweetTweet, likeTweet, Tweet as Itweet } from "../api/tweets";
+import { Tweet as Itweet } from "../api/tweets";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRetweet } from "@fortawesome/free-solid-svg-icons";
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 
-const Tweet = (props: { tweet: Itweet }) => {
-  const { user: currentUser } = useAuth() as ContextInterface;
-  const [tweet, setTweet] = useState(props.tweet);
+interface Props {
+  tweet: Itweet;
+  like: (tweet_id: string) => void;
+  retweet: (tweet_id: string) => void;
+}
 
-  const retweet = async () => {
-    if (!currentUser) return;
+const Tweet = (props: Props) => {
+  const { id, body, user, replies_count, retweets_count, likes_count } =
+    props.tweet;
 
-    const retweet = await retweetTweet(currentUser, tweet.id);
-    setTweet(retweet.tweet);
-  };
-
-  const like = async () => {
-    if (!currentUser) return;
-
-    const like = await likeTweet(currentUser, tweet.id);
-    setTweet(like.tweet)
-  };
-
-  const { body, user, replies_count, retweets_count, likes_count } =
-    tweet;
   return (
     <div className="flex p-2 w-full max-w-sm border-t border-neutral-600 last:border-b">
       <img
@@ -34,7 +21,7 @@ const Tweet = (props: { tweet: Itweet }) => {
         src={user.profile_image_url}
         alt={user.name}
       />
-      
+
       <div>
         <p className="overflow-ellipsis overflow-y-hidden">
           <span className="text-sm pr-2">{user.name}</span>
@@ -47,11 +34,11 @@ const Tweet = (props: { tweet: Itweet }) => {
             <FontAwesomeIcon className="mr-2" icon={faComment} />
             {replies_count}
           </button>
-          <button onClick={retweet}>
+          <button onClick={() => props.retweet(id)}>
             <FontAwesomeIcon className="mr-2" icon={faRetweet} />
             {retweets_count}
           </button>
-          <button onClick={like}>
+          <button onClick={() => props.like(id)}>
             <FontAwesomeIcon className="mr-2" icon={faHeart} />
             {likes_count}
           </button>

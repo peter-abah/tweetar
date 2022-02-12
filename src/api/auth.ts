@@ -1,4 +1,4 @@
-import { string } from "yup/lib/locale";
+import { isExpired, decodeToken } from "react-jwt";
 import { baseUrl, defaultHeaders } from ".";
 
 export interface User {
@@ -18,7 +18,7 @@ export type AuthResponse = User | Error;
 
 export const authHeader = (user: User) => {
   const headers = { Authorization: user.authentication_token };
-  return { ...headers, defaultHeaders };
+  return { ...headers, ...defaultHeaders };
 };
 
 export interface loginParams {
