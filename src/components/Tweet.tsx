@@ -1,49 +1,22 @@
-import { Tweet as Itweet } from "../api/tweets";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRetweet } from "@fortawesome/free-solid-svg-icons";
-import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
+import { Tweet as Itweet, TweetAction } from "../api/tweets";
+import TweetInfo from "./TweetInfo";
+import TweetBody from "./TweetBody";
 
 interface Props {
   tweet: Itweet;
-  like: (tweet_id: string) => void;
-  retweet: (tweet_id: string) => void;
+  toggleLike: (tweet_id: string) => void;
+  toggleRetweet: (tweet_id: string) => void;
 }
 
-const Tweet = (props: Props) => {
-  const { id, body, user, replies_count, retweets_count, likes_count } =
-    props.tweet;
-
+const Tweet = ({ tweet, toggleLike, toggleRetweet }: Props) => {
   return (
-    <div className="flex p-2 w-full max-w-sm border-t border-neutral-600 last:border-b">
-      <img
-        className="w-1/6 h-1/6 rounded-full mr-2"
-        src={user.profile_image_url}
-        alt={user.name}
+    <div className="p-2 w-full max-w-sm border-t border-neutral-600 last:border-b">
+      {['like', 'retweet'].includes(tweet.type) && <TweetInfo {...tweet} />}
+      <TweetBody
+        tweet={tweet}
+        toggleLike={toggleLike}
+        toggleRetweet={toggleRetweet}
       />
-
-      <div>
-        <p className="overflow-ellipsis overflow-y-hidden">
-          <span className="text-sm pr-2">{user.name}</span>
-          <span className="text-xs">@{user.username}</span>
-        </p>
-
-        <p>{body}</p>
-        <div className="flex justify-between px-4">
-          <button>
-            <FontAwesomeIcon className="mr-2" icon={faComment} />
-            {replies_count}
-          </button>
-          <button onClick={() => props.retweet(id)}>
-            <FontAwesomeIcon className="mr-2" icon={faRetweet} />
-            {retweets_count}
-          </button>
-          <button onClick={() => props.like(id)}>
-            <FontAwesomeIcon className="mr-2" icon={faHeart} />
-            {likes_count}
-          </button>
-        </div>
-      </div>
     </div>
   );
 };

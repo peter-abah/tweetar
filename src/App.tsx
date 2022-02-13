@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { Layout, Home, SignUp, SignIn } from "./routes";
-import { AuthProvider } from "./contexts/authContext";
+import AllProviders from "./contexts";
 
 function App() {
   return (
-    <AuthProvider>
+    <AllProviders>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -12,7 +12,7 @@ function App() {
         <Route path="/register" element={<SignUp />} />
         <Route path="/login" element={<SignIn />} />
       </Routes>
-    </AuthProvider>
+    </AllProviders>
   );
 }
 

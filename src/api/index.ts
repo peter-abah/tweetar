@@ -1,4 +1,4 @@
-export const baseUrl = "https://tweetar-api.herokuapp.com/api/v1"; //"http://localhost:3001/api/v1";
+export const baseUrl = "https://tweetar-api.herokuapp.com/api/v1";
 
 
 export const defaultHeaders = {

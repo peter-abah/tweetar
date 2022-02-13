@@ -1,41 +1,52 @@
-import { baseUrl } from ".";
+import { baseUrl, defaultHeaders } from ".";
 import { User, authHeader } from "./auth";
 import stringifyParams, { Params } from "./stringifyParams";
 
 export interface Tweet {
+  tweet: {
+    id: string;
+    body: string;
+    user: User;
+    replies_count: number;
+    retweets_count: number;
+    likes_count: number;
+    liked_by_user: boolean;
+    retweeted_by_user: boolean;
+    parent: Tweet | null;
+  };
+  type: 'tweet' | 'like' | 'retweet';
   id: string;
-  body: string;
+  user?: User;
+  data_id: string;
+}
+
+export interface TweetAction {
+  id: string;
+  tweet: Tweet;
   user: User;
-  replies_count: number;
-  retweets_count: number;
-  likes_count: number;
+  type: 'like' | 'retweet'
 }
 
-interface RequestInteface {
-  params?: Params;
-  user?: User | null;
-}
+export type FeedResult = Tweet | TweetAction;
 
-const defaultParameter = { params: {}, user: null };
-
-export const getFeed = async ({
-  params = {},
-  user = null,
-}: RequestInteface = defaultParameter) => {
+export const getFeed = async (user: User | null, params: Params = {}) => {
   const stringParams = stringifyParams(params);
   const url = `${baseUrl}/feed/${stringParams}`;
-  const headers = user ? authHeader(user) : {};
+  const headers = user ? authHeader(user) : defaultHeaders;
 
   const res = await fetch(url, {
     mode: "cors",
     headers,
   });
 
-  return await res.json();
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data
 };
 
 export const retweetTweet = async (user: User, tweet_id: string) => {
-  const url = `${baseUrl}/retweets?tweet_id=${tweet_id}`;
+  const url = `${baseUrl}/tweets/${tweet_id}/retweets`;
   const headers = authHeader(user);
 
   const res = await fetch(url, {
@@ -44,11 +55,32 @@ export const retweetTweet = async (user: User, tweet_id: string) => {
     headers,
   });
 
-  return await res.json();
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data;
+};
+
+export const deleteTweetRetweet = async (user: User, tweet_id: string) => {
+  const url = `${baseUrl}/tweets/${tweet_id}/retweets`;
+  const headers = authHeader(user);
+
+  const res = await fetch(url, {
+    mode: "cors",
+    method: "DELETE",
+    headers,
+  });
+
+  if (res.status === 204) { // no content
+    return
+  }
+
+  // response will have a body if there is an error
+  throw await res.json();
 };
 
 export const likeTweet = async (user: User, tweet_id: string) => {
-  const url = `${baseUrl}/likes?tweet_id=${tweet_id}`;
+  const url = `${baseUrl}/tweets/${tweet_id}/likes`;
   const headers = user ? authHeader(user) : {};
 
   const res = await fetch(url, {
@@ -57,5 +89,26 @@ export const likeTweet = async (user: User, tweet_id: string) => {
     headers,
   });
 
-  return await res.json();
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data
+};
+
+export const deleteTweetLike = async (user: User, tweet_id: string) => {
+  const url = `${baseUrl}/tweets/${tweet_id}/likes`;
+  const headers = authHeader(user);
+
+  const res = await fetch(url, {
+    mode: "cors",
+    method: "DELETE",
+    headers,
+  });
+
+  if (res.status === 204) { // no content
+    return
+  }
+
+  // response will have a body if there is an error
+  throw await res.json();
 };

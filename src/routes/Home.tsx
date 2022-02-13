@@ -1,36 +1,21 @@
 import { useState, useEffect } from "react";
 import { getFeed, likeTweet, retweetTweet, Tweet as Itweet } from "../api/tweets";
 import Tweets from "../components/Tweets";
-import { useAuth, ContextInterface } from "../contexts/authContext";
+import { useAuth, AuthContextInterface } from "../contexts/authContext";
+import { useTweets, TweetsContextInterface } from "../contexts/tweetsContext";
 
 const Home = () => {
-  const { user } = useAuth() as ContextInterface;
-  const [tweets, setTweets] = useState<Itweet[]>([])
-
-  const like = async (tweet_id: string) => {
-    if (!user) return;
-
-    const like = await likeTweet(user, tweet_id);
-    const filteredTweets = tweets.filter((tweet) => tweet.id !== like.tweet.id);
-    setTweets([like, ...filteredTweets]);
-  };
-
-  const retweet = async (tweet_id: string) => {
-    if (!user) return;
-
-    const retweet = await retweetTweet(user, tweet_id)
-    const filteredTweets = tweets.filter((tweet) => tweet.id !== retweet.tweet.id);
-    setTweets([retweet, ...filteredTweets]);
-  };
+  const { user } = useAuth() as AuthContextInterface;
+  const { setTweets } = useTweets() as TweetsContextInterface;
 
   useEffect(() => {
-    getFeed({ user })
+    getFeed(user)
       .then((data) => setTweets(data.list));
-  }, []);
+  }, [user]);
 
   return (
     <main>
-      <Tweets tweets={tweets} like={like} retweet={retweet} />
+      <Tweets/>
     </main>
   );
 };

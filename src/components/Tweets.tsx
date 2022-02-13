@@ -1,16 +1,19 @@
-import { Tweet as Itweet, likeTweet, retweetTweet } from "../api/tweets";
 import Tweet from "./Tweet";
+import { TweetsContextInterface, useTweets } from "../contexts/tweetsContext";
 
-const Tweets = (props: {
-  tweets: Itweet[];
-  like: (tweet_id: string) => void;
-  retweet: (tweet_id: string) => void;
-}) => {
-  const { tweets, like, retweet } = props;
+const Tweets = () => {
+  const { tweets, toggleLike, toggleRetweet } =
+    useTweets() as TweetsContextInterface;
+
   return (
     <>
       {tweets.map((tweet) => (
-        <Tweet key={tweet.id} tweet={tweet} like={like} retweet={retweet} />
+        <Tweet
+          key={`${tweet.id}${tweet.type}`}
+          tweet={tweet}
+          toggleLike={toggleLike}
+          toggleRetweet={toggleRetweet}
+        />
       ))}
     </>
   );

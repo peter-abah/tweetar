@@ -1,4 +1,4 @@
-import { useAuth, ContextInterface } from "../contexts/authContext";
+import { useAuth, AuthContextInterface } from "../contexts/authContext";
 
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -6,7 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 import FormField from "../components/FormField";
 
 const SignUp = () => {
-  const { signUp } = useAuth() as ContextInterface;
+  const { signUp } = useAuth() as AuthContextInterface;
   const navigate = useNavigate();
 
   return (

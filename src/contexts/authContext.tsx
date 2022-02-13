@@ -8,13 +8,14 @@ import {
   loginParams,
 } from "../api/auth";
 
-export interface ContextInterface {
+export interface AuthContextInterface {
   user: User | null;
   login: (userParams: loginParams) => Promise<AuthResponse>;
   signUp: (userParams: signUpParams) => Promise<AuthResponse>;
+  logOut: () => void;
 }
 
-const AuthContext = React.createContext<ContextInterface | null>(null);
+const AuthContext = React.createContext<AuthContextInterface | null>(null);
 
 interface ProviderProps {
   children: React.ReactNode;
@@ -60,9 +61,10 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   };
 
   const providerValue = {
-    user: user,
-    login: login,
-    signUp: signUp,
+    user,
+    login,
+    signUp,
+    logOut,
   };
   return (
     <AuthContext.Provider value={providerValue}>
