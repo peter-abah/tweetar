@@ -14,7 +14,7 @@ const Home = () => {
   }, [user]);
 
   return (
-    <main>
+    <main className="mx-auto max-w-xl border-x border-neutral-300">
       <Tweets/>
     </main>
   );
