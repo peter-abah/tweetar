@@ -14,7 +14,7 @@ const Home = () => {
   }, [user]);
 
   return (
-    <main className="mx-auto max-w-xl border-x border-neutral-300">
+    <main className="col-span-1 mx-auto max-w-[31.25rem]">
       <Tweets/>
     </main>
   );
