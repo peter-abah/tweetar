@@ -1,3 +1,4 @@
+import { formatDistanceToNow, parseISO } from "date-fns/esm";
 import { Link } from "react-router-dom";
 import { Tweet } from "../api/tweets";
 import TweetBtns from "./TweetBtns";
@@ -10,7 +11,9 @@ interface Props {
 
 const TweetBody = (props: Props) => {
   const { tweet, toggleLike, toggleRetweet } = props;
-  const { body, user } = tweet.tweet;
+  const { body, user, updated_at } = tweet.tweet;
+
+  const tweetTime = formatDistanceToNow(parseISO(updated_at));
 
   return (
     <div className="flex">
@@ -23,10 +26,11 @@ const TweetBody = (props: Props) => {
       </Link>
 
       <div className="w-full">
-        <p className="overflow-ellipsis overflow-y-hidden">
+        <div className="overflow-ellipsis overflow-y-hidden flex gap-2 items-center">
           <span className="pr-2 font-bold">{user.name}</span>
           <span className="text-neutral-700">@{user.username}</span>
-        </p>
+          <span className="text-neutral-700 text-sm">{tweetTime} ago</span>
+        </div>
 
         <p>{body}</p>
         <TweetBtns

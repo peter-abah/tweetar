@@ -15,6 +15,8 @@ export interface Tweet {
     liked_by_user: boolean;
     retweeted_by_user: boolean;
     parent: Tweet | null;
+    updated_at: string;
+    created_at: string;
   };
   type: "tweet" | "like" | "retweet";
   id: string;

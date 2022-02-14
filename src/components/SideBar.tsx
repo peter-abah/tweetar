@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { linkSync } from "fs";
 import { Link } from "react-router-dom";
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
 
@@ -6,13 +7,14 @@ const SideBar = ({ isOpen }: { isOpen: boolean }) => {
   const { user } = useAuth() as AuthContextInterface;
 
   const profileLink = user ? `/profile/${user.username}` : ''
-  const links = [
+  let links = [
     { name: "Home", link: "/home", id: 1 },
     { name: "Search", link: "/home", id: 2 },
     { name: "Profile", link: profileLink, id: 3 },
-    { name: "Home", link: "/home", id: 4 },
-    { name: "Home", link: "/home", id: 5 },
+    { name: "Tweet", link: "/new", id: 4 },
   ];
+
+  links = user ? links : links.filter(({name}) => name !== 'Tweet');
 
   const navClassName = classnames(
     "hidden md:block md:sticky top-10 h-fit col-span-1 h-screen",
