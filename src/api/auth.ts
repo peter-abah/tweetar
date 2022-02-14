@@ -1,14 +1,5 @@
-import { isExpired, decodeToken } from "react-jwt";
+import { User } from './users';
 import { baseUrl, defaultHeaders } from ".";
-
-export interface User {
-  name: string;
-  username: string;
-  email: string;
-  profile_image_url: string;
-  cover_image_url: string;
-  authentication_token: string;
-}
 
 interface Error {
   error: string;

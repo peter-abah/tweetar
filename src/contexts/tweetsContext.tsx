@@ -1,13 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Tweet,
   likeTweet,
   retweetTweet,
   deleteTweetLike,
   deleteTweetRetweet,
-  TweetAction,
 } from "../api/tweets";
-import { User } from "../api/auth";
+import { User } from "../api/users";
 import { AuthContextInterface, useAuth } from "./authContext";
 
 export interface TweetsContextInterface {
@@ -138,4 +137,10 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
   );
 };
 
-export const useTweets = () => useContext(TweetsContext);
+export const useTweets = () => {
+  const values = useContext(TweetsContext);
+
+  useEffect(() => values?.setTweets([]), []) // empty tweets first time it is called
+
+  return values;
+}

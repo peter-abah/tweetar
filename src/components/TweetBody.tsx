@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Tweet } from "../api/tweets";
 import TweetBtns from "./TweetBtns";
 
@@ -13,11 +14,13 @@ const TweetBody = (props: Props) => {
 
   return (
     <div className="flex">
-      <img
-        className="w-12 h-12 rounded-full mr-2"
-        src={user.profile_image_url}
-        alt={user.name}
-      />
+      <Link className="w-fit h-fit mr-2" to={`/profile/${user.username}`}>
+        <img
+          className="w-12 h-12 rounded-full"
+          src={user.profile_image_url}
+          alt={user.name}
+        />
+      </Link>
 
       <div className="w-full">
         <p className="overflow-ellipsis overflow-y-hidden">

@@ -3,10 +3,10 @@ import {
   loginUser,
   signUpUser,
   AuthResponse,
-  User,
   signUpParams,
   loginParams,
 } from "../api/auth";
+import { User } from "../api/users";
 
 export interface AuthContextInterface {
   user: User | null;
