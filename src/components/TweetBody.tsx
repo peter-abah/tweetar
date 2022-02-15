@@ -16,8 +16,8 @@ const TweetBody = (props: Props) => {
   const tweetTime = formatDistanceToNow(parseISO(updated_at));
 
   return (
-    <div className="flex">
-      <Link className="w-fit h-fit mr-2" to={`/profile/${user.username}`}>
+    <div className="flex w-full">
+      <Link className="w-fit h-fit mr-2 shrink-0" to={`/profile/${user.username}`}>
         <img
           className="w-12 h-12 rounded-full"
           src={user.profile_image_url}
@@ -25,8 +25,8 @@ const TweetBody = (props: Props) => {
         />
       </Link>
 
-      <div className="w-full">
-        <div className="overflow-ellipsis overflow-y-hidden flex gap-2 items-center">
+      <div className="w-4/5">
+        <div className="w-full overflow-x-hidden whitespace-nowrap overflow-y-hidden flex gap-2 items-center">
           <span className="pr-2 font-bold">{user.name}</span>
           <span className="text-neutral-700">@{user.username}</span>
           <span className="text-neutral-700 text-sm">{tweetTime} ago</span>

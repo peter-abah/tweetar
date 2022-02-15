@@ -7,14 +7,14 @@ const TweetInfo = ({ type, user }: Tweet) => {
   return type === "like" ? (
     <Link
       to={`/profile/${user.username}`}
-      className="text-xs ml-4 text-neutral-700"
+      className="text-xs ml-4 text-neutral-700 whitespace-nowrap text-ellipsis"
     >
       {user.name} Liked
     </Link>
   ) : (
     <Link
       to={`/profile/${user.username}`}
-      className="text-xs ml-4 text-neutral-700"
+      className="text-xs ml-4 text-neutral-700 whitespace-nowrap text-ellipsis"
     >
       {user.name} Retweeted
     </Link>

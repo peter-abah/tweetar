@@ -21,7 +21,7 @@ const TweetBtns = (props: Props) => {
   } = props.tweet.tweet;
 
   return (
-    <div className="flex gap-2 justify-between pt-3 max-w-xs">
+    <div className="flex gap-12 pt-3 max-w-xs">
       <button>
         <FontAwesomeIcon className="mr-2" icon={faComment} />
         {replies_count}
