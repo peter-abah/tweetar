@@ -1,12 +1,23 @@
+import { Link } from "react-router-dom";
 import { Tweet } from "../api/tweets";
 
-const TweetInfo = ({ type, tweet }: Tweet) => {
-  const { user } = tweet;
+const TweetInfo = ({ type, user }: Tweet) => {
+  if (!user) return null;
 
   return type === "like" ? (
-    <p className="text-xs ml-4 text-neutral-700">{user.name} Liked</p>
+    <Link
+      to={`/profile/${user.username}`}
+      className="text-xs ml-4 text-neutral-700"
+    >
+      {user.name} Liked
+    </Link>
   ) : (
-    <p className="text-xs ml-4 text-neutral-700">{user.name} Retweeted</p>
+    <Link
+      to={`/profile/${user.username}`}
+      className="text-xs ml-4 text-neutral-700"
+    >
+      {user.name} Retweeted
+    </Link>
   );
 };
 

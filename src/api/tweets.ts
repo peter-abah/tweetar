@@ -70,6 +70,24 @@ export const getTweetsForUser = async (
   return data;
 };
 
+export const createTweet = async (currentUser: User, body: string) => {
+  const requestBody = JSON.stringify({ tweet: { body } })
+  const url = `${baseUrl}/tweets/`;
+  
+  const headers = authHeader(currentUser);
+  const res = await fetch(url, {
+    method: "POST",
+    mode: "cors",
+    body: requestBody,
+    headers
+  });
+
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data;
+};
+
 export const retweetTweet = async (user: User, tweet_id: string) => {
   const url = `${baseUrl}/tweets/${tweet_id}/retweets`;
   const headers = authHeader(user);

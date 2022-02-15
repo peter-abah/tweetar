@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { getFeed, likeTweet, retweetTweet, Tweet as Itweet } from "../api/tweets";
+import { useEffect } from "react";
+import { getFeed } from "../api/tweets";
 import Tweets from "../components/Tweets";
 import { useAuth, AuthContextInterface } from "../contexts/authContext";
 import { useTweets, TweetsContextInterface } from "../contexts/tweetsContext";
