@@ -155,7 +155,9 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
 export const useTweets = () => {
   const values = useContext(TweetsContext);
 
-  useEffect(() => values?.setTweets([]), []); // empty tweets first time it is called
+  useEffect(() => {
+    values?.setTweets([])
+  }, []); // empty tweets first time it is called
 
   return values;
 };

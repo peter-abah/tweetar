@@ -70,10 +70,16 @@ export const getTweetsForUser = async (
   return data;
 };
 
-export const createTweet = async (currentUser: User, body: string) => {
-  const requestBody = JSON.stringify({ tweet: { body } })
+interface createTweetBody {
+  tweet: {
+    body: string,
+    parent_id?: string
+  }
+}
+export const createTweet = async (currentUser: User, body: createTweetBody) => {
+  const requestBody = JSON.stringify(body)
   const url = `${baseUrl}/tweets/`;
-  
+
   const headers = authHeader(currentUser);
   const res = await fetch(url, {
     method: "POST",

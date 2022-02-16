@@ -9,14 +9,13 @@ const NewTweet = () => {
   const navigate = useNavigate();
   const { user: currentUser } = useAuth() as AuthContextInterface;
 
-useEffect(() => {
+  useEffect(() => {
     if (!currentUser) navigate("/");
   }, [currentUser]);
 
   const onSubmit = async ({ body }: { body: string }) => {
-    debugger;
     if (!currentUser) return;
-    createTweet(currentUser, body).then(() => navigate("/"));
+    createTweet(currentUser, { tweet: { body } }).then(() => navigate("/"));
   };
 
   if (!currentUser) return null;
