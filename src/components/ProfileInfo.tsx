@@ -1,7 +1,13 @@
 import { User } from "../api/users";
-import { format, parseISO } from 'date-fns';
+import { format, parseISO } from "date-fns";
+import ProfileBtn from "./ProfileBtn";
 
-const ProfileInfo = (props: { user: User }) => {
+interface Props {
+  user: User;
+  onFollow: () => void;
+  onUnfollow: () => void;
+}
+const ProfileInfo = (props: Props) => {
   const {
     username,
     name,
@@ -12,7 +18,7 @@ const ProfileInfo = (props: { user: User }) => {
     created_at,
   } = props.user;
 
-  const joinedDate = format(parseISO(created_at), 'MMMM yyyy');
+  const joinedDate = format(parseISO(created_at), "MMMM yyyy");
   return (
     <div className="mb-4 border-b border-neutral-300">
       <div
@@ -28,6 +34,13 @@ const ProfileInfo = (props: { user: User }) => {
           alt={name}
         />
       </div>
+
+      <ProfileBtn
+        user={props.user}
+        onFollow={props.onFollow}
+        onUnfollow={props.onUnfollow}
+      />
+
       <div className="mt-20 p-4">
         <h2 className="text-xl font-bold">{name}</h2>
         <small className="text-neutral-700">@{username}</small>

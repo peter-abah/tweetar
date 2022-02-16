@@ -13,6 +13,8 @@ export interface User {
   followers_count: number;
   followed_users_count: number;
   created_at: string;
+  followed_by_user: boolean;
+  following_user: boolean;
 }
 
 export const getUser = async (idOrUsername: string, user: User | null, params: Params = {}) => {
@@ -30,3 +32,35 @@ export const getUser = async (idOrUsername: string, user: User | null, params: P
 
   return data
 };
+
+export const followUser = async (currentUser: User, user: User) => {
+  const url = `${baseUrl}/users/${user.id}/follow`
+  const headers = authHeader(currentUser);
+
+  const res = await fetch(url, {
+    mode: "cors",
+    method: 'POST',
+    headers,
+  });
+
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data
+}
+
+export const unFollowUser = async (currentUser: User, user: User) => {
+  const url = `${baseUrl}/users/${user.id}/follow`
+  const headers = authHeader(currentUser);
+
+  const res = await fetch(url, {
+    mode: "cors",
+    method: 'DELETE',
+    headers,
+  });
+
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data
+}

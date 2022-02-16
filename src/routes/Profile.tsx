@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { User } from "../api/users";
-import { getUser } from "../api/users";
+import { User, getUser, followUser, unFollowUser } from "../api/users";
 import { getTweetsForUser } from "../api/tweets";
 
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
@@ -27,11 +26,27 @@ const Profile = () => {
     getTweetsForUser(currentUser, user).then((data) => setTweets(data.list));
   }, [user]);
 
+  const onFollow = () => {
+    if (!user || !currentUser) return;
+
+    followUser(currentUser, user).then((user) =>
+      setUser(user)
+    );
+  };
+
+  const onUnfollow = () => {
+    if (!user || !currentUser) return;
+
+    unFollowUser(currentUser, user).then((user) =>
+      setUser(user)
+    );
+  };
+
   if (!user) return <p>Loading ...</p>;
 
   return (
     <main className="border-x border-neutral-300">
-      <ProfileInfo user={user} />
+      <ProfileInfo user={user} onFollow={onFollow} onUnfollow={onUnfollow} />
       <Tweets />
     </main>
   );
