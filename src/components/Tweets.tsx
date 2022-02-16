@@ -1,4 +1,4 @@
-import Tweet from "./Tweet";
+import Tweet from "./SmallTweet";
 import { TweetsContextInterface, useTweets } from "../contexts/tweetsContext";
 
 const Tweets = () => {

@@ -10,6 +10,8 @@ import { User } from "../api/users";
 import { AuthContextInterface, useAuth } from "./authContext";
 
 export interface TweetsContextInterface {
+  tweet: Tweet | null;
+  setTweet: (tweet: Tweet) => void;
   tweets: Tweet[];
   setTweets: (tweets: Tweet[]) => void;
   toggleLike: (tweet_id: string) => void;
@@ -26,19 +28,25 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
   const { user } = useAuth() as AuthContextInterface;
 
   const [tweets, setTweets] = useState<Tweet[]>([]);
+  const [tweet, setTweet] = useState<Tweet | null>(null);
 
   const findTweetIndex = (tweet: Tweet) => {
     return tweets.findIndex((e) => e.data_id === tweet.data_id);
   };
 
-  const updateTweets = (tweet: Tweet) => {
-    const index = findTweetIndex(tweet);
-    const filteredTweets = tweets.filter(
-      (e) => e.data_id !== tweet.data_id
-    );
-    filteredTweets.splice(index, 0, tweet)
-    return filteredTweets;
-  }
+  const updateTweets = (updatedTweet: Tweet) => {
+    if (updatedTweet.data_id === tweet?.data_id) {
+      setTweet(updatedTweet);
+      return;
+    }
+
+    const index = findTweetIndex(updatedTweet);
+    if (index < 0) return;
+
+    const filteredTweets = tweets.filter((e) => e.data_id !== updatedTweet.data_id);
+    filteredTweets.splice(index, 0, updatedTweet);
+    setTweets(filteredTweets);
+  };
 
   const like = async (user: User, tweet: Tweet) => {
     const id = tweet.tweet.id;
@@ -53,8 +61,7 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
       },
     };
 
-    const updated = updateTweets(tweet);
-    setTweets(updated);
+    updateTweets(tweet);
   };
 
   const retweet = async (user: User, tweet: Tweet) => {
@@ -70,8 +77,7 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
       },
     };
 
-    const updated = updateTweets(tweet);
-    setTweets(updated);
+    updateTweets(tweet);
   };
 
   const deleteLike = async (user: User, tweet: Tweet) => {
@@ -86,8 +92,7 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
       },
     };
 
-    const updated = updateTweets(tweet);
-    setTweets(updated);
+    updateTweets(tweet);
   };
 
   const deleteRetweet = async (user: User, tweet: Tweet) => {
@@ -102,33 +107,43 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
       },
     };
 
-    const updated = updateTweets(tweet);
-    setTweets(updated);
+    updateTweets(tweet);
   };
 
   const toggleLike = (tweet_id: string) => {
     if (!user) return;
 
-    let tweet = tweets.filter((tweet) => tweet.data_id === tweet_id)[0];
-    if (tweet.tweet.liked_by_user) {
-      deleteLike(user, tweet);
+    let filteredTweet = tweets.filter((tweet) => tweet.data_id === tweet_id)[0];
+    filteredTweet = tweet?.data_id === tweet_id ? tweet : filteredTweet;
+  
+    if (filteredTweet.tweet.liked_by_user) {
+      deleteLike(user, filteredTweet);
     } else {
-      like(user, tweet);
+      like(user, filteredTweet);
     }
   };
 
   const toggleRetweet = (tweet_id: string) => {
     if (!user) return;
 
-    let tweet = tweets.filter((tweet) => tweet.data_id === tweet_id)[0];
-    if (tweet.tweet.retweeted_by_user) {
-      deleteRetweet(user, tweet);
+    let filteredTweet = tweets.filter((tweet) => tweet.data_id === tweet_id)[0];
+    filteredTweet = tweet?.data_id === tweet_id ? tweet : filteredTweet;
+  
+    if (filteredTweet.tweet.retweeted_by_user) {
+      deleteRetweet(user, filteredTweet);
     } else {
-      retweet(user, tweet);
+      retweet(user, filteredTweet);
     }
   };
 
-  const providerValue = { tweets, setTweets, toggleLike, toggleRetweet };
+  const providerValue = {
+    tweet,
+    tweets,
+    setTweet,
+    setTweets,
+    toggleLike,
+    toggleRetweet,
+  };
 
   return (
     <TweetsContext.Provider value={providerValue}>
@@ -140,7 +155,7 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
 export const useTweets = () => {
   const values = useContext(TweetsContext);
 
-  useEffect(() => values?.setTweets([]), []) // empty tweets first time it is called
+  useEffect(() => values?.setTweets([]), []); // empty tweets first time it is called
 
   return values;
-}
+};

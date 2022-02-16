@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <div>
       <Header isNavOpen={isNavOpen} toggleNav={toggleNav} />
-      <div className="md:grid md:grid-cols-[1fr_3fr] lg:grid-cols-[1fr_2fr_1fr]">
+      <div className="md:grid md:grid-cols-[1fr_3fr] lg:grid-cols-[1fr_1.6fr_1fr]">
         <SideBar isOpen={isNavOpen} />
         <Outlet />
       </div>

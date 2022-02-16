@@ -88,8 +88,46 @@ export const createTweet = async (currentUser: User, body: string) => {
   return data;
 };
 
-export const retweetTweet = async (user: User, tweet_id: string) => {
-  const url = `${baseUrl}/tweets/${tweet_id}/retweets`;
+export const getTweet = async (
+  currentUser: User | null,
+  tweetId: string
+) => {
+  const url = `${baseUrl}/tweets/${tweetId}`;
+  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
+
+  const res = await fetch(url, {
+    mode: "cors",
+    headers,
+  });
+
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data;
+};
+
+export const getTweetReplies = async (
+  currentUser: User | null,
+  tweetId: string,
+  params: Params = {}
+) => {
+  const stringParams = stringifyParams(params);
+  const url = `${baseUrl}/tweets/${tweetId}/replies/${stringParams}`;
+  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
+
+  const res = await fetch(url, {
+    mode: "cors",
+    headers,
+  });
+
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data;
+};
+
+export const retweetTweet = async (user: User, tweetId: string) => {
+  const url = `${baseUrl}/tweets/${tweetId}/retweets`;
   const headers = authHeader(user);
 
   const res = await fetch(url, {
@@ -104,8 +142,8 @@ export const retweetTweet = async (user: User, tweet_id: string) => {
   return data;
 };
 
-export const deleteTweetRetweet = async (user: User, tweet_id: string) => {
-  const url = `${baseUrl}/tweets/${tweet_id}/retweets`;
+export const deleteTweetRetweet = async (user: User, tweetId: string) => {
+  const url = `${baseUrl}/tweets/${tweetId}/retweets`;
   const headers = authHeader(user);
 
   const res = await fetch(url, {
@@ -123,8 +161,8 @@ export const deleteTweetRetweet = async (user: User, tweet_id: string) => {
   throw await res.json();
 };
 
-export const likeTweet = async (user: User, tweet_id: string) => {
-  const url = `${baseUrl}/tweets/${tweet_id}/likes`;
+export const likeTweet = async (user: User, tweetId: string) => {
+  const url = `${baseUrl}/tweets/${tweetId}/likes`;
   const headers = user ? authHeader(user) : {};
 
   const res = await fetch(url, {
@@ -139,8 +177,8 @@ export const likeTweet = async (user: User, tweet_id: string) => {
   return data;
 };
 
-export const deleteTweetLike = async (user: User, tweet_id: string) => {
-  const url = `${baseUrl}/tweets/${tweet_id}/likes`;
+export const deleteTweetLike = async (user: User, tweetId: string) => {
+  const url = `${baseUrl}/tweets/${tweetId}/likes`;
   const headers = authHeader(user);
 
   const res = await fetch(url, {

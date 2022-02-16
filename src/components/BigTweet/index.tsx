@@ -1,6 +1,9 @@
-import { Tweet as Itweet } from "../api/tweets";
-import TweetInfo from "./TweetInfo";
+import { Tweet as Itweet } from "../../api/tweets";
+import TweetInfo from "../TweetInfo";
 import TweetBody from "./TweetBody";
+import TweetUser from "./TweetUser";
+import TweetStats from "./TweetStats";
+import TweetBtns from "./TweetBtns";
 
 interface Props {
   tweet: Itweet;
@@ -10,9 +13,12 @@ interface Props {
 
 const Tweet = ({ tweet, toggleLike, toggleRetweet }: Props) => {
   return (
-    <div className="p-2 w-full border-t border-neutral-300 last:border-b">
+    <div className="p-4 w-full">
       <TweetInfo {...tweet} />
-      <TweetBody
+      <TweetUser tweet={tweet} />
+      <TweetBody tweet={tweet} />
+      <TweetStats tweet={tweet} />
+      <TweetBtns
         tweet={tweet}
         toggleLike={toggleLike}
         toggleRetweet={toggleRetweet}

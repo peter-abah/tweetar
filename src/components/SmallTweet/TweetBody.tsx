@@ -1,6 +1,6 @@
 import { formatDistanceToNow, parseISO } from "date-fns/esm";
 import { Link } from "react-router-dom";
-import { Tweet } from "../api/tweets";
+import { Tweet } from "../../api/tweets";
 import TweetBtns from "./TweetBtns";
 
 interface Props {
@@ -11,13 +11,16 @@ interface Props {
 
 const TweetBody = (props: Props) => {
   const { tweet, toggleLike, toggleRetweet } = props;
-  const { body, user, updated_at } = tweet.tweet;
+  const { id, body, user, updated_at } = tweet.tweet;
 
   const tweetTime = formatDistanceToNow(parseISO(updated_at));
 
   return (
     <div className="flex w-full">
-      <Link className="w-fit h-fit mr-2 shrink-0" to={`/profile/${user.username}`}>
+      <Link
+        className="w-fit h-fit mr-2 shrink-0"
+        to={`/profile/${user.username}`}
+      >
         <img
           className="w-12 h-12 rounded-full"
           src={user.profile_image_url}
@@ -26,13 +29,15 @@ const TweetBody = (props: Props) => {
       </Link>
 
       <div className="w-4/5">
-        <div className="w-full overflow-x-hidden whitespace-nowrap overflow-y-hidden flex gap-2 items-center">
-          <span className="pr-2 font-bold">{user.name}</span>
-          <span className="text-neutral-700">@{user.username}</span>
-          <span className="text-neutral-700 text-sm">{tweetTime} ago</span>
-        </div>
+        <Link className="block" to={`/tweet/${id}`}>
+          <div className="w-full overflow-x-hidden whitespace-nowrap overflow-y-hidden flex gap-2 items-center">
+            <span className="pr-2 font-bold">{user.name}</span>
+            <span className="text-neutral-700">@{user.username}</span>
+            <span className="text-neutral-700 text-sm">{tweetTime} ago</span>
+          </div>
 
-        <p>{body}</p>
+          <p>{body}</p>
+        </Link>
         <TweetBtns
           tweet={tweet}
           toggleLike={toggleLike}
