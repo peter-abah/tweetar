@@ -9,7 +9,7 @@ const SideBar = ({ isOpen }: { isOpen: boolean }) => {
   const profileLink = user ? `/profile/${user.username}` : ''
   let links = [
     { name: "Home", link: "/home", id: 1 },
-    { name: "Search", link: "/home", id: 2 },
+    { name: "Search", link: "/search", id: 2 },
     { name: "Profile", link: profileLink, id: 3 },
     { name: "Tweet", link: "/new", id: 4 },
   ];

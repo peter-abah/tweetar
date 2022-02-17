@@ -111,6 +111,25 @@ export const getTweet = async (
   return data;
 };
 
+export const getTweets = async (
+  currentUser: User | null,
+  params: Params = {}
+) => {
+  const stringParams = stringifyParams(params);
+  const url = `${baseUrl}/tweets/${stringParams}`;
+  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
+
+  const res = await fetch(url, {
+    mode: "cors",
+    headers,
+  });
+
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data;
+};
+
 export const getTweetReplies = async (
   currentUser: User | null,
   tweetId: string,

@@ -33,6 +33,25 @@ export const getUser = async (idOrUsername: string, user: User | null, params: P
   return data
 };
 
+export const getUsers = async (
+  currentUser: User | null,
+  params: Params = {}
+) => {
+  const stringParams = stringifyParams(params);
+  const url = `${baseUrl}/users/${stringParams}`;
+  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
+
+  const res = await fetch(url, {
+    mode: "cors",
+    headers,
+  });
+
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data;
+};
+
 export const followUser = async (currentUser: User, user: User) => {
   const url = `${baseUrl}/users/${user.id}/follow`
   const headers = authHeader(currentUser);
