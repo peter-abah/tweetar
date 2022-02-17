@@ -1,11 +1,10 @@
 import { User } from "../api/users";
 import { format, parseISO } from "date-fns";
 import ProfileBtn from "./ProfileBtn";
+import { Link } from "react-router-dom";
 
 interface Props {
   user: User;
-  onFollow: () => void;
-  onUnfollow: () => void;
 }
 const ProfileInfo = (props: Props) => {
   const {
@@ -20,7 +19,7 @@ const ProfileInfo = (props: Props) => {
 
   const joinedDate = format(parseISO(created_at), "MMMM yyyy");
   return (
-    <div className="mb-4 border-b border-neutral-300">
+    <div className="border-b border-neutral-300">
       <div
         className="relative h-32 md:h-48"
         style={{
@@ -37,8 +36,6 @@ const ProfileInfo = (props: Props) => {
 
       <ProfileBtn
         user={props.user}
-        onFollow={props.onFollow}
-        onUnfollow={props.onUnfollow}
       />
 
       <div className="mt-20 p-4">
@@ -46,14 +43,14 @@ const ProfileInfo = (props: Props) => {
         <small className="text-neutral-700">@{username}</small>
         <p className="text-neutral-700">Joined {joinedDate}</p>
         <div className="text-neutral-700 flex gap-4">
-          <p>
+          <Link to='users/following'>
             <span className="font-bold text-black">{followed_users_count}</span>
             <span> Following</span>
-          </p>
-          <p>
+          </Link>
+          <Link to='users/followers'>
             <span className="font-bold text-black">{followers_count}</span>
             <span> Followers</span>
-          </p>
+          </Link>
         </div>
       </div>
     </div>

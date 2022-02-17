@@ -1,19 +1,19 @@
 import { Link } from "react-router-dom";
 import { User } from "../api/users";
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
+import { UsersContextInterface, useUsers } from "../contexts/usersContext";
 
 interface Props {
   user: User;
-  onFollow: () => void;
-  onUnfollow: () => void;
 }
-const ProfileBtn = ({ user, onFollow, onUnfollow }: Props) => {
+const ProfileBtn = ({ user }: Props) => {
   const { user: currentUser } = useAuth() as AuthContextInterface;
+  const { onFollow, onUnfollow } = useUsers() as UsersContextInterface;
 
   if (!currentUser) return null;
 
   const className =
-    "block w-fit mt-4 ml-auto mr-4 px-4 py-1 text-lg rounded-full bg-neutral-700 text-white";
+    "block w-fit mt-4 ml-auto mr-4 px-4 py-1 rounded-full bg-neutral-700 text-white";
 
   if (user.id === currentUser.id) {
     return (
@@ -23,13 +23,13 @@ const ProfileBtn = ({ user, onFollow, onUnfollow }: Props) => {
     );
   } else if (user.followed_by_user) {
     return (
-      <button className={className} onClick={onUnfollow}>
+      <button className={className} onClick={() => onUnfollow(user)}>
         Unfollow
       </button>
     );
   } else {
     return (
-      <button className={className} onClick={onFollow}>
+      <button className={className} onClick={() => onFollow(user)}>
         Follow
       </button>
     );

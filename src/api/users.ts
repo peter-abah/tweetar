@@ -63,4 +63,36 @@ export const unFollowUser = async (currentUser: User, user: User) => {
   if (data.error) throw data;
 
   return data
-}
+};
+
+export const getFollowers = async (currentUser: User | null, user: User, params: Params = {}) => {
+  const stringParams = stringifyParams(params);
+  const url = `${baseUrl}/users/${user.id}/followers/${stringParams}`;
+  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
+
+  const res = await fetch(url, {
+    mode: "cors",
+    headers,
+  });
+
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data
+};
+
+export const getFollowing = async (currentUser: User | null, user: User, params: Params = {}) => {
+  const stringParams = stringifyParams(params);
+  const url = `${baseUrl}/users/${user.id}/followed_users/${stringParams}`;
+  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
+
+  const res = await fetch(url, {
+    mode: "cors",
+    headers,
+  });
+
+  const data = await res.json();
+  if (data.error) throw data;
+
+  return data
+};

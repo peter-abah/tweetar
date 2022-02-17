@@ -1,14 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import { AuthProvider } from './authContext';
-import { TweetsProvider } from './tweetsContext';
+import { AuthProvider } from "./authContext";
+import { TweetsProvider } from "./tweetsContext";
+import { UsersProvider } from "./usersContext";
 
-const AllProviders = ({ children }: {children: React.ReactNode}) => {
+const AllProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthProvider>
-      <TweetsProvider>
-        {children}
-      </TweetsProvider>
+      <UsersProvider>
+        <TweetsProvider>{children}</TweetsProvider>
+      </UsersProvider>
     </AuthProvider>
   );
 };
