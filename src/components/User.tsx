@@ -20,7 +20,7 @@ const User = (props: { user: Iuser }) => {
 
       <Link to={`/profile/${user.username}`} className="flex flex-col">
         <span className="font-bold">{user.name}</span>
-        <span className="text-neutral-700">@{user.username}</span>
+        <span className="">@{user.username}</span>
       </Link>
 
       <ProfileBtn user={user} />

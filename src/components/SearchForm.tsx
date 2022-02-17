@@ -22,13 +22,13 @@ const SearchForm = ({ onSubmit }: Props) => {
       <Form className="flex items-center gap-2 px-2 py-3">
         <div className="flex relative grow">
           <Field
-            className="pl-4 pr-8 py-1 text-lg rounded-full w-full border border-neutral-30 focus-visible:outline-none"
+            className="pl-4 pr-8 py-1 text-lg rounded-full w-full bg-bg border border-neutral focus-visible:outline-none"
             name="query"
             id="search-query"
             placeholder="Search"
           />
           <button className="absolute top-0 bottom-0 right-4" type="submit">
-            <FontAwesomeIcon className="!text-xl text-neutral-600" icon={faSearch} />
+            <FontAwesomeIcon className="!text-xl text-neutral" icon={faSearch} />
           </button>
         </div>
       </Form>

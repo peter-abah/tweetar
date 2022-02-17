@@ -3,7 +3,7 @@ import { Tweet } from "../api/tweets";
 
 const TweetInfo = ({ type, user, tweet }: Tweet) => {
   const className =
-    "text-xs ml-4 text-neutral-700 whitespace-nowrap text-ellipsis";
+    "text-xs ml-4 whitespace-nowrap text-ellipsis";
 
   if (tweet.parent) {
     const username = tweet.parent.tweet.user.username;

@@ -12,7 +12,7 @@ const Header = (props: Iprops) => {
   const { title } = props;
 
   return (
-    <header className="flex justify-between items-center sticky top-0 z-20 h-16 bg-white px-4 py-2">
+    <header className="flex justify-between items-center sticky top-0 z-20 h-16 px-4 py-2">
       <h1 className="text-xl font-bold">{title}</h1>
       <button
         className="md:hidden w-fit ml-auto"

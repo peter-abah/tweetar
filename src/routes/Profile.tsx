@@ -32,7 +32,7 @@ const Profile = () => {
   if (!user) return <p>Loading ...</p>;
 
   return (
-    <main className="border-x border-neutral-300">
+    <main className="">
       <ProfileInfo user={user} />
       <Outlet />
 

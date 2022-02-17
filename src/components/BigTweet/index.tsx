@@ -13,7 +13,7 @@ interface Props {
 
 const Tweet = ({ tweet, toggleLike, toggleRetweet }: Props) => {
   return (
-    <div className="p-4 border-b border-neutral-300">
+    <div className="p-4 border-b border-neutral">
       <TweetInfo {...tweet} />
       <TweetUser tweet={tweet} />
       <TweetBody tweet={tweet} />

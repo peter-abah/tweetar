@@ -29,27 +29,27 @@ const ReplyForm = ({ tweetToReply, onSubmit }: Props) => {
       })}
       onSubmit={onSubmit}
     >
-      <Form className="flex gap-2 md:gap-3 py-2 border-b border-neutral-300">
+      <Form className="flex gap-2 md:gap-3 py-2 border-b border-neutral">
         <img
           className="w-12 h-12 rounded-full"
           src={currentUser.profile_image_url}
           alt={currentUser.name}
         />
-        <div className="w-full flex flex-col px-4 border-neutral-300">
+        <div className="w-full flex flex-col px-4 border-neutral">
           <Field
             name="body"
             as="textarea"
-            className="h-16 resize-none mb-2 border-b focus-visible:outline-none tracking-wide"
+            className="h-16 resize-none mb-2 bg-inherit border-b focus-visible:outline-none tracking-wide"
             id="tweet-body"
             placeholder="Tweet your reply"
           />
           <ErrorMessage
-            className="text-red-600 text-sm"
+            className="text-red text-sm"
             component="small"
             name="body"
           />
           <button
-            className="w-fit px-4 py-1 ml-auto rounded-full bg-neutral-700 text-white"
+            className="w-fit px-4 py-1 ml-auto rounded-full bg-primary text-bg"
             type="submit"
           >
             Reply

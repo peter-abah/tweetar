@@ -48,12 +48,12 @@ const SignUp = () => {
           .finally(() => console.log("done"));
       }}
     >
-      <div className="max-w-screen-sm w-11/12 my-12 mx-auto py-8 px-4 rounded-2xl bg-neutral-100 shadow-lg">
+      <div className="theme-light max-w-screen-sm w-11/12 my-12 mx-auto py-8 px-4 rounded-2xl">
         <h1 className="text-3xl pb-4 font-bold">Tweeter</h1>
         <Form>
           <h2 className="text-2xl font-bold pb-3">Create your account</h2>
 
-          <div className="flex gap-4 my-4 md:flex-row">
+          <div className="flex gap-4 my-4 flex-col md:flex-row">
             <FormField
               label="First Name:"
               name="first_name"
@@ -71,7 +71,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div className="flex gap-4 my-4 md:flex-row">
+          <div className="flex gap-4 my-4 flex-col md:flex-row">
             <FormField
               label="Username:"
               name="username"
@@ -89,7 +89,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div className="flex gap-4 my-4 md:flex-row">
+          <div className="flex gap-4 my-4 flex-col md:flex-row">
             <FormField
               label="Password:"
               name="password"
@@ -106,7 +106,7 @@ const SignUp = () => {
           </div>
 
           <button
-            className="block text-center py-2 w-full rounded-lg text-white bg-neutral-600"
+            className="block mx-auto max-w-xs text-center py-2 w-full rounded-full text-bg bg-primary"
             type="submit"
           >
             Sign Up

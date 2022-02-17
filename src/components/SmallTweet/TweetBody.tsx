@@ -32,8 +32,8 @@ const TweetBody = (props: Props) => {
         <Link className="block" to={`/tweet/${id}`}>
           <div className="w-full overflow-x-hidden whitespace-nowrap overflow-y-hidden flex gap-2 items-center">
             <span className="pr-2 font-bold">{user.name}</span>
-            <span className="text-neutral-700">@{user.username}</span>
-            <span className="text-neutral-700 text-sm">{tweetTime} ago</span>
+            <span className="">@{user.username}</span>
+            <span className="text-sm">{tweetTime} ago</span>
           </div>
 
           <p>{body}</p>

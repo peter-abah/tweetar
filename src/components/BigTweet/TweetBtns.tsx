@@ -19,7 +19,7 @@ const TweetBtns = (props: Props) => {
       <button onClick={() => props.toggleRetweet(props.tweet.data_id)}>
         <FontAwesomeIcon
           className={classnames("mr-2 text-xl text-neutral-600", {
-            "!text-emerald-700": retweeted_by_user,
+            "!text-blue": retweeted_by_user,
           })}
           icon={faRetweet}
         />
@@ -28,7 +28,7 @@ const TweetBtns = (props: Props) => {
       <button onClick={() => props.toggleLike(props.tweet.data_id)}>
         <FontAwesomeIcon
           className={classnames("mr-2 text-xl text-neutral-600", {
-            "!text-red-700": liked_by_user,
+            "!text-red": liked_by_user,
           })}
           icon={faHeart}
         />

@@ -13,7 +13,7 @@ const ProfileBtn = ({ user }: Props) => {
   if (!currentUser) return null;
 
   const className =
-    "block w-fit mt-4 ml-auto mr-4 px-4 py-1 rounded-full bg-neutral-700 text-white";
+    "block w-fit mt-4 ml-auto mr-4 px-4 py-1 rounded-full bg-primary text-bg";
 
   if (user.id === currentUser.id) {
     return (

@@ -19,7 +19,7 @@ const ProfileInfo = (props: Props) => {
 
   const joinedDate = format(parseISO(created_at), "MMMM yyyy");
   return (
-    <div className="border-b border-neutral-300">
+    <div className="border-x border-neutral">
       <div
         className="relative h-32 md:h-48"
         style={{
@@ -28,7 +28,7 @@ const ProfileInfo = (props: Props) => {
         }}
       >
         <img
-          className="absolute border-2 border-white bg-white z-10 left-4 md:left-8 bottom-[-3rem] md:bottom-[-4rem] w-24 h-24 md:w-32 md:h-32 rounded-full"
+          className="absolute border-2 border-bg bg-bg z-10 left-4 md:left-8 bottom-[-3rem] md:bottom-[-4rem] w-24 h-24 md:w-32 md:h-32 rounded-full"
           src={profile_image_url}
           alt={name}
         />
@@ -38,17 +38,17 @@ const ProfileInfo = (props: Props) => {
         user={props.user}
       />
 
-      <div className="mt-20 p-4">
+      <div className="mt-4 p-4">
         <h2 className="text-xl font-bold">{name}</h2>
         <small className="text-neutral-700">@{username}</small>
-        <p className="text-neutral-700">Joined {joinedDate}</p>
-        <div className="text-neutral-700 flex gap-4">
+        <p className="">Joined {joinedDate}</p>
+        <div className="flex gap-4">
           <Link to='users/following'>
-            <span className="font-bold text-black">{followed_users_count}</span>
+            <span className="font-bold">{followed_users_count}</span>
             <span> Following</span>
           </Link>
           <Link to='users/followers'>
-            <span className="font-bold text-black">{followers_count}</span>
+            <span className="font-bold">{followers_count}</span>
             <span> Followers</span>
           </Link>
         </div>

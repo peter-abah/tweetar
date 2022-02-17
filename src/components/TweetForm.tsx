@@ -30,11 +30,11 @@ const TweetForm = ({ body, onSubmit }: Props) => {
           src={user.profile_image_url}
           alt={user.name}
         />
-        <div className="w-full flex flex-col px-4 border-neutral-300">
+        <div className="w-full flex flex-col px-4 border-neutral">
           <Field
             name="body"
             as="textarea"
-            className="h-32 resize-none mb-2 border-b focus-visible:outline-none tracking-wide"
+            className="h-32 resize-none mb-2 border-b focus-visible:outline-none bg-bg"
             id="tweet-body"
             placeholder="What's happening?"
           />
@@ -44,7 +44,7 @@ const TweetForm = ({ body, onSubmit }: Props) => {
             name="body"
           />
           <button
-            className="w-fit px-4 py-1 ml-auto rounded-full bg-neutral-700 text-white"
+            className="w-fit px-4 py-1 ml-auto rounded-full bg-primary text-bg"
             type="submit"
           >
             Save

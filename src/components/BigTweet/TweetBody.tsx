@@ -7,7 +7,7 @@ const TweetBody = ({ tweet }: { tweet: Tweet }) => {
   return (
     <div>
       <p className='text-2xl'>{body}</p>
-      <p className='py-4 text-neutral-600'>{tweetDate}</p>
+      <p className='py-4'>{tweetDate}</p>
     </div>
   )
 };

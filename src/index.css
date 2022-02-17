@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.theme-dark {
+  --color-bg: 10 9 3;
+  --color-primary: 254 254 255;
+  --color-red: 189 30 30;
+  --color-blue: 25 41 124;
+  --color-neutral: 212 212 212;
+}
+
+.theme-light {
+  --color-primary: 10 9 3;
+  --color-bg: 250 246 255;
+  --color-red: 189 30 30;
+  --color-blue: 25 41 124;
+  --color-neutral: 212 212 212;
+}

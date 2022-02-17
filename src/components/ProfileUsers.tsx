@@ -6,7 +6,7 @@ import Following from "./Following";
 const ProfileUsers = ({ user }: { user: User }) => {
   return (
     <div>
-      <nav className="border-b border-neutral-300">
+      <nav className="border-x border-b border-neutral">
         <ul className="grid grid-cols-2">
           <li>
             <Link className="block text-center p-2" to="followers">

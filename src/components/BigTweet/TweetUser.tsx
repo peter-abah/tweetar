@@ -17,8 +17,8 @@ const TweetUser = ({ tweet }: { tweet: Tweet }) => {
       </Link>
 
       <Link to={`/profile/${user.username}`} className="flex flex-col">
-        <span>{user.name}</span>
-        <span className="text-neutral-700">@{user.username}</span>
+        <span className="font-bold">{user.name}</span>
+        <span className="">@{user.username}</span>
       </Link>
     </div>
   );

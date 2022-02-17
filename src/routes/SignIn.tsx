@@ -31,7 +31,7 @@ const SignIn = () => {
           .finally(() => console.log("done"));
       }}
     >
-      <div className="w-11/12 max-w-md my-12 mx-auto py-8 px-4 rounded-2xl bg-neutral-100 shadow-lg">
+      <div className="w-11/12 max-w-md my-12 mx-auto py-8 px-4 rounded-2xl">
         <h1 className="text-3xl pb-4 font-bold">Tweeter</h1>
         <Form>
           <h2 className="text-2xl font-bold pb-3">Log in</h2>
@@ -54,7 +54,7 @@ const SignIn = () => {
           />
 
           <button
-            className="block text-center py-2 w-full rounded-full text-white bg-neutral-600"
+            className="block text-center py-2 w-full rounded-full text-bg bg-primary"
             type="submit"
           >
             Log in
