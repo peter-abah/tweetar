@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/tweeter/static/css/main.bb22f991.css",
+    "main.js": "/tweeter/static/js/main.ac8aa333.js",
+    "index.html": "/tweeter/index.html",
+    "main.bb22f991.css.map": "/tweeter/static/css/main.bb22f991.css.map",
+    "main.ac8aa333.js.map": "/tweeter/static/js/main.ac8aa333.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bb22f991.css",
+    "static/js/main.ac8aa333.js"
+  ]
+}
