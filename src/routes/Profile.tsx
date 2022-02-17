@@ -11,6 +11,7 @@ import ProfileInfo from "../components/ProfileInfo";
 import Tweets from "../components/Tweets";
 import ProfileUsers from "../components/ProfileUsers";
 import { UsersContextInterface, useUsers } from "../contexts/usersContext";
+import Header from "../components/Header";
 
 const Profile = () => {
   const { user: currentUser } = useAuth() as AuthContextInterface;
@@ -32,7 +33,8 @@ const Profile = () => {
   if (!user) return <p>Loading ...</p>;
 
   return (
-    <main className="">
+    <>
+      <Header title={user.name} backLink />
       <ProfileInfo user={user} />
       <Outlet />
 
@@ -41,7 +43,7 @@ const Profile = () => {
         <Route path="tweets" element={<Tweets />} />
         <Route path="users/*" element={<ProfileUsers user={user} />} />
       </Routes>
-    </main>
+    </>
   );
 };
 

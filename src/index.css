@@ -12,8 +12,12 @@
 
 .theme-light {
   --color-primary: 10 9 3;
-  --color-bg: 250 246 255;
+  --color-bg: 255 254 255;
   --color-red: 189 30 30;
   --color-blue: 25 41 124;
   --color-neutral: 212 212 212;
+}
+
+html, body, #root {
+  min-height: 100vh;
 }

@@ -8,7 +8,7 @@ const SideBar = () => {
   const { user } = useAuth() as AuthContextInterface;
   const { isNavOpen } = useSettings();
 
-  const profileLink = user ? `/profile/${user.username}` : ''
+  const profileLink = user ? `/profile/${user.username}` : "";
   let links = [
     { name: "Home", link: "/home", id: 1 },
     { name: "Search", link: "/search", id: 2 },
@@ -16,10 +16,12 @@ const SideBar = () => {
     { name: "Tweet", link: "/new", id: 4 },
   ];
 
-  links = user ? links : links.filter(({name}) => name !== 'Tweet');
+  links = user
+    ? links
+    : links.filter(({ name }) => name !== "Tweet" && name !== "Profile");
 
   const navClassName = classnames(
-    "hidden md:block md:sticky top-10 h-fit col-span-1 h-screen",
+    "hidden md:block sticky top-0 bottom-0 col-span-1 h-screen",
     { "!block fixed left-0 w-4/5 z-20 bg-bg": isNavOpen }
   );
   return (

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { createTweet } from "../api/tweets";
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
 import TweetForm from "../components/TweetForm";
+import Header from "../components/Header";
 
 const NewTweet = () => {
   const navigate = useNavigate();
@@ -20,7 +21,12 @@ const NewTweet = () => {
 
   if (!currentUser) return null;
 
-  return <TweetForm body="" onSubmit={onSubmit} />;
+  return (
+    <>
+      <Header title="Create Tweet" backLink />
+      <TweetForm body="" onSubmit={onSubmit} />;
+    </>
+  );
 };
 
 export default NewTweet;

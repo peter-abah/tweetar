@@ -8,6 +8,7 @@ import { createTweet, getTweet, getTweetReplies } from "../api/tweets";
 import Tweets from "../components/Tweets";
 import BigTweet from "../components/BigTweet";
 import ReplyForm from "../components/ReplyForm";
+import Header from "../components/Header";
 
 const Tweet = () => {
   const { tweet, tweets, setTweet, setTweets, toggleRetweet, toggleLike } =
@@ -41,7 +42,8 @@ const Tweet = () => {
   };
 
   return (
-    <main className="w-full max-w-xl mx-auto border-x border-neutral-300">
+    <>
+      <Header title="Tweet" backLink />
       <BigTweet
         tweet={tweet}
         toggleLike={toggleLike}
@@ -49,7 +51,7 @@ const Tweet = () => {
       />
       <ReplyForm tweetToReply={tweet} onSubmit={onSubmit} />
       <Tweets />
-    </main>
+    </>
   );
 };
 

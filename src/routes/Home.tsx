@@ -17,10 +17,10 @@ const Home = () => {
   }, [user]);
 
   return (
-    <main className="w-full col-span-1 mx-auto max-w-[38rem]">
+    <>
       <Header title="Home" />
       <Tweets/>
-    </main>
+    </>
   );
 };
 

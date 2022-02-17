@@ -19,7 +19,7 @@ const SearchForm = ({ onSubmit }: Props) => {
       })}
       onSubmit={onSubmit}
     >
-      <Form className="flex items-center gap-2 px-2 py-3">
+      <Form className="sticky top-0 flex items-center gap-2 px-2 py-3 bg-bg/60 backdrop-blur-md">
         <div className="flex relative grow">
           <Field
             className="pl-4 pr-8 py-1 text-lg rounded-full w-full bg-bg border border-neutral focus-visible:outline-none"

@@ -11,10 +11,10 @@ const Search = () => {
   };
 
   return (
-    <main>
+    <>
       <SearchForm onSubmit={onSubmit} />
       <SearchResults query={query} />
-    </main>
+    </>
   );
 };
 

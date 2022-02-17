@@ -19,7 +19,7 @@ const ProfileInfo = (props: Props) => {
 
   const joinedDate = format(parseISO(created_at), "MMMM yyyy");
   return (
-    <div className="border-x border-neutral">
+    <div className="border-neutral">
       <div
         className="relative h-32 md:h-48"
         style={{

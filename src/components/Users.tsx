@@ -5,7 +5,7 @@ const Users = () => {
   const { users } = useUsers() as UsersContextInterface;
 
   return (
-    <div>
+    <div className="border-x border-neutral h-full">
       {users.map((user) => (
         <User key={user.id} user={user} />
       ))}

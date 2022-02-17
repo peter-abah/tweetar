@@ -7,6 +7,7 @@ import { AuthContextInterface, useAuth } from "../contexts/authContext";
 import { UsersContextInterface, useUsers } from "../contexts/usersContext";
 
 import Users from "../components/Users";
+import Header from "../components/Header";
 
 const Retweets = () => {
   const { tweetId } = useParams() as { tweetId: string };
@@ -22,12 +23,10 @@ const Retweets = () => {
   }, [tweetId, currentUser]);
 
   return (
-    <div className="w-full border-x border-neutral-300">
-      <header className="p-2 border-b border-neutral-300">
-        <h1 className="pl-4 text-lg">Retweets</h1>
-      </header>
+    <>
+      <Header title="Retweets" backLink />
       <Users />
-    </div>
+    </>
   );
 };
 

@@ -32,7 +32,7 @@ const SearchResults = ({ query }: { query: string }) => {
 
   return (
     <>
-      <nav className="px-2 py-3">
+      <nav className="px-2 py-3 border-b border-neutral">
         <ul className="flex gap-4">
           <li>
             <Link className="block px-6 py-1" to="users">
