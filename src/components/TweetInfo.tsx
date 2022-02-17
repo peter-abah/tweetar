@@ -1,24 +1,38 @@
 import { Link } from "react-router-dom";
 import { Tweet } from "../api/tweets";
 
-const TweetInfo = ({ type, user }: Tweet) => {
-  if (!user) return null;
+const TweetInfo = ({ type, user, tweet }: Tweet) => {
+  const className =
+    "text-xs ml-4 text-neutral-700 whitespace-nowrap text-ellipsis";
 
-  return type === "like" ? (
-    <Link
-      to={`/profile/${user.username}`}
-      className="text-xs ml-4 text-neutral-700 whitespace-nowrap text-ellipsis"
-    >
-      {user.name} Liked
-    </Link>
-  ) : (
-    <Link
-      to={`/profile/${user.username}`}
-      className="text-xs ml-4 text-neutral-700 whitespace-nowrap text-ellipsis"
-    >
-      {user.name} Retweeted
-    </Link>
-  );
+  if (tweet.parent) {
+    const username = tweet.parent.tweet.user.username;
+    return (
+      <Link className={className} to={`/tweet/${tweet.parent.id}`}>
+        Replying to @{username}
+      </Link>
+    );
+  }
+
+  if (!user) return null;
+  
+  if (type === "like") {
+    return (
+      <Link to={`/profile/${user.username}`} className={className}>
+        {user.name} Liked
+      </Link>
+    );
+  }
+  
+  if (type === "retweet") {
+    return (
+      <Link to={`/profile/${user.username}`} className={className}>
+        @{user.name} Retweeted
+      </Link>
+    );
+  }
+  
+  return null;
 };
 
 export default TweetInfo;
