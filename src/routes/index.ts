@@ -5,3 +5,5 @@ export { default as SignIn } from "./SignIn";
 export { default as Profile } from './Profile';
 export { default as NewTweet } from './NewTweet';
 export { default as Tweet } from './Tweet';
+export { default as Likes } from './Likes';
+export { default as Retweets } from './Retweets';

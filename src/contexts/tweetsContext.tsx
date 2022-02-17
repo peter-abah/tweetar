@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Tweet } from "../api/tweets";
 import {
-  Tweet,
   likeTweet,
   retweetTweet,
   deleteTweetLike,
   deleteTweetRetweet,
-} from "../api/tweets";
+} from "../api/tweetActions";
 import { User } from "../api/users";
 import { AuthContextInterface, useAuth } from "./authContext";
 
@@ -43,7 +43,9 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
     const index = findTweetIndex(updatedTweet);
     if (index < 0) return;
 
-    const filteredTweets = tweets.filter((e) => e.data_id !== updatedTweet.data_id);
+    const filteredTweets = tweets.filter(
+      (e) => e.data_id !== updatedTweet.data_id
+    );
     filteredTweets.splice(index, 0, updatedTweet);
     setTweets(filteredTweets);
   };
@@ -115,7 +117,7 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
 
     let filteredTweet = tweets.filter((tweet) => tweet.data_id === tweet_id)[0];
     filteredTweet = tweet?.data_id === tweet_id ? tweet : filteredTweet;
-  
+
     if (filteredTweet.tweet.liked_by_user) {
       deleteLike(user, filteredTweet);
     } else {
@@ -128,7 +130,7 @@ export const TweetsProvider = ({ children }: ProviderProps) => {
 
     let filteredTweet = tweets.filter((tweet) => tweet.data_id === tweet_id)[0];
     filteredTweet = tweet?.data_id === tweet_id ? tweet : filteredTweet;
-  
+
     if (filteredTweet.tweet.retweeted_by_user) {
       deleteRetweet(user, filteredTweet);
     } else {
@@ -156,7 +158,7 @@ export const useTweets = () => {
   const values = useContext(TweetsContext);
 
   useEffect(() => {
-    values?.setTweets([])
+    values?.setTweets([]);
   }, []); // empty tweets first time it is called
 
   return values;
