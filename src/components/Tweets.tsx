@@ -6,7 +6,7 @@ const Tweets = () => {
     useTweets() as TweetsContextInterface;
 
   return (
-    <div>
+    <div className="border-x border-neutral-300">
       {tweets.map((tweet) => (
         <Tweet
           key={`${tweet.id}${tweet.type}`}

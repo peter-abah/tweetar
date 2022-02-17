@@ -2,9 +2,11 @@ import classnames from "classnames";
 import { linkSync } from "fs";
 import { Link } from "react-router-dom";
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
+import { useSettings } from "../contexts/settingsContext";
 
-const SideBar = ({ isOpen }: { isOpen: boolean }) => {
+const SideBar = () => {
   const { user } = useAuth() as AuthContextInterface;
+  const { isNavOpen } = useSettings();
 
   const profileLink = user ? `/profile/${user.username}` : ''
   let links = [
@@ -18,7 +20,7 @@ const SideBar = ({ isOpen }: { isOpen: boolean }) => {
 
   const navClassName = classnames(
     "hidden md:block md:sticky top-10 h-fit col-span-1 h-screen",
-    { "!block fixed left-0 w-4/5 z-20 bg-white": isOpen }
+    { "!block fixed left-0 w-4/5 z-20 bg-white": isNavOpen }
   );
   return (
     <nav className={navClassName}>

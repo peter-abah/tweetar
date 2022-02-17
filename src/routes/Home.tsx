@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { getFeed } from "../api/tweets";
-import Tweets from "../components/Tweets";
+
 import { useAuth, AuthContextInterface } from "../contexts/authContext";
 import { useTweets, TweetsContextInterface } from "../contexts/tweetsContext";
+
+import Tweets from "../components/Tweets";
+import Header from "../components/Header";
 
 const Home = () => {
   const { user } = useAuth() as AuthContextInterface;
@@ -14,7 +17,8 @@ const Home = () => {
   }, [user]);
 
   return (
-    <main className="w-full col-span-1 mx-auto max-w-[31.25rem] border-x border-neutral-300">
+    <main className="w-full col-span-1 mx-auto max-w-[38rem]">
+      <Header title="Home" />
       <Tweets/>
     </main>
   );
