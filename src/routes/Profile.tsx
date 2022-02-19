@@ -38,7 +38,8 @@ const Profile = () => {
   const { follow, unfollow } = useFollowUser(userQueryKey);
   const { toggleLike } = useLikeTweet(tweetsQueryKey);
   const { toggleRetweet } = useRetweetTweet(tweetsQueryKey);
-
+  
+  // const { data: user } = userValues;
   return (
     <>
       <Header title={userValues.data?.name} backLink />

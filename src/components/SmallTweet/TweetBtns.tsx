@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { Link } from 'react-router-dom'
 import { Tweet } from "../../api/tweets";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,10 +23,10 @@ const TweetBtns = (props: Props) => {
 
   return (
     <div className="flex gap-12 pt-3 max-w-xs">
-      <button>
+      <Link to={`tweet/${props.tweet.id}`}>
         <FontAwesomeIcon className="mr-2" icon={faComment} />
         {replies_count}
-      </button>
+      </Link>
       <button onClick={() => props.toggleRetweet(props.tweet.data_id)}>
         <FontAwesomeIcon
           className={classnames("mr-2", {

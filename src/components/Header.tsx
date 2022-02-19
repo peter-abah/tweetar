@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
-  faTimes,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSettings } from "../contexts/settingsContext";

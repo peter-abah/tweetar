@@ -21,9 +21,7 @@ const ReplyForm = ({ onSubmit }: Props) => {
         body: "",
       }}
       validationSchema={Yup.object({
-        body: Yup.string()
-          .required("Tweet cannot be empty")
-          .max(250, "Maximum of 250 characters"),
+        body: Yup.string().max(250, "Maximum of 250 characters"),
       })}
       onSubmit={onSubmit}
     >
@@ -37,6 +35,7 @@ const ReplyForm = ({ onSubmit }: Props) => {
           <Field
             name="body"
             as="textarea"
+            autoFocus
             className="h-16 resize-none mb-2 bg-inherit border-b focus-visible:outline-none tracking-wide"
             id="tweet-body"
             placeholder="Tweet your reply"

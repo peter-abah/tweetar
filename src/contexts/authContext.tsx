@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useLocalStorage } from "usehooks-ts";
 import { loginUser, signUpUser, signUpParams, loginParams } from "../api/auth";
 import { User } from "../api/users";
 
@@ -16,19 +17,10 @@ interface ProviderProps {
 }
 
 export const AuthProvider = ({ children }: ProviderProps) => {
-  const [currentUser, setUser] = useState<User | null>(null);
+  const [currentUser, setUser] = useLocalStorage<User | null>("user", null);
 
   useEffect(() => {
-    const userJson = window.localStorage.getItem("user");
-
-    if (userJson) {
-      setUser(JSON.parse(userJson));
-    }
-  }, []);
-
-  useEffect(() => {
-    const userJson = JSON.stringify(currentUser);
-    window.localStorage.setItem("user", userJson);
+    if (!currentUser?.authentication_token) setUser(null);
   }, [currentUser]);
 
   const login = async (userParams: loginParams) => {
@@ -51,7 +43,6 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
   const logOut = () => {
     setUser(null);
-    window.localStorage.removeItem("user");
   };
 
   const providerValue = {
