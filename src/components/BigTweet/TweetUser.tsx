@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Tweet } from "../../api/tweets";
 
+import fallbackImg from '../../assets/defaultAvatar.png';
+
 const TweetUser = ({ tweet }: { tweet: Tweet }) => {
   const { user } = tweet.tweet;
   return (
@@ -11,7 +13,7 @@ const TweetUser = ({ tweet }: { tweet: Tweet }) => {
       >
         <img
           className="w-12 h-12 rounded-full"
-          src={user.profile_image_url}
+          src={user.profile_image_url || fallbackImg}
           alt={user.name}
         />
       </Link>

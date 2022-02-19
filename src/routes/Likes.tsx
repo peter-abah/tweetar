@@ -6,7 +6,7 @@ import { useFollowUser } from "../hooks";
 import { UsersResponse } from "../api/users";
 import { getTweetLikes } from "../api/tweetActions";
 
-import { concatInfiniteQueryData, transformData } from "../helpers";
+import { transformData } from "../helpers";
 
 import Users from "../components/Users";
 import Header from "../components/Header";

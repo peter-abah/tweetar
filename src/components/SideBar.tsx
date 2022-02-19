@@ -44,7 +44,7 @@ const SideBar = () => {
     : links.filter(({ name }) => name !== "Tweet" && name !== "Profile");
 
   const navClassName = classnames(
-    "hidden top-0 bottom-0 h-screen fixed w-full max-w-xs col-span-1 md:block md:max-w-none md:sticky overflow-scroll",
+    "hidden top-0 bottom-0 h-screen fixed w-full max-w-xs col-span-1 md:block md:max-w-none md:sticky overflow-auto",
     { "!block fixed z-30 bg-bg": isNavOpen }
   );
   return (

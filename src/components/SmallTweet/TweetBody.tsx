@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Tweet } from "../../api/tweets";
 import TweetBtns from "./TweetBtns";
 
+import fallbackImg from '../../assets/defaultAvatar.png';
+
 interface Props {
   tweet: Tweet;
   toggleLike: (tweet_id: string) => void;
@@ -23,7 +25,7 @@ const TweetBody = (props: Props) => {
       >
         <img
           className="w-12 h-12 rounded-full"
-          src={user.profile_image_url}
+          src={user.profile_image_url || fallbackImg}
           alt={user.name}
         />
       </Link>

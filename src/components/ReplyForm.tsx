@@ -2,6 +2,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
 
+import fallbackImg from "../assets/defaultAvatar.png";
+
 interface Props {
   onSubmit: (
     values: { body: string },
@@ -28,7 +30,7 @@ const ReplyForm = ({ onSubmit }: Props) => {
       <Form className="flex gap-2 md:gap-3 py-2 border-b border-neutral">
         <img
           className="w-12 h-12 rounded-full"
-          src={currentUser.profile_image_url}
+          src={currentUser.profile_image_url || fallbackImg}
           alt={currentUser.name}
         />
         <div className="w-full flex flex-col px-4 border-neutral">

@@ -3,6 +3,8 @@ import { User as Iuser } from "../api/users";
 
 import ProfileBtn from "./ProfileBtn";
 
+import fallbackImg from '../assets/defaultAvatar.png';
+
 interface Props {
   user: Iuser;
   onFollow: (user: Iuser) => void;
@@ -18,7 +20,7 @@ const User = (props: Props) => {
       >
         <img
           className="w-12 h-12 rounded-full"
-          src={user.profile_image_url}
+          src={user.profile_image_url || fallbackImg}
           alt={user.name}
         />
       </Link>
