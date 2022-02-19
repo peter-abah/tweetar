@@ -1,14 +1,13 @@
 import classnames from "classnames";
-import { linkSync } from "fs";
 import { Link } from "react-router-dom";
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
 import { useSettings } from "../contexts/settingsContext";
 
 const SideBar = () => {
-  const { user } = useAuth() as AuthContextInterface;
+  const { currentUser } = useAuth() as AuthContextInterface;
   const { isNavOpen } = useSettings();
 
-  const profileLink = user ? `/profile/${user.username}` : "";
+  const profileLink = currentUser ? `/profile/${currentUser.username}` : "";
   let links = [
     { name: "Home", link: "/home", id: 1 },
     { name: "Search", link: "/search", id: 2 },
@@ -16,7 +15,7 @@ const SideBar = () => {
     { name: "Tweet", link: "/new", id: 4 },
   ];
 
-  links = user
+  links = currentUser
     ? links
     : links.filter(({ name }) => name !== "Tweet" && name !== "Profile");
 

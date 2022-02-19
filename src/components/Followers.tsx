@@ -1,18 +1,27 @@
-import { useEffect } from "react";
+import { useInfiniteQuery } from "react-query";
 import { User, getFollowers } from "../api/users";
-import { AuthContextInterface, useAuth } from "../contexts/authContext";
-import { UsersContextInterface, useUsers } from "../contexts/usersContext";
+import { useAuth } from "../contexts/authContext";
+import { useFollowUser } from "../hooks";
+import { concatInfiniteQueryData } from "../helpers";
 import Users from "./Users";
 
 const Followers = ({ user }: { user: User }) => {
-  const { user: currentUser } = useAuth() as AuthContextInterface;
-  const { setUsers } = useUsers() as UsersContextInterface;
+  const { currentUser } = useAuth();
+  const queryKey = ["users", "followers", user, currentUser];
 
-  useEffect(() => {
-    getFollowers(currentUser, user).then((users) => setUsers(users.list));
-  }, [user, currentUser]);
+  const userValues = useInfiniteQuery(
+    queryKey,
+    ({ pageParam = 1 }) => getFollowers(currentUser, user, { page: pageParam }),
+    { getNextPageParam: (lastPage) => lastPage.current_page + 1 }
+  );
 
-  return <Users />;
+  const { follow, unfollow } = useFollowUser(queryKey);
+
+  if (!userValues.data)
+    return <p>Remove this component, loading or error state</p>;
+
+  const users = concatInfiniteQueryData(userValues.data);
+  return <Users users={users} onFollow={follow} onUnfollow={unfollow} />;
 };
 
 export default Followers;

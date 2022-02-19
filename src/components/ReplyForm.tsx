@@ -2,18 +2,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
 
-import { Tweet, createTweet } from "../api/tweets";
-import { useNavigate } from "react-router-dom";
-
 interface Props {
-  tweetToReply: Tweet;
   onSubmit: (
     values: { body: string },
     functions: { resetForm: () => void }
   ) => void;
 }
-const ReplyForm = ({ tweetToReply, onSubmit }: Props) => {
-  const { user: currentUser } = useAuth() as AuthContextInterface;
+const ReplyForm = ({ onSubmit }: Props) => {
+  const { currentUser } = useAuth() as AuthContextInterface;
 
   if (!currentUser) return null;
 

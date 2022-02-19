@@ -1,7 +1,5 @@
-import { baseUrl, defaultHeaders } from ".";
-import { authHeader } from "./auth";
+import { Client, headers, Params } from ".";
 import { User } from "./users";
-import stringifyParams, { Params } from "./stringifyParams";
 
 export interface Tweet {
   tweet: {
@@ -23,129 +21,62 @@ export interface Tweet {
   data_id: string;
 }
 
-export interface TweetAction {
-  id: string;
-  tweet: Tweet;
-  user: User;
-  type: "like" | "retweet";
+export interface TweetsResponse {
+  list: Tweet[];
+  current_page: number;
+  total_size: number;
+  total_pages: number;
+  size: number;
 }
-
-export type FeedResult = Tweet | TweetAction;
 
 export const getFeed = async (user: User | null, params: Params = {}) => {
-  const stringParams = stringifyParams(params);
-  const url = `${baseUrl}/feed/${stringParams}`;
-  const headers = user ? authHeader(user) : defaultHeaders;
-
-  const res = await fetch(url, {
-    mode: "cors",
-    headers,
+  const { data } = await Client.get("/feed", {
+    headers: headers(user),
+    params,
   });
-
-  const data = await res.json();
   if (data.error) throw data;
 
-  return data;
-};
-
-export const getTweetsForUser = async (
-  currentUser: User | null,
-  user: User,
-  params: Params = {}
-) => {
-  params = { ...params, user_id: user.id };
-  const stringParams = stringifyParams(params);
-  const url = `${baseUrl}/tweets/${stringParams}`;
-  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
-
-  const res = await fetch(url, {
-    mode: "cors",
-    headers,
-  });
-
-  const data = await res.json();
-  if (data.error) throw data;
-
-  return data;
-};
-
-interface createTweetBody {
-  tweet: {
-    body: string,
-    parent_id?: string
-  }
-}
-export const createTweet = async (currentUser: User, body: createTweetBody) => {
-  const requestBody = JSON.stringify(body)
-  const url = `${baseUrl}/tweets/`;
-
-  const headers = authHeader(currentUser);
-  const res = await fetch(url, {
-    method: "POST",
-    mode: "cors",
-    body: requestBody,
-    headers
-  });
-
-  const data = await res.json();
-  if (data.error) throw data;
-
-  return data;
-};
-
-export const getTweet = async (
-  currentUser: User | null,
-  tweetId: string
-) => {
-  const url = `${baseUrl}/tweets/${tweetId}`;
-  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
-
-  const res = await fetch(url, {
-    mode: "cors",
-    headers,
-  });
-
-  const data = await res.json();
-  if (data.error) throw data;
-
-  return data;
+  return data as TweetsResponse;
 };
 
 export const getTweets = async (
   currentUser: User | null,
   params: Params = {}
 ) => {
-  const stringParams = stringifyParams(params);
-  const url = `${baseUrl}/tweets/${stringParams}`;
-  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
-
-  const res = await fetch(url, {
-    mode: "cors",
-    headers,
+  const { data } = await Client.get("/tweets", {
+    headers: headers(currentUser),
+    params,
   });
-
-  const data = await res.json();
   if (data.error) throw data;
 
-  return data;
+  return data as TweetsResponse;
 };
 
-export const getTweetReplies = async (
+interface tweetBody {
+  tweet: {
+    body: string;
+    parent_id?: string;
+  };
+}
+export const createTweet = async (currentUser: User, body: tweetBody) => {
+  const { data } = await Client.post("/tweets", body, {
+    headers: headers(currentUser),
+  });
+  if (data.error) throw data;
+
+  return data as Tweet;
+};
+
+export const getTweet = async (
   currentUser: User | null,
   tweetId: string,
   params: Params = {}
 ) => {
-  const stringParams = stringifyParams(params);
-  const url = `${baseUrl}/tweets/${tweetId}/replies/${stringParams}`;
-  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
-
-  const res = await fetch(url, {
-    mode: "cors",
-    headers,
+  const { data } = await Client.get(`/tweets/${tweetId}`, {
+    headers: headers(currentUser),
+    params,
   });
-
-  const data = await res.json();
   if (data.error) throw data;
 
-  return data;
+  return data as Tweet;
 };

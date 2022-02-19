@@ -25,7 +25,7 @@ function App() {
             <Route path="/search/*" element={<Search />} />
             <Route path="/profile/:username/*" element={<Profile />} />
             <Route path="/new" element={<NewTweet />} />
-            <Route path="/tweet/:tweetId" element={<Tweet />} />
+            <Route path="/tweet/:tweet_id" element={<Tweet />} />{" "}
             <Route path="/likes/:tweetId" element={<Likes />} />
             <Route path="/retweets/:tweetId" element={<Retweets />} />
           </Route>

@@ -1,56 +1,92 @@
-import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import {
+  useQuery,
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "react-query";
+import { useParams } from "react-router-dom";
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
-import { TweetsContextInterface, useTweets } from "../contexts/tweetsContext";
 
-import { createTweet, getTweet, getTweetReplies } from "../api/tweets";
+import {
+  createTweet,
+  getTweet,
+  getTweets,
+  Tweet as Itweet,
+} from "../api/tweets";
 
 import Tweets from "../components/Tweets";
 import BigTweet from "../components/BigTweet";
 import ReplyForm from "../components/ReplyForm";
 import Header from "../components/Header";
+import { useLikeTweet, useRetweetTweet } from "../hooks";
 
 const Tweet = () => {
-  const { tweet, tweets, setTweet, setTweets, toggleRetweet, toggleLike } =
-    useTweets() as TweetsContextInterface;
-  const { user: currentUser } = useAuth() as AuthContextInterface;
-  const { tweetId } = useParams() as { tweetId: string };
+  const { currentUser } = useAuth() as AuthContextInterface;
+  const { tweet_id } = useParams() as { tweet_id: string };
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    getTweet(currentUser, tweetId).then((tweet) => setTweet(tweet));
-  }, [currentUser, tweetId]);
+  const tweetQueryKey = ["tweet", tweet_id, currentUser];
+  const repliesQueryKey = ["replies", tweet_id, currentUser];
 
-  useEffect(() => {
-    getTweetReplies(currentUser, tweetId).then((tweets) =>
-      setTweets(tweets.list)
-    );
-  }, [currentUser, tweetId]);
+  const tweetValues = useQuery(tweetQueryKey, () =>
+    getTweet(currentUser, tweet_id)
+  );
+  const repliesValues = useInfiniteQuery(
+    repliesQueryKey,
+    ({ pageParam = 1 }) =>
+      getTweets(currentUser, { parent_id: tweet_id, page: pageParam }),
+    { getNextPageParam: (lastPage) => lastPage.current_page + 1 }
+  );
 
-  if (!tweet) return <p>Not Found</p>;
+  const { mutate: newTweet } = useMutation(
+    (body: string) => {
+      if (!currentUser) throw new Error("No Authentication");
+      return createTweet(currentUser, { tweet: { body, parent_id: tweet_id } });
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries(repliesQueryKey),
+    }
+  );
 
-  const onSubmit = (
+  const onSubmit = async (
     { body }: { body: string },
     { resetForm }: { resetForm: () => void }
   ) => {
     if (!currentUser) return;
 
-    createTweet(currentUser, {
-      tweet: { body, parent_id: tweet.id },
-    })
-      .then((tweet) => setTweets([tweet, ...tweets]))
-      .then(() => resetForm());
+    await newTweet(body);
+    resetForm();
   };
 
+  const { toggleLike: toggleTweetLike } = useLikeTweet(tweetQueryKey);
+  const { toggleRetweet: toggleTweetRetweet } = useRetweetTweet(tweetQueryKey);
+
+  const { toggleLike: toggleRepliesLike } = useLikeTweet(repliesQueryKey);
+  const { toggleRetweet: toggleRepliesRetweet } =
+    useRetweetTweet(repliesQueryKey);
+
+  if (!repliesValues.data || !tweetValues.data)
+    return <p>Remove This component</p>;
+
+  const { data: tweet } = tweetValues;
+  const tweets = repliesValues.data.pages.reduce(
+    (total: Itweet[], group) => total.concat(group.list),
+    []
+  );
   return (
     <>
       <Header title="Tweet" backLink />
       <BigTweet
         tweet={tweet}
-        toggleLike={toggleLike}
-        toggleRetweet={toggleRetweet}
+        toggleLike={toggleTweetLike}
+        toggleRetweet={toggleTweetRetweet}
       />
-      <ReplyForm tweetToReply={tweet} onSubmit={onSubmit} />
-      <Tweets />
+      <ReplyForm onSubmit={onSubmit} />
+      <Tweets
+        tweets={tweets}
+        toggleLike={toggleRepliesLike}
+        toggleRetweet={toggleRepliesRetweet}
+      />
     </>
   );
 };

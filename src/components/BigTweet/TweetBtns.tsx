@@ -7,8 +7,8 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
 interface Props {
   tweet: Tweet;
-  toggleLike: (tweet_id: string) => void;
-  toggleRetweet: (tweet_id: string) => void;
+  toggleLike: (tweet: Tweet) => void;
+  toggleRetweet: (tweet: Tweet) => void;
 }
 
 const TweetBtns = (props: Props) => {
@@ -16,7 +16,7 @@ const TweetBtns = (props: Props) => {
 
   return (
     <div className="flex justify-around pt-3">
-      <button onClick={() => props.toggleRetweet(props.tweet.data_id)}>
+      <button onClick={() => props.toggleRetweet(props.tweet)}>
         <FontAwesomeIcon
           className={classnames("mr-2 text-xl text-neutral-600", {
             "!text-blue": retweeted_by_user,
@@ -25,7 +25,7 @@ const TweetBtns = (props: Props) => {
         />
       </button>
 
-      <button onClick={() => props.toggleLike(props.tweet.data_id)}>
+      <button onClick={() => props.toggleLike(props.tweet)}>
         <FontAwesomeIcon
           className={classnames("mr-2 text-xl text-neutral-600", {
             "!text-red": liked_by_user,

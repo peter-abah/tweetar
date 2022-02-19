@@ -4,8 +4,8 @@ import TweetBody from "./TweetBody";
 
 interface Props {
   tweet: Itweet;
-  toggleLike: (tweet_id: string) => void;
-  toggleRetweet: (tweet_id: string) => void;
+  toggleLike: (tweet: Itweet) => void;
+  toggleRetweet: (tweet: Itweet) => void;
 }
 
 const Tweet = ({ tweet, toggleLike, toggleRetweet }: Props) => {
@@ -14,8 +14,8 @@ const Tweet = ({ tweet, toggleLike, toggleRetweet }: Props) => {
       <TweetInfo {...tweet} />
       <TweetBody
         tweet={tweet}
-        toggleLike={toggleLike}
-        toggleRetweet={toggleRetweet}
+        toggleLike={() => toggleLike(tweet)}
+        toggleRetweet={() => toggleRetweet(tweet)}
       />
     </div>
   );

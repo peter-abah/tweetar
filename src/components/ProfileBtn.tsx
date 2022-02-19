@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { User } from "../api/users";
-import { AuthContextInterface, useAuth } from "../contexts/authContext";
-import { UsersContextInterface, useUsers } from "../contexts/usersContext";
+import { useAuth } from "../contexts/authContext";
 
 interface Props {
   user: User;
+  onFollow: (user: User) => void;
+  onUnfollow: (user: User) => void;
 }
-const ProfileBtn = ({ user }: Props) => {
-  const { user: currentUser } = useAuth() as AuthContextInterface;
-  const { onFollow, onUnfollow } = useUsers() as UsersContextInterface;
+const ProfileBtn = ({ user, onFollow, onUnfollow }: Props) => {
+  const { currentUser } = useAuth();
 
   if (!currentUser) return null;
 

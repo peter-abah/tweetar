@@ -1,17 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import {
-  loginUser,
-  signUpUser,
-  AuthResponse,
-  signUpParams,
-  loginParams,
-} from "../api/auth";
+import { loginUser, signUpUser, signUpParams, loginParams } from "../api/auth";
 import { User } from "../api/users";
 
 export interface AuthContextInterface {
-  user: User | null;
-  login: (userParams: loginParams) => Promise<AuthResponse>;
-  signUp: (userParams: signUpParams) => Promise<AuthResponse>;
+  currentUser: User | null;
+  login: (userParams: loginParams) => Promise<any>;
+  signUp: (userParams: signUpParams) => Promise<any>;
   logOut: () => void;
 }
 
@@ -22,7 +16,7 @@ interface ProviderProps {
 }
 
 export const AuthProvider = ({ children }: ProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [currentUser, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const userJson = window.localStorage.getItem("user");
@@ -33,9 +27,9 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   }, []);
 
   useEffect(() => {
-    const userJson = JSON.stringify(user);
+    const userJson = JSON.stringify(currentUser);
     window.localStorage.setItem("user", userJson);
-  }, [user]);
+  }, [currentUser]);
 
   const login = async (userParams: loginParams) => {
     const data = await loginUser(userParams);
@@ -61,7 +55,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   };
 
   const providerValue = {
-    user,
+    currentUser,
     login,
     signUp,
     logOut,
@@ -74,5 +68,5 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 };
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  return useContext(AuthContext) as AuthContextInterface;
 };

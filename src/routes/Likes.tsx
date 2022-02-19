@@ -1,31 +1,44 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useAuth } from "../contexts/authContext";
+import { useInfiniteQuery } from "react-query";
 
-import { getLikes } from "../api/tweetActions";
+import { useFollowUser } from "../hooks";
+import { UsersResponse } from "../api/users";
+import { getTweetLikes } from "../api/tweetActions";
 
-import { AuthContextInterface, useAuth } from "../contexts/authContext";
-import { UsersContextInterface, useUsers } from "../contexts/usersContext";
+import { concatInfiniteQueryData, transformData } from "../helpers";
 
 import Users from "../components/Users";
 import Header from "../components/Header";
 
 const Likes = () => {
   const { tweetId } = useParams() as { tweetId: string };
+  const { currentUser } = useAuth();
+  const queryKey = ["tweets", "likes", tweetId, currentUser];
 
-  const { user: currentUser } = useAuth() as AuthContextInterface;
-  const { setUsers } = useUsers() as UsersContextInterface;
+  const likesValues = useInfiniteQuery(
+    queryKey,
+    async ({ pageParam = 1 }) => {
+      const likes = await getTweetLikes(currentUser, tweetId, {
+        page: pageParam,
+      });
+      return transformData(likes, ["user"]) as UsersResponse;
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+    }
+  );
 
-  useEffect(() => {
-    getLikes(currentUser, tweetId).then((likes) => {
-      const users = likes.list.map(({ user }: any) => user);
-      setUsers(users);
-    });
-  }, [tweetId, currentUser]);
+  const { follow, unfollow } = useFollowUser(queryKey);
 
+  if (!likesValues.data)
+    return <p>Remove this component, loading or error state</p>;
+
+  const users = concatInfiniteQueryData(likesValues.data);
   return (
     <>
       <Header title="Likes" backLink />
-      <Users />
+      <Users users={users} onFollow={follow} onUnfollow={unfollow} />
     </>
   );
 };

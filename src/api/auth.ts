@@ -1,11 +1,5 @@
-import { User } from './users';
-import { baseUrl, defaultHeaders } from ".";
-
-interface Error {
-  error: string;
-}
-
-export type AuthResponse = User | Error;
+import { User } from "./users";
+import { defaultHeaders, Client } from ".";
 
 export const authHeader = (user: User) => {
   const headers = { Authorization: user.authentication_token };
@@ -17,16 +11,11 @@ export interface loginParams {
   password: string;
 }
 
-export const loginUser = async (userParams: loginParams) => {
-  const requestBody = JSON.stringify(userParams);
-  const response = await fetch(`${baseUrl}/login`, {
-    method: "POST",
-    mode: "cors",
-    body: requestBody,
-    headers: defaultHeaders,
-  });
+export const loginUser = async (body: loginParams) => {
+  const { data } = await Client.post("/login", body);
+  if (data.error) throw data;
 
-  return (await response.json()) as AuthResponse;
+  return data as User;
 };
 
 export interface signUpParams {
@@ -40,14 +29,9 @@ export interface signUpParams {
   };
 }
 
-export const signUpUser = async (userParams: signUpParams) => {
-  const requestBody = JSON.stringify(userParams);
-  const response = await fetch(`${baseUrl}/register`, {
-    method: "POST",
-    mode: "cors",
-    body: requestBody,
-    headers: defaultHeaders,
-  });
+export const signUpUser = async (body: signUpParams) => {
+  const { data } = await Client.post("/register", body);
+  if (data.error) throw data;
 
-  return (await response.json()) as AuthResponse;
+  return data as User;
 };

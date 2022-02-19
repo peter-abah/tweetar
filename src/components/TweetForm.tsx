@@ -1,6 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { AuthContextInterface, useAuth } from "../contexts/authContext";
+import { useAuth } from "../contexts/authContext";
 
 interface Props {
   body: string;
@@ -8,9 +8,9 @@ interface Props {
 }
 
 const TweetForm = ({ body, onSubmit }: Props) => {
-  const { user } = useAuth() as AuthContextInterface;
+  const { currentUser } = useAuth();
 
-  if (!user) return null;
+  if (!currentUser) return null;
 
   return (
     <Formik
@@ -27,8 +27,8 @@ const TweetForm = ({ body, onSubmit }: Props) => {
       <Form className="flex gap-2 md:gap-6 p-2 md:p-4">
         <img
           className="w-12 h-12 rounded-full"
-          src={user.profile_image_url}
-          alt={user.name}
+          src={currentUser.profile_image_url}
+          alt={currentUser.name}
         />
         <div className="w-full flex flex-col px-4 border-neutral">
           <Field

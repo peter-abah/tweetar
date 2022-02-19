@@ -1,19 +1,18 @@
 import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import { AuthProvider } from "./authContext";
-import { TweetsProvider } from "./tweetsContext";
-import { UsersProvider } from "./usersContext";
 import { SettingsProvider } from "./settingsContext";
+
+const queryClient = new QueryClient();
 
 const AllProviders = ({ children }: { children: React.ReactNode }) => {
   return (
-    <AuthProvider>
-      <UsersProvider>
-        <TweetsProvider>
-          <SettingsProvider>{children}</SettingsProvider>
-        </TweetsProvider>
-      </UsersProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <SettingsProvider>{children}</SettingsProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 

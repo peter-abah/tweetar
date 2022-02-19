@@ -16,12 +16,7 @@ interface Iprops {
 const Header = (props: Iprops) => {
   const { isNavOpen, toggleNav } = useSettings();
   const { title } = props;
-
   const navigate = useNavigate();
-
-  const goBack = () => {
-    navigate(-1);
-  };
 
   return (
     <header className="flex items-center sticky top-0 z-20 h-16 px-4 py-2 bg-bg/60 backdrop-blur-md">

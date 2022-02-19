@@ -28,7 +28,10 @@ const SearchForm = ({ onSubmit }: Props) => {
             placeholder="Search"
           />
           <button className="absolute top-0 bottom-0 right-4" type="submit">
-            <FontAwesomeIcon className="!text-xl text-neutral" icon={faSearch} />
+            <FontAwesomeIcon
+              className="!text-xl text-neutral"
+              icon={faSearch}
+            />
           </button>
         </div>
       </Form>

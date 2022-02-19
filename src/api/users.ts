@@ -1,6 +1,4 @@
-import { baseUrl, defaultHeaders } from ".";
-import { authHeader } from "./auth";
-import stringifyParams, { Params } from "./stringifyParams";
+import { Client, Params, headers } from ".";
 
 export interface User {
   id: string;
@@ -17,101 +15,87 @@ export interface User {
   following_user: boolean;
 }
 
-export const getUser = async (idOrUsername: string, user: User | null, params: Params = {}) => {
-  const stringParams = stringifyParams(params);
-  const url = `${baseUrl}/users/${idOrUsername}/${stringParams}`;
-  const headers = user ? authHeader(user) : defaultHeaders;
+export interface UsersResponse {
+  list: User[];
+  current_page: number;
+  total_size: number;
+  total_pages: number;
+  size: number;
+}
 
-  const res = await fetch(url, {
-    mode: "cors",
-    headers,
+export const getUser = async (
+  currentUser: User | null,
+  idOrUsername: string,
+  params: Params = {}
+) => {
+  const { data } = await Client.get(`/users/${idOrUsername}`, {
+    params,
+    headers: headers(currentUser),
   });
-
-  const data = await res.json();
   if (data.error) throw data;
 
-  return data
+  return data as User;
 };
 
 export const getUsers = async (
   currentUser: User | null,
   params: Params = {}
 ) => {
-  const stringParams = stringifyParams(params);
-  const url = `${baseUrl}/users/${stringParams}`;
-  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
-
-  const res = await fetch(url, {
-    mode: "cors",
-    headers,
+  const { data } = await Client.get("/users", {
+    params,
+    headers: headers(currentUser),
   });
-
-  const data = await res.json();
   if (data.error) throw data;
 
-  return data;
+  return data as UsersResponse;
+};
+
+export const getFollowers = async (
+  currentUser: User | null,
+  user: User,
+  params: Params = {}
+) => {
+  const { data } = await Client.get(`/users/${user.id}/followers`, {
+    params,
+    headers: headers(currentUser),
+  });
+  if (data.error) throw data;
+
+  return data as UsersResponse;
+};
+
+export const getFollowing = async (
+  currentUser: User | null,
+  user: User,
+  params: Params = {}
+) => {
+  const { data } = await Client.get(`/users/${user.id}/followed_users`, {
+    params,
+    headers: headers(currentUser),
+  });
+  if (data.error) throw data;
+
+  return data as UsersResponse;
 };
 
 export const followUser = async (currentUser: User, user: User) => {
-  const url = `${baseUrl}/users/${user.id}/follow`
-  const headers = authHeader(currentUser);
-
-  const res = await fetch(url, {
-    mode: "cors",
-    method: 'POST',
-    headers,
-  });
-
-  const data = await res.json();
+  const { data } = await Client.post(
+    `/users/${user.id}/follow`,
+    {},
+    {
+      headers: headers(currentUser),
+    }
+  );
   if (data.error) throw data;
 
-  return data
-}
+  return data as User;
+};
 
 export const unFollowUser = async (currentUser: User, user: User) => {
-  const url = `${baseUrl}/users/${user.id}/follow`
-  const headers = authHeader(currentUser);
-
-  const res = await fetch(url, {
-    mode: "cors",
-    method: 'DELETE',
-    headers,
+  const { data } = await Client.delete(`/users/${user.id}/follow`, {
+    headers: headers(currentUser),
   });
-
-  const data = await res.json();
   if (data.error) throw data;
 
-  return data
-};
-
-export const getFollowers = async (currentUser: User | null, user: User, params: Params = {}) => {
-  const stringParams = stringifyParams(params);
-  const url = `${baseUrl}/users/${user.id}/followers/${stringParams}`;
-  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
-
-  const res = await fetch(url, {
-    mode: "cors",
-    headers,
-  });
-
-  const data = await res.json();
-  if (data.error) throw data;
-
-  return data
-};
-
-export const getFollowing = async (currentUser: User | null, user: User, params: Params = {}) => {
-  const stringParams = stringifyParams(params);
-  const url = `${baseUrl}/users/${user.id}/followed_users/${stringParams}`;
-  const headers = currentUser ? authHeader(currentUser) : defaultHeaders;
-
-  const res = await fetch(url, {
-    mode: "cors",
-    headers,
-  });
-
-  const data = await res.json();
-  if (data.error) throw data;
-
-  return data
+  return data as User;
 };

@@ -3,8 +3,13 @@ import { User as Iuser } from "../api/users";
 
 import ProfileBtn from "./ProfileBtn";
 
-const User = (props: { user: Iuser }) => {
-  const { user } = props;
+interface Props {
+  user: Iuser;
+  onFollow: (user: Iuser) => void;
+  onUnfollow: (user: Iuser) => void;
+}
+const User = (props: Props) => {
+  const { user, onFollow, onUnfollow } = props;
   return (
     <div className="flex items-start p-4">
       <Link
@@ -23,7 +28,7 @@ const User = (props: { user: Iuser }) => {
         <span className="">@{user.username}</span>
       </Link>
 
-      <ProfileBtn user={user} />
+      <ProfileBtn user={user} onFollow={onFollow} onUnfollow={onUnfollow} />
     </div>
   );
 };

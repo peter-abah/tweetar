@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 interface Props {
   user: User;
+  onFollow: (user: User) => void;
+  onUnfollow: (user: User) => void;
 }
 const ProfileInfo = (props: Props) => {
   const {
@@ -36,6 +38,8 @@ const ProfileInfo = (props: Props) => {
 
       <ProfileBtn
         user={props.user}
+        onFollow={props.onFollow}
+        onUnfollow={props.onUnfollow}
       />
 
       <div className="mt-4 p-4">
@@ -43,11 +47,11 @@ const ProfileInfo = (props: Props) => {
         <small className="text-neutral-700">@{username}</small>
         <p className="">Joined {joinedDate}</p>
         <div className="flex gap-4">
-          <Link to='users/following'>
+          <Link to="users/following">
             <span className="font-bold">{followed_users_count}</span>
             <span> Following</span>
           </Link>
-          <Link to='users/followers'>
+          <Link to="users/followers">
             <span className="font-bold">{followers_count}</span>
             <span> Followers</span>
           </Link>

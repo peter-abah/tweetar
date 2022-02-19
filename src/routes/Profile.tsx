@@ -1,46 +1,76 @@
-import { useEffect } from "react";
+import { useQuery, useInfiniteQuery } from "react-query";
 import { Routes, Route, Outlet, useParams } from "react-router-dom";
 
 import { getUser } from "../api/users";
-import { getTweetsForUser } from "../api/tweets";
+import { getTweets } from "../api/tweets";
 
-import { AuthContextInterface, useAuth } from "../contexts/authContext";
-import { TweetsContextInterface, useTweets } from "../contexts/tweetsContext";
+import { useAuth } from "../contexts/authContext";
 
 import ProfileInfo from "../components/ProfileInfo";
 import Tweets from "../components/Tweets";
 import ProfileUsers from "../components/ProfileUsers";
-import { UsersContextInterface, useUsers } from "../contexts/usersContext";
 import Header from "../components/Header";
+import { useFollowUser, useLikeTweet, useRetweetTweet } from "../hooks";
+import { concatInfiniteQueryData } from "../helpers";
 
 const Profile = () => {
-  const { user: currentUser } = useAuth() as AuthContextInterface;
-  const { user, setUser } = useUsers() as UsersContextInterface;
-
+  const { currentUser } = useAuth();
   const { username } = useParams() as { username: string };
-  const { setTweets } = useTweets() as TweetsContextInterface;
 
-  useEffect(() => {
-    getUser(username, currentUser).then((user) => setUser(user));
-  }, [username, currentUser]);
+  const userQueryKey = ["users", "profile", username, currentUser];
+  const tweetsQueryKey = ["tweets", "user", username, currentUser];
 
-  useEffect(() => {
-    if (!user) return;
+  const userValues = useQuery(userQueryKey, () =>
+    getUser(currentUser, username)
+  );
+  const user = userValues.data;
 
-    getTweetsForUser(currentUser, user).then((data) => setTweets(data.list));
-  }, [user]);
+  const tweetsValues = useInfiniteQuery(
+    tweetsQueryKey,
+    ({ pageParam = 1 }) =>
+      getTweets(currentUser, { user_id: user?.id, page: pageParam }),
+    {
+      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      enabled: !!user,
+    }
+  );
 
-  if (!user) return <p>Loading ...</p>;
+  const { follow, unfollow } = useFollowUser(userQueryKey);
+  const { toggleLike } = useLikeTweet(tweetsQueryKey);
+  const { toggleRetweet } = useRetweetTweet(tweetsQueryKey);
+  if (!user) return <p>Remove this component , loader or error</p>;
 
+  if (!userValues.data || !tweetsValues.data)
+    return <p>Replace the component , error or loading state</p>;
+
+  const tweets = concatInfiniteQueryData(tweetsValues.data);
   return (
     <>
       <Header title={user.name} backLink />
-      <ProfileInfo user={user} />
+      <ProfileInfo user={user} onFollow={follow} onUnfollow={unfollow} />
       <Outlet />
 
       <Routes>
-        <Route index element={<Tweets />} />
-        <Route path="tweets" element={<Tweets />} />
+        <Route
+          index
+          element={
+            <Tweets
+              tweets={tweets}
+              toggleLike={toggleLike}
+              toggleRetweet={toggleRetweet}
+            />
+          }
+        />
+        <Route
+          path="tweets"
+          element={
+            <Tweets
+              tweets={tweets}
+              toggleLike={toggleLike}
+              toggleRetweet={toggleRetweet}
+            />
+          }
+        />
         <Route path="users/*" element={<ProfileUsers user={user} />} />
       </Routes>
     </>

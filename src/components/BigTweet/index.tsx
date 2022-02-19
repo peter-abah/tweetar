@@ -7,8 +7,8 @@ import TweetBtns from "./TweetBtns";
 
 interface Props {
   tweet: Itweet;
-  toggleLike: (tweet_id: string) => void;
-  toggleRetweet: (tweet_id: string) => void;
+  toggleLike: (tweet: Itweet) => void;
+  toggleRetweet: (tweet: Itweet) => void;
 }
 
 const Tweet = ({ tweet, toggleLike, toggleRetweet }: Props) => {

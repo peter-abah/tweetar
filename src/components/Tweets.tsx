@@ -1,10 +1,15 @@
 import Tweet from "./SmallTweet";
-import { TweetsContextInterface, useTweets } from "../contexts/tweetsContext";
+import { Tweet as Itweet } from "../api/tweets";
 
-const Tweets = () => {
-  const { tweets, toggleLike, toggleRetweet } =
-    useTweets() as TweetsContextInterface;
-
+const Tweets = ({
+  tweets,
+  toggleLike,
+  toggleRetweet,
+}: {
+  tweets: Itweet[];
+  toggleLike: (tweet: Itweet) => void;
+  toggleRetweet: (tweet: Itweet) => void;
+}) => {
   return (
     <div className="h-full">
       {tweets.map((tweet) => (
