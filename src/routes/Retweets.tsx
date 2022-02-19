@@ -6,7 +6,7 @@ import { useFollowUser } from "../hooks";
 import { UsersResponse } from "../api/users";
 import { getTweetRetweets } from "../api/tweetActions";
 
-import { concatInfiniteQueryData, transformData } from "../helpers";
+import { transformData } from "../helpers";
 
 import Users from "../components/Users";
 import Header from "../components/Header";
@@ -16,7 +16,7 @@ const Retweets = () => {
   const { currentUser } = useAuth();
   const queryKey = ["tweets", "retweets", tweetId, currentUser];
 
-  const retweetsValues = useInfiniteQuery(
+  const usersValues = useInfiniteQuery(
     queryKey,
     async ({ pageParam = 1 }) => {
       const retweets = await getTweetRetweets(currentUser, tweetId, {
@@ -31,14 +31,14 @@ const Retweets = () => {
 
   const { follow, unfollow } = useFollowUser(queryKey);
 
-  if (!retweetsValues.data)
-    return <p>Remove this component, loading or error state</p>;
-
-  const users = concatInfiniteQueryData(retweetsValues.data);
   return (
     <>
       <Header title="Retweets" backLink />
-      <Users users={users} onFollow={follow} onUnfollow={unfollow} />
+      <Users
+        usersValues={usersValues}
+        onFollow={follow}
+        onUnfollow={unfollow}
+      />
     </>
   );
 };

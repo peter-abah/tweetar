@@ -38,16 +38,15 @@ const Profile = () => {
   const { follow, unfollow } = useFollowUser(userQueryKey);
   const { toggleLike } = useLikeTweet(tweetsQueryKey);
   const { toggleRetweet } = useRetweetTweet(tweetsQueryKey);
-  if (!user) return <p>Remove this component , loader or error</p>;
 
-  if (!userValues.data || !tweetsValues.data)
-    return <p>Replace the component , error or loading state</p>;
-
-  const tweets = concatInfiniteQueryData(tweetsValues.data);
   return (
     <>
-      <Header title={user.name} backLink />
-      <ProfileInfo user={user} onFollow={follow} onUnfollow={unfollow} />
+      <Header title={userValues.data?.name} backLink />
+      <ProfileInfo
+        userValues={userValues}
+        onFollow={follow}
+        onUnfollow={unfollow}
+      />
       <Outlet />
 
       <Routes>
@@ -55,7 +54,7 @@ const Profile = () => {
           index
           element={
             <Tweets
-              tweets={tweets}
+              tweetsValues={tweetsValues}
               toggleLike={toggleLike}
               toggleRetweet={toggleRetweet}
             />
@@ -65,13 +64,18 @@ const Profile = () => {
           path="tweets"
           element={
             <Tweets
-              tweets={tweets}
+              tweetsValues={tweetsValues}
               toggleLike={toggleLike}
               toggleRetweet={toggleRetweet}
             />
           }
         />
-        <Route path="users/*" element={<ProfileUsers user={user} />} />
+        {userValues.data && (
+          <Route
+            path="users/*"
+            element={<ProfileUsers user={userValues.data} />}
+          />
+        )}
       </Routes>
     </>
   );

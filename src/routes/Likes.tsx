@@ -16,7 +16,7 @@ const Likes = () => {
   const { currentUser } = useAuth();
   const queryKey = ["tweets", "likes", tweetId, currentUser];
 
-  const likesValues = useInfiniteQuery(
+  const usersValues = useInfiniteQuery(
     queryKey,
     async ({ pageParam = 1 }) => {
       const likes = await getTweetLikes(currentUser, tweetId, {
@@ -31,14 +31,14 @@ const Likes = () => {
 
   const { follow, unfollow } = useFollowUser(queryKey);
 
-  if (!likesValues.data)
-    return <p>Remove this component, loading or error state</p>;
-
-  const users = concatInfiniteQueryData(likesValues.data);
   return (
     <>
       <Header title="Likes" backLink />
-      <Users users={users} onFollow={follow} onUnfollow={unfollow} />
+      <Users
+        usersValues={usersValues}
+        onFollow={follow}
+        onUnfollow={unfollow}
+      />
     </>
   );
 };

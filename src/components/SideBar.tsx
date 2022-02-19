@@ -21,7 +21,7 @@ const SideBar = () => {
 
   const navClassName = classnames(
     "hidden md:block sticky top-0 bottom-0 col-span-1 h-screen",
-    { "!block fixed left-0 w-4/5 z-20 bg-bg": isNavOpen }
+    { "!block fixed left-0 w-4/5 z-30 bg-bg": isNavOpen }
   );
   return (
     <nav className={navClassName}>

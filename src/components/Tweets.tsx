@@ -1,17 +1,28 @@
-import Tweet from "./SmallTweet";
-import { Tweet as Itweet } from "../api/tweets";
+import { Tweet as Itweet, TweetsResponse } from "../api/tweets";
+import { UseInfiniteQueryResult } from "react-query";
 
-const Tweets = ({
-  tweets,
-  toggleLike,
-  toggleRetweet,
-}: {
-  tweets: Itweet[];
+import Tweet from "./SmallTweet";
+import Loader from "./Loader";
+import ErrorPage from "./Error";
+import { concatInfiniteQueryData } from "../helpers";
+
+interface Props {
   toggleLike: (tweet: Itweet) => void;
   toggleRetweet: (tweet: Itweet) => void;
-}) => {
+  tweetsValues: UseInfiniteQueryResult<TweetsResponse>;
+}
+const Tweets = (props: Props) => {
+  const { toggleLike, toggleRetweet, tweetsValues } = props;
+  const { data, isLoading, isError } = tweetsValues;
+
+  if (isLoading) return <Loader />;
+  if (isError) return <ErrorPage />;
+  if (!data) return <Loader />;
+
+  const tweets = concatInfiniteQueryData(data);
+
   return (
-    <div className="h-full">
+    <div className="grow">
       {tweets.map((tweet) => (
         <Tweet
           key={`${tweet.id}${tweet.type}`}

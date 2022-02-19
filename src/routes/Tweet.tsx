@@ -65,25 +65,17 @@ const Tweet = () => {
   const { toggleRetweet: toggleRepliesRetweet } =
     useRetweetTweet(repliesQueryKey);
 
-  if (!repliesValues.data || !tweetValues.data)
-    return <p>Remove This component</p>;
-
-  const { data: tweet } = tweetValues;
-  const tweets = repliesValues.data.pages.reduce(
-    (total: Itweet[], group) => total.concat(group.list),
-    []
-  );
   return (
     <>
       <Header title="Tweet" backLink />
       <BigTweet
-        tweet={tweet}
+        tweetValues={tweetValues}
         toggleLike={toggleTweetLike}
         toggleRetweet={toggleTweetRetweet}
       />
       <ReplyForm onSubmit={onSubmit} />
       <Tweets
-        tweets={tweets}
+        tweetsValues={repliesValues}
         toggleLike={toggleRepliesLike}
         toggleRetweet={toggleRepliesRetweet}
       />

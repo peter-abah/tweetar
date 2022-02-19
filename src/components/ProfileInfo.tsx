@@ -2,22 +2,31 @@ import { User } from "../api/users";
 import { format, parseISO } from "date-fns";
 import ProfileBtn from "./ProfileBtn";
 import { Link } from "react-router-dom";
+import { UseQueryResult } from "react-query";
+import Loader from "./Loader";
+import ErrorPage from "./Error";
 
 interface Props {
-  user: User;
+  userValues: UseQueryResult<User, unknown>;
   onFollow: (user: User) => void;
   onUnfollow: (user: User) => void;
 }
-const ProfileInfo = (props: Props) => {
+const ProfileInfo = ({ userValues, onFollow, onUnfollow }: Props) => {
+  const { data, isLoading, isError } = userValues;
+
+  if (isLoading) return <Loader />;
+  if (isError) return <ErrorPage />;
+  if (!data) return <Loader />;
+
   const {
     username,
     name,
     followers_count,
     followed_users_count,
-    profile_image_url,
-    cover_image_url,
     created_at,
-  } = props.user;
+    cover_image_url,
+    profile_image_url,
+  } = data;
 
   const joinedDate = format(parseISO(created_at), "MMMM yyyy");
   return (
@@ -36,13 +45,9 @@ const ProfileInfo = (props: Props) => {
         />
       </div>
 
-      <ProfileBtn
-        user={props.user}
-        onFollow={props.onFollow}
-        onUnfollow={props.onUnfollow}
-      />
+      <ProfileBtn user={data} onFollow={onFollow} onUnfollow={onUnfollow} />
 
-      <div className="mt-4 p-4">
+      <div className="mt-16 p-4">
         <h2 className="text-xl font-bold">{name}</h2>
         <small className="text-neutral-700">@{username}</small>
         <p className="">Joined {joinedDate}</p>

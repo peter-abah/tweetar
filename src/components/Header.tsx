@@ -9,7 +9,7 @@ import {
 import { useSettings } from "../contexts/settingsContext";
 
 interface Iprops {
-  title: string;
+  title?: string;
   backLink?: boolean;
 }
 

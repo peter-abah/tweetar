@@ -17,7 +17,7 @@ const SearchResults = ({ query }: { query: string }) => {
   const tweetsQueryKey = ["tweets", "search", query, currentUser];
   const usersQueryKey = ["users", "search", query, currentUser];
 
-  const tweetValues = useInfiniteQuery(
+  const tweetsValues = useInfiniteQuery(
     tweetsQueryKey,
     ({ pageParam = 1 }) =>
       getTweets(currentUser, { q: query, page: pageParam }),
@@ -40,14 +40,8 @@ const SearchResults = ({ query }: { query: string }) => {
   const { toggleRetweet } = useRetweetTweet(usersQueryKey);
 
   const { follow, unfollow } = useFollowUser(usersQueryKey);
-  
+
   if (!query) return null;
-
-  if (!usersValues.data || !tweetValues.data)
-    return <p>Remove this add a loading component</p>;
-
-  const tweets = concatInfiniteQueryData<Tweet>(tweetValues.data);
-  const users = concatInfiniteQueryData<User>(usersValues.data);
 
   return (
     <>
@@ -73,7 +67,7 @@ const SearchResults = ({ query }: { query: string }) => {
           index
           element={
             <Tweets
-              tweets={tweets}
+              tweetsValues={tweetsValues}
               toggleLike={toggleLike}
               toggleRetweet={toggleRetweet}
             />
@@ -83,7 +77,7 @@ const SearchResults = ({ query }: { query: string }) => {
           path="tweets"
           element={
             <Tweets
-              tweets={tweets}
+              tweetsValues={tweetsValues}
               toggleLike={toggleLike}
               toggleRetweet={toggleRetweet}
             />
@@ -92,7 +86,11 @@ const SearchResults = ({ query }: { query: string }) => {
         <Route
           path="users"
           element={
-            <Users users={users} onFollow={follow} onUnfollow={unfollow} />
+            <Users
+              usersValues={usersValues}
+              onFollow={follow}
+              onUnfollow={unfollow}
+            />
           }
         />
       </Routes>
