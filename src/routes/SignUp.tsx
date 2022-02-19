@@ -2,7 +2,7 @@ import { useAuth } from "../contexts/authContext";
 
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import FormField from "../components/FormField";
 
 const SignUp = () => {
@@ -111,6 +111,13 @@ const SignUp = () => {
           >
             Sign Up
           </button>
+
+          <div className="mt-8 max-w-xs mx-auto">
+            <p className="mb-2">Already have an account?</p>
+            <Link className="text-lg underline" to="/login">
+              Log in
+            </Link>
+          </div>
         </Form>
       </div>
     </Formik>

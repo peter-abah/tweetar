@@ -32,12 +32,9 @@ const Header = (props: Iprops) => {
         className="md:hidden w-fit ml-auto"
         onClick={toggleNav}
         type="button"
+        
       >
-        {isNavOpen ? (
-          <FontAwesomeIcon icon={faTimes} />
-        ) : (
-          <FontAwesomeIcon icon={faBars} />
-        )}
+        {!isNavOpen && <FontAwesomeIcon icon={faBars} />}
       </button>
     </header>
   );

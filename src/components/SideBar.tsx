@@ -1,11 +1,15 @@
 import classnames from "classnames";
-import { Link } from "react-router-dom";
-import { AuthContextInterface, useAuth } from "../contexts/authContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/authContext";
 import { useSettings } from "../contexts/settingsContext";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+
 const SideBar = () => {
-  const { currentUser } = useAuth() as AuthContextInterface;
-  const { isNavOpen } = useSettings();
+  const { currentUser, logOut } = useAuth();
+  const navigate = useNavigate();
+  const { isNavOpen, toggleNav } = useSettings();
 
   const profileLink = currentUser ? `/profile/${currentUser.username}` : "";
   let links = [
@@ -15,17 +19,43 @@ const SideBar = () => {
     { name: "Tweet", link: "/new", id: 4 },
   ];
 
+  const logOutUser = () => {
+    logOut();
+    navigate("/login");
+  };
+
+  const logOutBtn = (
+    <button
+      className="block p-3 rounded-full w-fit text-xl"
+      onClick={logOutUser}
+    >
+      Logout
+    </button>
+  );
+  const login = (
+    <Link className="block p-3 rounded-full w-fit text-xl" to="/login">
+      Login
+    </Link>
+  );
+
+  // Filter links to profile and new tweet is user is not logged in
   links = currentUser
     ? links
     : links.filter(({ name }) => name !== "Tweet" && name !== "Profile");
 
   const navClassName = classnames(
-    "hidden md:block sticky top-0 bottom-0 col-span-1 h-screen",
-    { "!block fixed left-0 w-4/5 z-30 bg-bg": isNavOpen }
+    "hidden top-0 bottom-0 h-screen fixed w-full max-w-xs col-span-1 md:block md:max-w-none md:sticky overflow-scroll",
+    { "!block fixed z-30 bg-bg": isNavOpen }
   );
   return (
     <nav className={navClassName}>
-      <ul className="flex flex-col gap-6 py-4 px-8">
+      <div className="h-16 py-2 px-4 w-full flex items-center md:hidden">
+        <button onClick={toggleNav} className="ml-auto">
+          <FontAwesomeIcon className="text-lg" icon={faTimes} />
+        </button>
+      </div>
+
+      <ul className="flex flex-col gap-6 px-8">
         {links.map(({ link, name, id }) => (
           <li key={id}>
             <Link className="block p-3 rounded-full w-fit text-xl" to={link}>
@@ -33,6 +63,8 @@ const SideBar = () => {
             </Link>
           </li>
         ))}
+
+        <li>{currentUser ? logOutBtn : login}</li>
       </ul>
     </nav>
   );
