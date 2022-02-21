@@ -7,12 +7,9 @@ import {
 import { useParams } from "react-router-dom";
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
 
-import {
-  createTweet,
-  getTweet,
-  getTweets,
-  Tweet as Itweet,
-} from "../api/tweets";
+import { createTweet, getTweet, getTweets } from "../api/tweets";
+
+import { ImageListType } from "react-images-uploading";
 
 import Tweets from "../components/Tweets";
 import BigTweet from "../components/BigTweet";
@@ -49,16 +46,17 @@ const Tweet = () => {
   );
 
   const onSubmit = async (
-    { body, files }: { body: string; files: FileList },
+    { body, images }: { body: string; images: ImageListType },
     { resetForm }: { resetForm: () => void }
   ) => {
-    if (!currentUser || files.length > 4) return;
+    if (!currentUser || images.length > 4) return;
 
     const formData = new FormData();
     formData.append("tweet[body]", body);
+    formData.append("tweet[parent_id", tweet_id);
 
-    for (let file of files) {
-      formData.append('tweet[images]', file);
+    for (let img of images) {
+      if (img.file) formData.append("tweet[images][]", img.file);
     }
 
     await newTweet(formData);

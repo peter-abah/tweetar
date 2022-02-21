@@ -31,7 +31,7 @@ const TweetBody = (props: Props) => {
         />
       </Link>
 
-      <div className="w-4/5">
+      <div className="grow">
         <Link className="block" to={`/tweet/${id}`}>
           <div className="w-full overflow-x-hidden whitespace-nowrap overflow-y-hidden flex gap-2 items-center">
             <span className="pr-2 font-bold">{user.name}</span>

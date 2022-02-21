@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../contexts/authContext";
 
-import ImageUploading, { ImageListType } from "react-images-uploading";
+import { ImageListType } from "react-images-uploading";
 
 import fallbackImg from "../assets/defaultAvatar.png";
 import ImageUploader from "./ImageUploader";

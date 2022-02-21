@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { Tweet } from "../../api/tweets";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,25 +23,36 @@ const TweetBtns = (props: Props) => {
 
   return (
     <div className="flex gap-12 pt-3 max-w-xs">
-      <Link to={`tweet/${props.tweet.id}`}>
-        <FontAwesomeIcon className="mr-2" icon={faComment} />
-        {replies_count}
+      <Link
+        className="block mr-2 rounded-full p-1 transition-transform hover:bg-emerald-700/10 hover:text-emerald-700 hover:scale-105 active:scale-95"
+        to={`/tweet/${props.tweet.id}`}
+      >
+        <FontAwesomeIcon icon={faComment} />
+        {replies_count > 0 && replies_count}
       </Link>
-      <button onClick={() => props.toggleRetweet(props.tweet.data_id)}>
-        <FontAwesomeIcon
-          className={classnames("mr-2", {
+      <button
+        className={classnames(
+          "mr-2 rounded-full p-1 transition-transform hover:bg-blue/10 hover:text-blue hover:scale-105 active:scale-95",
+          {
             "text-blue": retweeted_by_user,
-          })}
-          icon={faRetweet}
-        />
-        {retweets_count}
+          }
+        )}
+        onClick={() => props.toggleRetweet(props.tweet.data_id)}
+      >
+        <FontAwesomeIcon icon={faRetweet} />
+        {retweets_count > 0 && <span className="pl-1">{retweets_count}</span>}
       </button>
-      <button onClick={() => props.toggleLike(props.tweet.data_id)}>
-        <FontAwesomeIcon
-          className={classnames("mr-2", { "text-red": liked_by_user })}
-          icon={faHeart}
-        />
-        {likes_count}
+      <button
+        className={classnames(
+          "mr-2 rounded-full p-1 transition-transform hover:bg-red/10 hover:text-red hover:scale-105 active:scale-95",
+          {
+            "text-red": liked_by_user,
+          }
+        )}
+        onClick={() => props.toggleLike(props.tweet.data_id)}
+      >
+        <FontAwesomeIcon icon={faHeart} />
+        {likes_count > 0 && <span className="pl-1">{likes_count}</span>}
       </button>
     </div>
   );

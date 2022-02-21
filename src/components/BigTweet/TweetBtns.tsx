@@ -16,22 +16,28 @@ const TweetBtns = (props: Props) => {
 
   return (
     <div className="flex justify-around pt-3">
-      <button onClick={() => props.toggleRetweet(props.tweet)}>
-        <FontAwesomeIcon
-          className={classnames("mr-2 text-xl text-neutral-600", {
-            "!text-blue": retweeted_by_user,
-          })}
-          icon={faRetweet}
-        />
+      <button
+        className={classnames(
+          "mr-2 text-xl rounded-full p-1 transition-transform hover:bg-blue/10 hover:text-blue hover:scale-105 active:scale-95",
+          {
+            "text-blue": retweeted_by_user,
+          }
+        )}
+        onClick={() => props.toggleRetweet(props.tweet)}
+      >
+        <FontAwesomeIcon icon={faRetweet} />
       </button>
 
-      <button onClick={() => props.toggleLike(props.tweet)}>
-        <FontAwesomeIcon
-          className={classnames("mr-2 text-xl text-neutral-600", {
-            "!text-red": liked_by_user,
-          })}
-          icon={faHeart}
-        />
+      <button
+        className={classnames(
+          "mr-2 text-xl rounded-full p-1 transition-transform hover:bg-red/10 hover:text-red hover:scale-105 active:scale-95",
+          {
+            "text-red": liked_by_user,
+          }
+        )}
+        onClick={() => props.toggleLike(props.tweet)}
+      >
+        <FontAwesomeIcon icon={faHeart} />
       </button>
     </div>
   );
