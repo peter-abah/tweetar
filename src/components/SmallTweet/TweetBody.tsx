@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Tweet } from "../../api/tweets";
 import TweetBtns from "./TweetBtns";
 
-import fallbackImg from '../../assets/defaultAvatar.png';
+import fallbackImg from "../../assets/defaultAvatar.png";
 import TweetImages from "../TweetImages";
 
 interface Props {
@@ -31,14 +31,15 @@ const TweetBody = (props: Props) => {
         />
       </Link>
 
-      <div className="grow">
+      <div className="grow overflow-hidden">
+        <div className="max-w-full whitespace-nowrap text-ellipsis flex gap-2 items-center">
+          <Link className="flex gap-2" to={`/profile/${user.username}`}>
+            <span className="font-bold hover:underline">{user.name}</span>
+            <span className="shrink">@{user.username}</span>
+          </Link>
+          <span className="text-sm">{tweetTime} ago</span>
+        </div>
         <Link className="block" to={`/tweet/${id}`}>
-          <div className="w-full overflow-x-hidden whitespace-nowrap overflow-y-hidden flex gap-2 items-center">
-            <span className="pr-2 font-bold">{user.name}</span>
-            <span className="">@{user.username}</span>
-            <span className="text-sm">{tweetTime} ago</span>
-          </div>
-
           <p>{body}</p>
         </Link>
         <TweetImages images={image_urls} />

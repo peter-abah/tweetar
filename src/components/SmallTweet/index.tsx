@@ -10,7 +10,7 @@ interface Props {
 
 const Tweet = ({ tweet, toggleLike, toggleRetweet }: Props) => {
   return (
-    <div className="smx-auto px-4 py-2 w-full border-b border-neutral">
+    <div className="px-4 py-2 w-full border-b border-neutral">
       <TweetInfo {...tweet} />
       <TweetBody
         tweet={tweet}

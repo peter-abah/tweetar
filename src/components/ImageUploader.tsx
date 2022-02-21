@@ -15,7 +15,7 @@ const ImageUploader = ({ images, onChange }: Props) => {
       multiple
       value={images}
       onChange={(images) => onChange(images)}
-      maxNumber={30}
+      maxNumber={4}
       dataURLKey="data_url"
     >
       {({ onImageUpload, onImageRemoveAll, onImageRemove }) => (

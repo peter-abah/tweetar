@@ -22,15 +22,17 @@ const TweetBtns = (props: Props) => {
   } = props.tweet.tweet;
 
   return (
-    <div className="flex gap-12 pt-3 max-w-xs">
+    <div className="flex gap-12 md:gap-20 pt-3 max-w-xs">
       <Link
+        title="Reply"
         className="block mr-2 rounded-full p-1 transition-transform hover:bg-emerald-700/10 hover:text-emerald-700 hover:scale-105 active:scale-95"
         to={`/tweet/${props.tweet.id}`}
       >
         <FontAwesomeIcon icon={faComment} />
-        {replies_count > 0 && replies_count}
+        {replies_count > 0 && <span className="pl-1">{replies_count}</span>}
       </Link>
       <button
+        title="Retweet"
         className={classnames(
           "mr-2 rounded-full p-1 transition-transform hover:bg-blue/10 hover:text-blue hover:scale-105 active:scale-95",
           {
@@ -43,6 +45,7 @@ const TweetBtns = (props: Props) => {
         {retweets_count > 0 && <span className="pl-1">{retweets_count}</span>}
       </button>
       <button
+        title="Like"
         className={classnames(
           "mr-2 rounded-full p-1 transition-transform hover:bg-red/10 hover:text-red hover:scale-105 active:scale-95",
           {
