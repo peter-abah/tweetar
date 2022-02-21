@@ -7,7 +7,7 @@ const TweetBody = ({ tweet }: { tweet: Tweet }) => {
   const tweetDate = format(parseISO(updated_at), "h:mm b LLL d, yyyy");
   return (
     <div>
-      <p className="text-2xl">{body}</p>
+      <p className="text-2xl whitespace-pre-wrap">{body}</p>
       <TweetImages images={image_urls} />
       <p className="py-4">{tweetDate}</p>
     </div>

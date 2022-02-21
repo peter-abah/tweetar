@@ -40,7 +40,7 @@ const TweetBody = (props: Props) => {
           <span className="text-sm">{tweetTime} ago</span>
         </div>
         <Link className="block" to={`/tweet/${id}`}>
-          <p>{body}</p>
+          <p className="whitespace-pre-wrap">{body}</p>
         </Link>
         <TweetImages images={image_urls} />
         <TweetBtns
