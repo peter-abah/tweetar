@@ -21,7 +21,7 @@ module.exports = {
         neutral: withOpacityValue("--color-neutral"),
       },
       screens: {
-        xs: "324px",
+        xs: "500px",
         ...defaultTheme.screens,
       },
     },

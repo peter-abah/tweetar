@@ -6,7 +6,7 @@ import fallbackImg from "../assets/defaultAvatar.png";
 
 interface Props {
   onSubmit: (
-    values: { body: string },
+    values: { body: string, files: FileList },
     functions: { resetForm: () => void }
   ) => void;
 }
@@ -19,6 +19,7 @@ const ReplyForm = ({ onSubmit }: Props) => {
     <Formik
       initialValues={{
         body: "",
+        files: [] as unknown as FileList,
       }}
       validationSchema={Yup.object({
         body: Yup.string().max(250, "Maximum of 250 characters"),

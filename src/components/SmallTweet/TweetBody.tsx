@@ -4,6 +4,7 @@ import { Tweet } from "../../api/tweets";
 import TweetBtns from "./TweetBtns";
 
 import fallbackImg from '../../assets/defaultAvatar.png';
+import TweetImages from "../TweetImages";
 
 interface Props {
   tweet: Tweet;
@@ -13,7 +14,7 @@ interface Props {
 
 const TweetBody = (props: Props) => {
   const { tweet, toggleLike, toggleRetweet } = props;
-  const { id, body, user, updated_at } = tweet.tweet;
+  const { id, body, user, updated_at, image_urls } = tweet.tweet;
 
   const tweetTime = formatDistanceToNow(parseISO(updated_at));
 
@@ -40,6 +41,7 @@ const TweetBody = (props: Props) => {
 
           <p>{body}</p>
         </Link>
+        <TweetImages images={image_urls} />
         <TweetBtns
           tweet={tweet}
           toggleLike={toggleLike}

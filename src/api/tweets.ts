@@ -6,6 +6,7 @@ export interface Tweet {
     id: string;
     body: string;
     user: User;
+    image_urls: string[];
     replies_count: number;
     retweets_count: number;
     likes_count: number;
@@ -58,12 +59,11 @@ interface tweetBody {
     parent_id?: string;
   };
 }
-export const createTweet = async (currentUser: User, body: tweetBody) => {
-  const { data } = await Client.post("/tweets", body, {
-    headers: headers(currentUser),
+export const createTweet = async (currentUser: User, formData: FormData) => {
+  const { data } = await Client.post("/tweets", formData, {
+    headers: { ...headers(currentUser), "Content-Type": "multipart/form-data" },
   });
   if (data.error) throw data;
-
   return data as Tweet;
 };
 

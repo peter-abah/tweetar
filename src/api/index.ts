@@ -3,6 +3,7 @@ import { User } from "./users";
 import { authHeader } from "./auth";
 
 export const baseURL = "https://tweetar-api.herokuapp.com/api/v1";
+// export const baseURL = "http://localhost:3001/api/v1" //dev
 
 export interface ListResponse<T> {
   list: T[];

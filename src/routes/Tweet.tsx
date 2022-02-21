@@ -39,9 +39,9 @@ const Tweet = () => {
   );
 
   const { mutate: newTweet } = useMutation(
-    (body: string) => {
+    (formData: FormData) => {
       if (!currentUser) throw new Error("No Authentication");
-      return createTweet(currentUser, { tweet: { body, parent_id: tweet_id } });
+      return createTweet(currentUser, formData);
     },
     {
       onSuccess: () => queryClient.invalidateQueries(repliesQueryKey),
@@ -49,12 +49,19 @@ const Tweet = () => {
   );
 
   const onSubmit = async (
-    { body }: { body: string },
+    { body, files }: { body: string; files: FileList },
     { resetForm }: { resetForm: () => void }
   ) => {
-    if (!currentUser) return;
+    if (!currentUser || files.length > 4) return;
 
-    await newTweet(body);
+    const formData = new FormData();
+    formData.append("tweet[body]", body);
+
+    for (let file of files) {
+      formData.append('tweet[images]', file);
+    }
+
+    await newTweet(formData);
     resetForm();
   };
 
