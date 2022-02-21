@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useLocalStorage } from "usehooks-ts";
+import { useBoolean, useLocalStorage } from "usehooks-ts";
 import { loginUser, signUpUser, signUpParams, loginParams } from "../api/auth";
 import { User } from "../api/users";
 
 export interface AuthContextInterface {
   currentUser: User | null;
+  isLoading: boolean;
   login: (userParams: loginParams) => Promise<any>;
   signUp: (userParams: signUpParams) => Promise<any>;
   logOut: () => void;
@@ -18,14 +19,18 @@ interface ProviderProps {
 
 export const AuthProvider = ({ children }: ProviderProps) => {
   const [currentUser, setUser] = useLocalStorage<User | null>("user", null);
+  const { value: isLoading, setValue: setIsLoading } = useBoolean(false);
 
   useEffect(() => {
     if (!currentUser?.authentication_token) setUser(null);
   }, [currentUser]);
 
   const login = async (userParams: loginParams) => {
+    setIsLoading(true);
+
     const data = await loginUser(userParams);
 
+    setIsLoading(false);
     if ("error" in data) throw data;
 
     setUser(data);
@@ -33,8 +38,11 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   };
 
   const signUp = async (userParams: signUpParams) => {
+    setIsLoading(true);
+
     const data = await signUpUser(userParams);
 
+    setIsLoading(false);
     if ("error" in data) throw data;
 
     setUser(data);
@@ -47,6 +55,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
   const providerValue = {
     currentUser,
+    isLoading,
     login,
     signUp,
     logOut,

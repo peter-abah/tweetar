@@ -9,6 +9,21 @@ const SignUp = () => {
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
+  const handleSubmit = async (values: any, setError: any) => {
+    try {
+      await signUp({ user: values });
+      navigate("/");
+    } catch (e: any) {
+      const { data } = e.response;
+
+      for (let field of Object.keys(data.error)) {
+        if (field in values) {
+          setError(field, data.error[field]);
+        }
+      }
+    }
+  };
+
   return (
     <Formik
       initialValues={{
@@ -40,13 +55,9 @@ const SignUp = () => {
           "Passwords must match"
         ),
       })}
-      onSubmit={(values) => {
-        console.log("loading");
-        signUp({ user: values })
-          .then(() => navigate("/"))
-          .catch((e) => console.log(e))
-          .finally(() => console.log("done"));
-      }}
+      onSubmit={(values, { setFieldError }) =>
+        handleSubmit(values, setFieldError)
+      }
     >
       <div className="theme-light max-w-screen-sm w-11/12 my-12 mx-auto py-8 px-4 rounded-2xl">
         <h1 className="text-3xl pb-4 font-bold">Tweeter</h1>
