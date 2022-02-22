@@ -54,6 +54,7 @@ const useFollowUser = (queryKey: QueryKey) => {
 
       onSettled: () => {
         queryClient.invalidateQueries(queryKey);
+        queryClient.invalidateQueries("tweets");
       },
     }
   );
@@ -98,6 +99,7 @@ const useFollowUser = (queryKey: QueryKey) => {
 
       onSettled: () => {
         queryClient.invalidateQueries(queryKey);
+        queryClient.invalidateQueries("tweets");
       },
     }
   );
