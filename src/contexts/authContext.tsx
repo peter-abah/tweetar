@@ -27,26 +27,28 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
   const login = async (userParams: loginParams) => {
     setIsLoading(true);
+    try {
+      const data = await loginUser(userParams);
+      if ("error" in data) throw data;
 
-    const data = await loginUser(userParams);
-
-    setIsLoading(false);
-    if ("error" in data) throw data;
-
-    setUser(data);
-    return data;
+      setUser(data);
+      return data;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const signUp = async (userParams: signUpParams) => {
     setIsLoading(true);
+    try {
+      const data = await signUpUser(userParams);
+      if ("error" in data) throw data;
 
-    const data = await signUpUser(userParams);
-
-    setIsLoading(false);
-    if ("error" in data) throw data;
-
-    setUser(data);
-    return data;
+      setUser(data);
+      return data;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const logOut = () => {
