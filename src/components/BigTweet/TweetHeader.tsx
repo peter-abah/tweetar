@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
 import { Tweet } from "../../api/tweets";
 
-import fallbackImg from '../../assets/defaultAvatar.png';
+import fallbackImg from "../../assets/defaultAvatar.png";
+import TweetOptions from "../TweetOptions";
 
-const TweetUser = ({ tweet }: { tweet: Tweet }) => {
+interface Props {
+  tweet: Tweet;
+  deleteTweet: () => void;
+}
+const TweetUser = ({ tweet, deleteTweet }: Props) => {
   const { user } = tweet.tweet;
   return (
-    <div className="flex pb-4">
+    <div className="flex pb-4 items-start">
       <Link
         className="w-fit h-fit mr-2 shrink-0"
         to={`/profile/${user.username}`}
@@ -22,6 +27,8 @@ const TweetUser = ({ tweet }: { tweet: Tweet }) => {
         <span className="font-bold">{user.name}</span>
         <span className="">@{user.username}</span>
       </Link>
+
+      <TweetOptions values={[["Delete Tweet", deleteTweet]]} />
     </div>
   );
 };

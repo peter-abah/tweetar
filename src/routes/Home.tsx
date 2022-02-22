@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "react-query";
-import { getFeed, Tweet } from "../api/tweets";
-import { useLikeTweet, useRetweetTweet } from "../hooks";
+import { getFeed } from "../api/tweets";
+import { useLikeTweet, useRetweetTweet, useDeleteTweet } from "../hooks";
 
 import { useAuth } from "../contexts/authContext";
 
@@ -17,14 +17,9 @@ const Home = () => {
     { getNextPageParam: (lastPage) => lastPage.current_page + 1 }
   );
 
-  const { data, isLoading, isError, error, fetchNextPage } = tweetsValues;
   const { toggleLike } = useLikeTweet(queryKey);
   const { toggleRetweet } = useRetweetTweet(queryKey);
-
-  // const tweets = data.pages.reduce(
-  //   (total: Tweet[], group) => total.concat(group.list),
-  //   []
-  // );
+  const deleteTweet = useDeleteTweet(queryKey)
 
   return (
     <>
@@ -33,6 +28,7 @@ const Home = () => {
         tweetsValues={tweetsValues}
         toggleLike={toggleLike}
         toggleRetweet={toggleRetweet}
+        deleteTweet={deleteTweet}
       />
     </>
   );

@@ -9,10 +9,11 @@ import { concatInfiniteQueryData } from "../helpers";
 interface Props {
   toggleLike: (tweet: Itweet) => void;
   toggleRetweet: (tweet: Itweet) => void;
+  deleteTweet: (tweet: Itweet) => void;
   tweetsValues: UseInfiniteQueryResult<TweetsResponse>;
 }
 const Tweets = (props: Props) => {
-  const { toggleLike, toggleRetweet, tweetsValues } = props;
+  const { toggleLike, toggleRetweet, deleteTweet, tweetsValues } = props;
   const { data, isLoading, isError } = tweetsValues;
 
   if (isLoading) return <Loader />;
@@ -27,6 +28,7 @@ const Tweets = (props: Props) => {
         <Tweet
           key={`${tweet.id}${tweet.type}`}
           tweet={tweet}
+          deleteTweet={deleteTweet}
           toggleLike={toggleLike}
           toggleRetweet={toggleRetweet}
         />

@@ -3,7 +3,7 @@ import { useInfiniteQuery } from "react-query";
 
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
 
-import { useFollowUser, useLikeTweet, useRetweetTweet } from "../hooks";
+import { useDeleteTweet, useFollowUser, useLikeTweet, useRetweetTweet } from "../hooks";
 import { getUsers, User } from "../api/users";
 import { getTweets, Tweet } from "../api/tweets";
 import { concatInfiniteQueryData } from "../helpers";
@@ -37,7 +37,8 @@ const SearchResults = ({ query }: { query: string }) => {
   );
 
   const { toggleLike } = useLikeTweet(tweetsQueryKey);
-  const { toggleRetweet } = useRetweetTweet(usersQueryKey);
+  const { toggleRetweet } = useRetweetTweet(tweetsQueryKey);
+  const deleteTweet = useDeleteTweet(tweetsQueryKey)
 
   const { follow, unfollow } = useFollowUser(usersQueryKey);
 
@@ -70,6 +71,7 @@ const SearchResults = ({ query }: { query: string }) => {
               tweetsValues={tweetsValues}
               toggleLike={toggleLike}
               toggleRetweet={toggleRetweet}
+              deleteTweet={deleteTweet}
             />
           }
         />
@@ -80,6 +82,7 @@ const SearchResults = ({ query }: { query: string }) => {
               tweetsValues={tweetsValues}
               toggleLike={toggleLike}
               toggleRetweet={toggleRetweet}
+              deleteTweet={deleteTweet}
             />
           }
         />

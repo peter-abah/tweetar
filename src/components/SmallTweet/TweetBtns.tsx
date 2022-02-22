@@ -8,8 +8,8 @@ import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 
 interface Props {
   tweet: Tweet;
-  toggleLike: (tweet_id: string) => void;
-  toggleRetweet: (tweet_id: string) => void;
+  toggleLike: () => void;
+  toggleRetweet: () => void;
 }
 
 const TweetBtns = (props: Props) => {
@@ -39,7 +39,7 @@ const TweetBtns = (props: Props) => {
             "text-blue": retweeted_by_user,
           }
         )}
-        onClick={() => props.toggleRetweet(props.tweet.data_id)}
+        onClick={props.toggleRetweet}
       >
         <FontAwesomeIcon icon={faRetweet} />
         {retweets_count > 0 && <span className="pl-1">{retweets_count}</span>}
@@ -52,7 +52,7 @@ const TweetBtns = (props: Props) => {
             "text-red": liked_by_user,
           }
         )}
-        onClick={() => props.toggleLike(props.tweet.data_id)}
+        onClick={props.toggleLike}
       >
         <FontAwesomeIcon icon={faHeart} />
         {likes_count > 0 && <span className="pl-1">{likes_count}</span>}

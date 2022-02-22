@@ -53,12 +53,6 @@ export const getTweets = async (
   return data as TweetsResponse;
 };
 
-interface tweetBody {
-  tweet: {
-    body: string;
-    parent_id?: string;
-  };
-}
 export const createTweet = async (currentUser: User, formData: FormData) => {
   const { data } = await Client.post("/tweets", formData, {
     headers: { ...headers(currentUser), "Content-Type": "multipart/form-data" },
@@ -79,4 +73,9 @@ export const getTweet = async (
   if (data.error) throw data;
 
   return data as Tweet;
+};
+
+export const deleteTweet = async (currentUser: User, tweetId: string) => {
+  await Client.delete(`/tweets/${tweetId}`, { headers: headers(currentUser) });
+  return;
 };

@@ -5,13 +5,17 @@ import { getUser } from "../api/users";
 import { getTweets } from "../api/tweets";
 
 import { useAuth } from "../contexts/authContext";
+import {
+  useFollowUser,
+  useLikeTweet,
+  useRetweetTweet,
+  useDeleteTweet,
+} from "../hooks";
 
 import ProfileInfo from "../components/ProfileInfo";
 import Tweets from "../components/Tweets";
 import ProfileUsers from "../components/ProfileUsers";
 import Header from "../components/Header";
-import { useFollowUser, useLikeTweet, useRetweetTweet } from "../hooks";
-import { concatInfiniteQueryData } from "../helpers";
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -38,7 +42,8 @@ const Profile = () => {
   const { follow, unfollow } = useFollowUser(userQueryKey);
   const { toggleLike } = useLikeTweet(tweetsQueryKey);
   const { toggleRetweet } = useRetweetTweet(tweetsQueryKey);
-  
+  const deleteTweet = useDeleteTweet(tweetsQueryKey);
+
   // const { data: user } = userValues;
   return (
     <>
@@ -58,6 +63,7 @@ const Profile = () => {
               tweetsValues={tweetsValues}
               toggleLike={toggleLike}
               toggleRetweet={toggleRetweet}
+              deleteTweet={deleteTweet}
             />
           }
         />
@@ -68,6 +74,7 @@ const Profile = () => {
               tweetsValues={tweetsValues}
               toggleLike={toggleLike}
               toggleRetweet={toggleRetweet}
+              deleteTweet={deleteTweet}
             />
           }
         />
