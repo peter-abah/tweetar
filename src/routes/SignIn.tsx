@@ -46,7 +46,11 @@ const SignIn = () => {
         <Loader />
       ) : (
         <div className="w-11/12 max-w-xs my-12 mx-auto py-8 px-4 rounded-2xl">
-          <h1 className="text-3xl pb-4 font-bold">Tweeter</h1>
+          <h1 className="text-3xl pb-4 font-bold">
+            <Link className="hover:underline" to="/">
+              Tweeter
+            </Link>
+          </h1>
           <Form>
             <h2 className="text-2xl font-bold pb-3">Log in</h2>
 
@@ -73,12 +77,20 @@ const SignIn = () => {
             >
               Log in
             </button>
+
             <div className="mt-8 max-w-xs mx-auto">
-              <p className="mb-2">Create a new account</p>
-              <Link className="text-lg underline" to="/register">
+              <p>New to Tweeter?</p>
+              <Link
+                className="text-lg underline hover:no-underline"
+                to="/register"
+              >
                 Sign up
               </Link>
             </div>
+
+            <Link className="block mt-8 underline hover:no-underline" to="/">
+              Explore Tweeter
+            </Link>
           </Form>
         </div>
       )}

@@ -64,7 +64,11 @@ const SignUp = () => {
         <Loader />
       ) : (
         <div className="theme-light max-w-screen-sm w-11/12 my-12 mx-auto py-8 px-4 rounded-2xl">
-          <h1 className="text-3xl pb-4 font-bold">Tweeter</h1>
+          <h1 className="text-3xl pb-4 font-bold">
+            <Link className="hover:underline" to="/">
+              Tweeter
+            </Link>
+          </h1>
           <Form>
             <h2 className="text-2xl font-bold pb-3">Create your account</h2>
 
@@ -129,8 +133,12 @@ const SignUp = () => {
 
             <div className="mt-8 max-w-xs mx-auto">
               <p className="mb-2">Already have an account?</p>
-              <Link className="text-lg underline" to="/login">
+              <Link className="text-lg underline hover:no-underline" to="/login">
                 Log in
+              </Link>
+
+              <Link className="block mt-8 underline hover:no-underline" to="/">
+                Explore Tweeter
               </Link>
             </div>
           </Form>
