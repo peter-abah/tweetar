@@ -6,7 +6,7 @@ import { UseQueryResult } from "react-query";
 import Loader from "./Loader";
 import ErrorPage from "./Error";
 
-import fallbackImg from '../assets/defaultAvatar.png';
+import fallbackImg from "../assets/defaultAvatar.png";
 
 interface Props {
   userValues: UseQueryResult<User, unknown>;
@@ -50,19 +50,23 @@ const ProfileInfo = ({ userValues, onFollow, onUnfollow }: Props) => {
 
       <ProfileBtn user={data} onFollow={onFollow} onUnfollow={onUnfollow} />
 
-      <div className="mt-16 p-4">
+      <div className="mt-4 p-4">
         <h2 className="text-xl font-bold">{name}</h2>
         <small className="text-neutral-700">@{username}</small>
         <p className="">Joined {joinedDate}</p>
         <div className="flex gap-4">
-          <Link to="users/following">
-            <span className="font-bold">{followed_users_count}</span>
-            <span> Following</span>
-          </Link>
-          <Link to="users/followers">
-            <span className="font-bold">{followers_count}</span>
-            <span> Followers</span>
-          </Link>
+          {followed_users_count > 0 && (
+            <Link to="users/following">
+              <span className="font-bold">{followed_users_count}</span>
+              <span> Following</span>
+            </Link>
+          )}
+          {followers_count > 0 && (
+            <Link to="users/followers">
+              <span className="font-bold">{followers_count}</span>
+              <span> Followers</span>
+            </Link>
+          )}
         </div>
       </div>
     </div>
