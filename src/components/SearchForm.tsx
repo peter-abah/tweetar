@@ -23,7 +23,7 @@ const SearchForm = ({ onSubmit }: Props) => {
       onSubmit={onSubmit}
     >
       <Form className="sticky top-0 flex items-center gap-2 px-4 py-3 bg-bg/60 backdrop-blur-md">
-        <button className="mr-8" onClick={() => navigate(-1)}>
+        <button type="button" className="mr-8" onClick={() => navigate(-1)}>
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
         <div className="flex relative grow">
