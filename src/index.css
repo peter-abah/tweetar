@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-family: "Open Sans", system-ui, sans-serif;
+  }
+}
+
 .theme-dark {
   --color-bg: 10 9 3;
   --color-primary: 254 254 255;
@@ -18,7 +24,9 @@
   --color-neutral: 212 212 212;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   min-height: 100vh;
 }
 
