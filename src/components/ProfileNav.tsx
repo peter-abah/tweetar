@@ -7,8 +7,8 @@ const ProfileNav = () => {
     { title: "Media", link: "media" },
   ];
   return (
-    <nav>
-      <ul className="flex scrollbar-hide snap-x">
+    <nav className="overflow-scroll scrollbar-hide">
+      <ul className="flex snap-x">
         {links.map(({ title, link }) => (
           <li className="min-w-[6rem] px-6 mx-2 text-center hover:bg-gray-100 snap-start">
             <NavLink

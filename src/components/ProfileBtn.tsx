@@ -10,10 +10,10 @@ interface Props {
 const ProfileBtn = ({ user, onFollow, onUnfollow }: Props) => {
   const { currentUser } = useAuth();
 
-  if (!currentUser) return null;
-
   const className =
     "block w-fit mt-4 ml-auto mr-4 px-4 py-1 rounded-full bg-primary text-bg";
+
+  if (!currentUser) return <div className="h-12" />;
 
   if (user.id === currentUser.id) {
     return (

@@ -42,7 +42,7 @@ const ProfileInfo = ({ userValues, onFollow, onUnfollow }: Props) => {
         }}
       >
         <img
-          className="absolute border-2 border-bg bg-bg z-10 left-4 md:left-8 bottom-[-3rem] md:bottom-[-4rem] w-24 h-24 md:w-32 md:h-32 rounded-full"
+          className="absolute border-2 border-bg bg-bg z-10 left-4 bottom-[-3rem] md:bottom-[-4rem] w-24 h-24 md:w-32 md:h-32 rounded-full"
           src={profile_image_url || fallbackImg}
           alt={name}
         />
