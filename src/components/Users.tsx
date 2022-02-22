@@ -6,6 +6,7 @@ import ErrorPage from "./Error";
 
 import Loader from "./Loader";
 import User from "./User";
+import NoUsers from "./NoUsers";
 
 interface Props {
   usersValues: UseInfiniteQueryResult<UsersResponse>;
@@ -24,14 +25,18 @@ const Users = ({ usersValues, queryKey }: Props) => {
 
   return (
     <div className="border-neutral grow">
-      {users.map((user) => (
-        <User
-          key={user.id}
-          user={user}
-          onFollow={follow}
-          onUnfollow={unfollow}
-        />
-      ))}
+      {users.length < 1 ? (
+        <NoUsers />
+      ) : (
+        users.map((user) => (
+          <User
+            key={user.id}
+            user={user}
+            onFollow={follow}
+            onUnfollow={unfollow}
+          />
+        ))
+      )}
     </div>
   );
 };

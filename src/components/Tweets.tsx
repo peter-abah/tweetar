@@ -7,6 +7,7 @@ import ErrorPage from "./Error";
 import { concatInfiniteQueryData } from "../helpers";
 
 import { useLikeTweet, useRetweetTweet, useDeleteTweet } from "../hooks";
+import NoTweets from "./NoTweets";
 
 interface Props {
   tweetsValues: UseInfiniteQueryResult<TweetsResponse>;
@@ -27,15 +28,19 @@ const Tweets = (props: Props) => {
   const tweets = concatInfiniteQueryData(data);
   return (
     <div className="grow">
-      {tweets.map((tweet) => (
-        <Tweet
-          key={`${tweet.id}${tweet.type}`}
-          tweet={tweet}
-          deleteTweet={deleteTweet}
-          toggleLike={toggleLike}
-          toggleRetweet={toggleRetweet}
-        />
-      ))}
+      {tweets.length < 1 ? (
+        <NoTweets />
+      ) : (
+        tweets.map((tweet) => (
+          <Tweet
+            key={`${tweet.id}${tweet.type}`}
+            tweet={tweet}
+            deleteTweet={deleteTweet}
+            toggleLike={toggleLike}
+            toggleRetweet={toggleRetweet}
+          />
+        ))
+      )}
     </div>
   );
 };
