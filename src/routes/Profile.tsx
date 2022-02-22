@@ -16,6 +16,8 @@ import ProfileInfo from "../components/ProfileInfo";
 import Tweets from "../components/Tweets";
 import ProfileUsers from "../components/ProfileUsers";
 import Header from "../components/Header";
+import ProfileNav from "../components/ProfileNav";
+import { getUserLikes } from "../api/tweetActions";
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -23,6 +25,8 @@ const Profile = () => {
 
   const userQueryKey = ["users", "profile", username, currentUser];
   const tweetsQueryKey = ["tweets", "user", username, currentUser];
+  const likesQueryKey = ["tweets", "user", "likes", username, currentUser];
+  const mediaQueryKey = ["tweets", "user", "media", username, currentUser];
 
   const userValues = useQuery(userQueryKey, () =>
     getUser(currentUser, username)
@@ -39,10 +43,45 @@ const Profile = () => {
     }
   );
 
+  const likesValues = useInfiniteQuery(
+    likesQueryKey,
+    ({ pageParam = 1 }) =>
+      getUserLikes(currentUser, user?.id as string, { page: pageParam }),
+    {
+      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      enabled: !!user,
+    }
+  );
+
+  const mediaValues = useInfiniteQuery(
+    mediaQueryKey,
+    ({ pageParam = 1 }) =>
+      getTweets(currentUser, {
+        user_id: user?.id,
+        images: "attached",
+        page: pageParam,
+      }),
+    {
+      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      enabled: !!user,
+    }
+  );
+
   const { follow, unfollow } = useFollowUser(userQueryKey);
-  const { toggleLike } = useLikeTweet(tweetsQueryKey);
-  const { toggleRetweet } = useRetweetTweet(tweetsQueryKey);
-  const deleteTweet = useDeleteTweet(tweetsQueryKey);
+
+  const { toggleLike: toggleTweetsLike } = useLikeTweet(tweetsQueryKey);
+  const { toggleRetweet: toggleTweetsRetweet } =
+    useRetweetTweet(tweetsQueryKey);
+
+  const { toggleLike: toggleLikesLike } = useLikeTweet(likesQueryKey);
+  const { toggleRetweet: toggleLikesRetweet } = useRetweetTweet(likesQueryKey);
+
+  const { toggleLike: toggleMediaLike } = useLikeTweet(mediaQueryKey);
+  const { toggleRetweet: toggleMediaRetweet } = useRetweetTweet(mediaQueryKey);
+
+  const deleteTweetsTweet = useDeleteTweet(tweetsQueryKey);
+  const deleteLikesTweet = useDeleteTweet(likesQueryKey);
+  const deleteMediaTweet = useDeleteTweet(mediaQueryKey);
 
   // const { data: user } = userValues;
   return (
@@ -53,6 +92,7 @@ const Profile = () => {
         onFollow={follow}
         onUnfollow={unfollow}
       />
+      <ProfileNav />
       <Outlet />
 
       <Routes>
@@ -61,9 +101,9 @@ const Profile = () => {
           element={
             <Tweets
               tweetsValues={tweetsValues}
-              toggleLike={toggleLike}
-              toggleRetweet={toggleRetweet}
-              deleteTweet={deleteTweet}
+              toggleLike={toggleTweetsLike}
+              toggleRetweet={toggleTweetsRetweet}
+              deleteTweet={deleteTweetsTweet}
             />
           }
         />
@@ -72,9 +112,33 @@ const Profile = () => {
           element={
             <Tweets
               tweetsValues={tweetsValues}
-              toggleLike={toggleLike}
-              toggleRetweet={toggleRetweet}
-              deleteTweet={deleteTweet}
+              toggleLike={toggleTweetsLike}
+              toggleRetweet={toggleTweetsRetweet}
+              deleteTweet={deleteTweetsTweet}
+            />
+          }
+        />
+
+        <Route
+          path="likes"
+          element={
+            <Tweets
+              tweetsValues={likesValues}
+              toggleLike={toggleLikesLike}
+              toggleRetweet={toggleLikesRetweet}
+              deleteTweet={deleteLikesTweet}
+            />
+          }
+        />
+
+        <Route
+          path="media"
+          element={
+            <Tweets
+              tweetsValues={mediaValues}
+              toggleLike={toggleMediaLike}
+              toggleRetweet={toggleMediaRetweet}
+              deleteTweet={deleteMediaTweet}
             />
           }
         />
