@@ -66,7 +66,7 @@ const Tweet = () => {
     <>
       <Header title="Tweet" backLink />
       <BigTweet tweetValues={tweetValues} queryKey={tweetQueryKey} />
-      <ReplyForm onSubmit={onSubmit} />
+      {currentUser && <ReplyForm onSubmit={onSubmit} />}
       <Tweets tweetsValues={repliesValues} queryKey={repliesQueryKey} />
     </>
   );
