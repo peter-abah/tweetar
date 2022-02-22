@@ -1,6 +1,7 @@
-import { UseInfiniteQueryResult } from "react-query";
+import { QueryKey, UseInfiniteQueryResult } from "react-query";
 import { UsersResponse, User as Iuser } from "../api/users";
 import { concatInfiniteQueryData } from "../helpers";
+import { useFollowUser } from "../hooks";
 import ErrorPage from "./Error";
 
 import Loader from "./Loader";
@@ -8,12 +9,12 @@ import User from "./User";
 
 interface Props {
   usersValues: UseInfiniteQueryResult<UsersResponse>;
-  onFollow: (user: Iuser) => void;
-  onUnfollow: (user: Iuser) => void;
+  queryKey: QueryKey;
 }
 
-const Users = ({ usersValues, onFollow, onUnfollow }: Props) => {
+const Users = ({ usersValues, queryKey }: Props) => {
   const { data, isLoading, isError } = usersValues;
+  const { follow, unfollow } = useFollowUser(queryKey);
 
   if (isLoading) return <Loader />;
   if (isError) return <ErrorPage />;
@@ -27,8 +28,8 @@ const Users = ({ usersValues, onFollow, onUnfollow }: Props) => {
         <User
           key={user.id}
           user={user}
-          onFollow={onFollow}
-          onUnfollow={onUnfollow}
+          onFollow={follow}
+          onUnfollow={unfollow}
         />
       ))}
     </div>

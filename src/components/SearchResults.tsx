@@ -3,10 +3,8 @@ import { useInfiniteQuery } from "react-query";
 
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
 
-import { useDeleteTweet, useFollowUser, useLikeTweet, useRetweetTweet } from "../hooks";
-import { getUsers, User } from "../api/users";
-import { getTweets, Tweet } from "../api/tweets";
-import { concatInfiniteQueryData } from "../helpers";
+import { getUsers } from "../api/users";
+import { getTweets } from "../api/tweets";
 
 import Users from "../components/Users";
 import Tweets from "../components/Tweets";
@@ -36,12 +34,6 @@ const SearchResults = ({ query }: { query: string }) => {
     }
   );
 
-  const { toggleLike } = useLikeTweet(tweetsQueryKey);
-  const { toggleRetweet } = useRetweetTweet(tweetsQueryKey);
-  const deleteTweet = useDeleteTweet(tweetsQueryKey)
-
-  const { follow, unfollow } = useFollowUser(usersQueryKey);
-
   if (!query) return null;
 
   return (
@@ -67,34 +59,18 @@ const SearchResults = ({ query }: { query: string }) => {
         <Route
           index
           element={
-            <Tweets
-              tweetsValues={tweetsValues}
-              toggleLike={toggleLike}
-              toggleRetweet={toggleRetweet}
-              deleteTweet={deleteTweet}
-            />
+            <Tweets tweetsValues={tweetsValues} queryKey={tweetsQueryKey} />
           }
         />
         <Route
           path="tweets"
           element={
-            <Tweets
-              tweetsValues={tweetsValues}
-              toggleLike={toggleLike}
-              toggleRetweet={toggleRetweet}
-              deleteTweet={deleteTweet}
-            />
+            <Tweets tweetsValues={tweetsValues} queryKey={tweetsQueryKey} />
           }
         />
         <Route
           path="users"
-          element={
-            <Users
-              usersValues={usersValues}
-              onFollow={follow}
-              onUnfollow={unfollow}
-            />
-          }
+          element={<Users usersValues={usersValues} queryKey={usersQueryKey} />}
         />
       </Routes>
     </>

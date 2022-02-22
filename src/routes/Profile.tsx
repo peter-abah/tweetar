@@ -5,12 +5,7 @@ import { getUser } from "../api/users";
 import { getTweets } from "../api/tweets";
 
 import { useAuth } from "../contexts/authContext";
-import {
-  useFollowUser,
-  useLikeTweet,
-  useRetweetTweet,
-  useDeleteTweet,
-} from "../hooks";
+import { useFollowUser } from "../hooks";
 
 import ProfileInfo from "../components/ProfileInfo";
 import Tweets from "../components/Tweets";
@@ -69,21 +64,6 @@ const Profile = () => {
 
   const { follow, unfollow } = useFollowUser(userQueryKey);
 
-  const { toggleLike: toggleTweetsLike } = useLikeTweet(tweetsQueryKey);
-  const { toggleRetweet: toggleTweetsRetweet } =
-    useRetweetTweet(tweetsQueryKey);
-
-  const { toggleLike: toggleLikesLike } = useLikeTweet(likesQueryKey);
-  const { toggleRetweet: toggleLikesRetweet } = useRetweetTweet(likesQueryKey);
-
-  const { toggleLike: toggleMediaLike } = useLikeTweet(mediaQueryKey);
-  const { toggleRetweet: toggleMediaRetweet } = useRetweetTweet(mediaQueryKey);
-
-  const deleteTweetsTweet = useDeleteTweet(tweetsQueryKey);
-  const deleteLikesTweet = useDeleteTweet(likesQueryKey);
-  const deleteMediaTweet = useDeleteTweet(mediaQueryKey);
-
-  // const { data: user } = userValues;
   return (
     <>
       <Header title={userValues.data?.name} backLink />
@@ -99,47 +79,27 @@ const Profile = () => {
         <Route
           index
           element={
-            <Tweets
-              tweetsValues={tweetsValues}
-              toggleLike={toggleTweetsLike}
-              toggleRetweet={toggleTweetsRetweet}
-              deleteTweet={deleteTweetsTweet}
-            />
+            <Tweets tweetsValues={tweetsValues} queryKey={tweetsQueryKey} />
           }
         />
         <Route
           path="tweets"
           element={
-            <Tweets
-              tweetsValues={tweetsValues}
-              toggleLike={toggleTweetsLike}
-              toggleRetweet={toggleTweetsRetweet}
-              deleteTweet={deleteTweetsTweet}
-            />
+            <Tweets tweetsValues={tweetsValues} queryKey={tweetsQueryKey} />
           }
         />
 
         <Route
           path="likes"
           element={
-            <Tweets
-              tweetsValues={likesValues}
-              toggleLike={toggleLikesLike}
-              toggleRetweet={toggleLikesRetweet}
-              deleteTweet={deleteLikesTweet}
-            />
+            <Tweets tweetsValues={likesValues} queryKey={likesQueryKey} />
           }
         />
 
         <Route
           path="media"
           element={
-            <Tweets
-              tweetsValues={mediaValues}
-              toggleLike={toggleMediaLike}
-              toggleRetweet={toggleMediaRetweet}
-              deleteTweet={deleteMediaTweet}
-            />
+            <Tweets tweetsValues={mediaValues} queryKey={mediaQueryKey} />
           }
         />
         {userValues.data && (

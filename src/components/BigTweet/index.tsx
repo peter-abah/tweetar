@@ -1,4 +1,4 @@
-import { UseQueryResult } from "react-query";
+import { QueryKey, UseQueryResult } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 import { Tweet as Itweet } from "../../api/tweets";
@@ -10,21 +10,20 @@ import TweetBtns from "./TweetBtns";
 import Loader from "../Loader";
 import ErrorPage from "../Error";
 
+import { useLikeTweet, useRetweetTweet, useDeleteTweet } from "../../hooks";
+
 interface Props {
   tweetValues: UseQueryResult<Itweet>;
-  toggleLike: (tweet: Itweet) => void;
-  toggleRetweet: (tweet: Itweet) => void;
-  deleteTweet: (tweet: Itweet) => void;
+  queryKey: QueryKey;
 }
 
-const Tweet = ({
-  tweetValues,
-  toggleLike,
-  toggleRetweet,
-  deleteTweet,
-}: Props) => {
+const Tweet = ({ tweetValues, queryKey }: Props) => {
   const { data: tweet, isLoading, isError } = tweetValues;
   const navigate = useNavigate();
+
+  const { toggleLike } = useLikeTweet(queryKey);
+  const { toggleRetweet } = useRetweetTweet(queryKey);
+  const deleteTweet = useDeleteTweet(queryKey);
 
   if (isLoading) return <Loader />;
   if (isError) return <ErrorPage />;

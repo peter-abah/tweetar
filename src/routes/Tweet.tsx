@@ -15,7 +15,6 @@ import Tweets from "../components/Tweets";
 import BigTweet from "../components/BigTweet";
 import ReplyForm from "../components/ReplyForm";
 import Header from "../components/Header";
-import { useLikeTweet, useRetweetTweet, useDeleteTweet } from "../hooks";
 
 const Tweet = () => {
   const { currentUser } = useAuth() as AuthContextInterface;
@@ -63,31 +62,12 @@ const Tweet = () => {
     resetForm();
   };
 
-  const { toggleLike: toggleTweetLike } = useLikeTweet(tweetQueryKey);
-  const { toggleRetweet: toggleTweetRetweet } = useRetweetTweet(tweetQueryKey);
-  const deleteTweet = useDeleteTweet(tweetQueryKey);
-
-  const { toggleLike: toggleRepliesLike } = useLikeTweet(repliesQueryKey);
-  const { toggleRetweet: toggleRepliesRetweet } =
-    useRetweetTweet(repliesQueryKey);
-  const deleteReply = useDeleteTweet(repliesQueryKey);
-
   return (
     <>
       <Header title="Tweet" backLink />
-      <BigTweet
-        tweetValues={tweetValues}
-        toggleLike={toggleTweetLike}
-        toggleRetweet={toggleTweetRetweet}
-        deleteTweet={deleteTweet}
-      />
+      <BigTweet tweetValues={tweetValues} queryKey={tweetQueryKey} />
       <ReplyForm onSubmit={onSubmit} />
-      <Tweets
-        tweetsValues={repliesValues}
-        toggleLike={toggleRepliesLike}
-        toggleRetweet={toggleRepliesRetweet}
-        deleteTweet={deleteReply}
-      />
+      <Tweets tweetsValues={repliesValues} queryKey={repliesQueryKey} />
     </>
   );
 };

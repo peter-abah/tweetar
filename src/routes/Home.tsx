@@ -17,18 +17,12 @@ const Home = () => {
     { getNextPageParam: (lastPage) => lastPage.current_page + 1 }
   );
 
-  const { toggleLike } = useLikeTweet(queryKey);
-  const { toggleRetweet } = useRetweetTweet(queryKey);
-  const deleteTweet = useDeleteTweet(queryKey)
-
   return (
     <>
       <Header title="Home" />
       <Tweets
         tweetsValues={tweetsValues}
-        toggleLike={toggleLike}
-        toggleRetweet={toggleRetweet}
-        deleteTweet={deleteTweet}
+        queryKey={queryKey}
       />
     </>
   );

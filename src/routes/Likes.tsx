@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import { useInfiniteQuery } from "react-query";
 
-import { useFollowUser } from "../hooks";
 import { UsersResponse } from "../api/users";
 import { getTweetLikes } from "../api/tweetActions";
 
@@ -29,16 +28,10 @@ const Likes = () => {
     }
   );
 
-  const { follow, unfollow } = useFollowUser(queryKey);
-
   return (
     <>
       <Header title="Likes" backLink />
-      <Users
-        usersValues={usersValues}
-        onFollow={follow}
-        onUnfollow={unfollow}
-      />
+      <Users usersValues={usersValues} queryKey={queryKey} />
     </>
   );
 };
