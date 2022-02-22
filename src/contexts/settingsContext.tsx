@@ -5,6 +5,7 @@ import { useBoolean } from "usehooks-ts";
 export interface SettingsContextInterface {
   isNavOpen: boolean;
   toggleNav: () => void;
+  setNavOpen: (b: boolean) => void;
 }
 
 const SettingsContext = createContext<SettingsContextInterface | null>(null);
@@ -23,7 +24,7 @@ export const SettingsProvider = ({
 
   useEffect(() => setNavOpen(false), [location.pathname]);
 
-  const providerValues = { isNavOpen, toggleNav };
+  const providerValues = { isNavOpen, toggleNav, setNavOpen };
   return (
     <SettingsContext.Provider value={providerValues}>
       {children}

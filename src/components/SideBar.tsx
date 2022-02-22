@@ -1,15 +1,20 @@
 import classnames from "classnames";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import { useSettings } from "../contexts/settingsContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useRef } from "react";
+import { useOnClickOutside } from "usehooks-ts";
 
 const SideBar = () => {
   const { currentUser, logOut } = useAuth();
   const navigate = useNavigate();
-  const { isNavOpen, toggleNav } = useSettings();
+  const { isNavOpen, toggleNav, setNavOpen } = useSettings();
+
+  const ref = useRef(null);
+  useOnClickOutside(ref, () => setNavOpen(false));
 
   const profileLink = currentUser ? `/profile/${currentUser.username}` : "";
   let links = [
@@ -44,29 +49,45 @@ const SideBar = () => {
     : links.filter(({ name }) => name !== "Tweet" && name !== "Profile");
 
   const navClassName = classnames(
-    "hidden top-0 bottom-0 h-screen fixed w-full max-w-xs col-span-1 md:block md:max-w-none md:sticky overflow-auto",
-    { "!block fixed z-30 bg-bg": isNavOpen }
+    "scale-x-0 top-0 bottom-0 h-screen bg-bg fixed w-full max-w-xs z-40",
+    "col-span-1 md:scale-x-100 md:block md:max-w-none md:sticky",
+    "overflow-auto transition-transform duration-500 origin-top-left",
+    { "!block fixed !scale-x-100": isNavOpen }
   );
   return (
-    <nav className={navClassName}>
-      <div className="h-16 py-2 px-4 w-full flex items-center md:hidden">
-        <button onClick={toggleNav} className="ml-auto">
-          <FontAwesomeIcon className="text-lg" icon={faTimes} />
-        </button>
-      </div>
+    <>
+      <div
+        className={classnames("absolute w-0 h-0 top-[-9999px]", {
+          "!fixed !w-full !h-full !top-0 !left-0 right-0 bottom-0 bg-primary/10 z-30 md:w-0 md:top-[9999px]":
+            isNavOpen,
+        })}
+      />
+      <nav ref={ref} className={navClassName}>
+        <div className="h-16 py-2 px-4 w-full flex items-center md:hidden">
+          <button onClick={toggleNav} className="ml-auto">
+            <FontAwesomeIcon className="text-lg" icon={faTimes} />
+          </button>
+        </div>
 
-      <ul className="flex flex-col gap-6 px-8">
-        {links.map(({ link, name, id }) => (
-          <li key={id}>
-            <Link className="block p-3 rounded-full w-fit text-xl" to={link}>
-              {name}
-            </Link>
-          </li>
-        ))}
+        <ul className="flex flex-col md:py-10 gap-6 px-10">
+          {links.map(({ link, name, id }) => (
+            <li key={id}>
+              <NavLink
+                style={({ isActive }) => {
+                  return { borderBottom: isActive ? "3px solid" : "none" };
+                }}
+                className="block p-3 w-fit text-xl hover:translate-y-[-4px] active:translate-y-0 transition-transform"
+                to={link}
+              >
+                {name}
+              </NavLink>
+            </li>
+          ))}
 
-        <li>{currentUser ? logOutBtn : login}</li>
-      </ul>
-    </nav>
+          <li>{currentUser ? logOutBtn : login}</li>
+        </ul>
+      </nav>
+    </>
   );
 };
 
