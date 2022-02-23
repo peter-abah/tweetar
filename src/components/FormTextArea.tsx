@@ -19,7 +19,7 @@ const FormTextArea = ({ classname = "", label, ...props }: Iprops) => {
           {label}
         </label>
         <textarea
-          className="bg-inherit focus-visible:outline-none min-h-[4rem]"
+          className="bg-inherit focus-visible:outline-none min-h-[4rem] resize-none"
           {...field}
           {...props}
         />

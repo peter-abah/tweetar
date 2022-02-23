@@ -10,6 +10,8 @@ export interface User {
   email: string;
   profile_image_url: string;
   cover_image_url: string;
+  location: string;
+  website: string;
   authentication_token?: string;
   followers_count: number;
   followed_users_count: number;
@@ -33,7 +35,7 @@ export const updateUserProfile = async (currentUser: User, formData: FormData) =
   });
 
   if (data.error) throw data;
-
+  debugger
   return data as User;
 };
 

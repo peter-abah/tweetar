@@ -24,7 +24,6 @@ const EditProfile = () => {
     try {
       const formData = await buildFormData(values);
       const user = await updateUserProfile(currentUser, formData);
-
       updateUser(user);
       navigate(`/profile/${currentUser.username}`);
     } finally {
@@ -45,8 +44,15 @@ const EditProfile = () => {
   };
 
   if (!currentUser) return null;
-  const { first_name, last_name, profile_image_url, cover_image_url, bio } =
-    currentUser;
+  const {
+    first_name,
+    last_name,
+    profile_image_url,
+    cover_image_url,
+    bio,
+    location,
+    website,
+  } = currentUser;
 
   return (
     <Formik
@@ -56,14 +62,15 @@ const EditProfile = () => {
         bio,
         profile_image_url,
         cover_image_url,
+        location,
+        website,
       }}
       validationSchema={Yup.object({
         first_name: Yup.string().required("Enter your first name."),
-        last_name: Yup.string().required("Enter your last name."),
-        bio: Yup.string()
-          .min(3, "Must be 3 characters or more.")
-          .max(250, "Maximum of 250 characters")
-          .required("Enter your username."),
+        last_name: Yup.string(),
+        bio: Yup.string().max(250, "Maximum of 250 characters"),
+        website: Yup.string().max(100, "Maximum of 100 characters"),
+        location: Yup.string().max(100, "Maximum of 100 characters"),
       })}
       onSubmit={(values, { setFieldError }) =>
         handleSubmit(values, setFieldError)
@@ -119,6 +126,22 @@ const EditProfile = () => {
                   name="bio"
                   autoComplete="username"
                   placeholder="peter"
+                />
+
+                <FormField
+                  classname="my-3"
+                  label="Location"
+                  name="location"
+                  type="text"
+                  autoComplete="location"
+                />
+
+                <FormField
+                  classname="my-3"
+                  label="Website"
+                  name="website"
+                  type="text"
+                  autoComplete="website"
                 />
 
                 <button
