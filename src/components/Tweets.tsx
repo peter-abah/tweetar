@@ -40,7 +40,7 @@ const Tweets = (props: Props) => {
     >
         {tweets.map((tweet) => (
           <Tweet
-            key={`${tweet.id}${tweet.type}`}
+            key={tweet.data_id}
             tweet={tweet}
             deleteTweet={deleteTweet}
             toggleLike={toggleLike}

@@ -10,7 +10,10 @@ const ProfileNav = () => {
     <nav className="overflow-scroll scrollbar-hide">
       <ul className="flex snap-x">
         {links.map(({ title, link }) => (
-          <li className="min-w-[6rem] px-6 mx-2 text-center hover:bg-gray-100 snap-start">
+          <li
+            key={title}
+            className="min-w-[6rem] px-6 mx-2 text-center hover:bg-gray-100 snap-start"
+          >
             <NavLink
               className="block py-3 border-green-400"
               style={({ isActive }) => {
