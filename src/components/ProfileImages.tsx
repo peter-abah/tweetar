@@ -1,10 +1,11 @@
+import React, { useState } from "react";
 import { User } from "../api/users";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPortrait, faImage } from "@fortawesome/free-solid-svg-icons";
+import FullscreenImageViewer from "./FullscreenImageViewer";
 
 import fallbackImg from "../assets/defaultAvatar.png";
 import classnames from "classnames";
-import React from "react";
 
 interface Props {
   cover_image_url: string;
@@ -14,6 +15,9 @@ interface Props {
   handleCoverImgChange?: (ev: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const ProfileImages = (props: Props) => {
+  const [showProfileImg, setShowProfileImg] = useState(false);
+  const [showCoverImg, setShowCoverImg] = useState(false);
+
   const {
     cover_image_url,
     profile_image_url,
@@ -28,15 +32,17 @@ const ProfileImages = (props: Props) => {
   );
   const fileClassNames = "fixed top-[-9999px] z[-1] w-0 h-0 overflow-hidden";
   return (
-    <div
-      className="relative w-full aspect-[3/1] md:h-48"
-      style={{
-        backgroundImage: `url(${cover_image_url})`,
-        backgroundPosition: "center",
-        backgroundColor: "gray",
-        backgroundSize: "cover",
-      }}
-    >
+    <div className="relative">
+      <img
+        onClick={() => setShowCoverImg(true)}
+        className="object-cover relative w-full aspect-[3/1] md:h-48 cursor-pointer"
+        style={{
+          backgroundImage: `url(${cover_image_url})`,
+          backgroundPosition: "center",
+          backgroundColor: "gray",
+          backgroundSize: "cover",
+        }}
+      />
       {handleCoverImgChange && (
         <>
           <label htmlFor="cover-img" className={btnClassNames}>
@@ -69,11 +75,25 @@ const ProfileImages = (props: Props) => {
         )}
 
         <img
-          className="border-2 border-bg bg-bg w-20 h-20 md:w-32 md:h-32 rounded-full object-cover"
+          onClick={() => setShowProfileImg(true)}
+          className="cursor-pointer border-2 border-bg bg-bg w-20 h-20 md:w-32 md:h-32 rounded-full object-cover"
           src={profile_image_url || fallbackImg}
           alt={user?.name}
         />
       </div>
+      {showCoverImg && (
+        <FullscreenImageViewer
+          image={cover_image_url}
+          handleClose={() => setShowCoverImg(false)}
+        />
+      )}
+
+      {showProfileImg && (
+        <FullscreenImageViewer
+          image={profile_image_url}
+          handleClose={() => setShowProfileImg(false)}
+        />
+      )}
     </div>
   );
 };
