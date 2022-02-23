@@ -24,7 +24,7 @@ const Likes = () => {
       return transformData(likes, ["user"]) as UsersResponse;
     },
     {
-      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      getNextPageParam: (lastPage) => lastPage.next_page,
     }
   );
 

@@ -3,6 +3,7 @@ import { UsersResponse, User as Iuser } from "../api/users";
 import { concatInfiniteQueryData } from "../helpers";
 import { useFollowUser } from "../hooks";
 import ErrorPage from "./Error";
+import InfiniteScroll from "react-infinite-scroller";
 
 import Loader from "./Loader";
 import User from "./User";
@@ -24,18 +25,27 @@ const Users = ({ usersValues, queryKey }: Props) => {
   const users = concatInfiniteQueryData(data);
 
   return (
-    <div className="border-neutral grow">
+    <div className="border-neutral grow overflow-auto">
       {users.length < 1 ? (
         <NoUsers />
       ) : (
-        users.map((user) => (
-          <User
-            key={user.id}
-            user={user}
-            onFollow={follow}
-            onUnfollow={unfollow}
-          />
-        ))
+        <InfiniteScroll
+          pageStart={1}
+          loadMore={() =>
+            usersValues.isFetchingNextPage || usersValues.fetchNextPage()
+          }
+          hasMore={usersValues.hasNextPage}
+          loader={<Loader key="loader" />}
+        >
+          {users.map((user) => (
+            <User
+              key={user.id}
+              user={user}
+              onFollow={follow}
+              onUnfollow={unfollow}
+            />
+          ))}
+        </InfiniteScroll>
       )}
     </div>
   );

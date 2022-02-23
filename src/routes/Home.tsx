@@ -1,6 +1,5 @@
 import { useInfiniteQuery } from "react-query";
 import { getFeed } from "../api/tweets";
-import { useLikeTweet, useRetweetTweet, useDeleteTweet } from "../hooks";
 
 import { useAuth } from "../contexts/authContext";
 
@@ -14,16 +13,13 @@ const Home = () => {
   const tweetsValues = useInfiniteQuery(
     queryKey,
     ({ pageParam = 1 }) => getFeed(currentUser, { page: pageParam }),
-    { getNextPageParam: (lastPage) => lastPage.current_page + 1 }
+    { getNextPageParam: (lastPage) => lastPage.next_page }
   );
 
   return (
     <>
       <Header title="Home" />
-      <Tweets
-        tweetsValues={tweetsValues}
-        queryKey={queryKey}
-      />
+      <Tweets tweetsValues={tweetsValues} queryKey={queryKey} />
     </>
   );
 };

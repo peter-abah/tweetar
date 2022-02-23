@@ -10,7 +10,7 @@ const Followers = ({ user }: { user: User }) => {
   const usersValues = useInfiniteQuery(
     queryKey,
     ({ pageParam = 1 }) => getFollowers(currentUser, user, { page: pageParam }),
-    { getNextPageParam: (lastPage) => lastPage.current_page + 1 }
+    { getNextPageParam: (lastPage) => lastPage.next_page }
   );
 
   return <Users usersValues={usersValues} queryKey={queryKey} />;

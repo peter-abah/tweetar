@@ -20,7 +20,7 @@ const SearchResults = ({ query }: { query: string }) => {
     ({ pageParam = 1 }) =>
       getTweets(currentUser, { q: query, page: pageParam }),
     {
-      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      getNextPageParam: (lastPage) => lastPage.next_page,
       enabled: !!query,
     }
   );
@@ -29,7 +29,7 @@ const SearchResults = ({ query }: { query: string }) => {
     usersQueryKey,
     ({ pageParam = 1 }) => getUsers(currentUser, { q: query, page: pageParam }),
     {
-      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      getNextPageParam: (lastPage) => lastPage.next_page,
       enabled: !!query,
     }
   );

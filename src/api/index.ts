@@ -10,6 +10,7 @@ export interface ListResponse<T> {
   current_page: number;
   total_size: number;
   total_pages: number;
+  next_page?: number;
   size: number;
 }
 

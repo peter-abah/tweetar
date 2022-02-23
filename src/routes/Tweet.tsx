@@ -31,7 +31,7 @@ const Tweet = () => {
     repliesQueryKey,
     ({ pageParam = 1 }) =>
       getTweets(currentUser, { parent_id: tweet_id, page: pageParam }),
-    { getNextPageParam: (lastPage) => lastPage.current_page + 1 }
+    { getNextPageParam: (lastPage) => lastPage.next_page }
   );
 
   const { mutate: newTweet } = useMutation(

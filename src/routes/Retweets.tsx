@@ -24,7 +24,7 @@ const Retweets = () => {
       return transformData(retweets, ["user"]) as UsersResponse;
     },
     {
-      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      getNextPageParam: (lastPage) => lastPage.next_page,
     }
   );
 

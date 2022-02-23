@@ -33,7 +33,7 @@ const Profile = () => {
     ({ pageParam = 1 }) =>
       getTweets(currentUser, { user_id: user?.id, page: pageParam }),
     {
-      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      getNextPageParam: (lastPage) => lastPage.next_page,
       enabled: !!user,
     }
   );
@@ -43,7 +43,7 @@ const Profile = () => {
     ({ pageParam = 1 }) =>
       getUserLikes(currentUser, user?.id as string, { page: pageParam }),
     {
-      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      getNextPageParam: (lastPage) => lastPage.next_page,
       enabled: !!user,
     }
   );
@@ -57,7 +57,7 @@ const Profile = () => {
         page: pageParam,
       }),
     {
-      getNextPageParam: (lastPage) => lastPage.current_page + 1,
+      getNextPageParam: (lastPage) => lastPage.next_page ,
       enabled: !!user,
     }
   );

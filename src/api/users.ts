@@ -19,6 +19,7 @@ export interface UsersResponse {
   list: User[];
   current_page: number;
   total_size: number;
+  next_page?: number;
   total_pages: number;
   size: number;
 }

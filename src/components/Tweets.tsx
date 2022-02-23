@@ -1,5 +1,6 @@
-import { Tweet as Itweet, TweetsResponse } from "../api/tweets";
+import { TweetsResponse } from "../api/tweets";
 import { QueryKey, UseInfiniteQueryResult } from "react-query";
+import InfiniteScroll from 'react-infinite-scroller';
 
 import Tweet from "./SmallTweet";
 import Loader from "./Loader";
@@ -31,7 +32,13 @@ const Tweets = (props: Props) => {
       {tweets.length < 1 ? (
         <NoTweets />
       ) : (
-        tweets.map((tweet) => (
+        <InfiniteScroll
+        pageStart={1}
+        loadMore={() => tweetsValues.fetchNextPage()}
+        hasMore={tweetsValues.hasNextPage}
+        loader={<Loader key='loader' />}
+    >
+        {tweets.map((tweet) => (
           <Tweet
             key={`${tweet.id}${tweet.type}`}
             tweet={tweet}
@@ -39,7 +46,8 @@ const Tweets = (props: Props) => {
             toggleLike={toggleLike}
             toggleRetweet={toggleRetweet}
           />
-        ))
+        ))}
+    </InfiniteScroll>
       )}
     </div>
   );
