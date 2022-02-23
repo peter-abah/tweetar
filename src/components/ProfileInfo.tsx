@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import { UseQueryResult } from "react-query";
 import Loader from "./Loader";
 import ErrorPage from "./Error";
-
-import fallbackImg from "../assets/defaultAvatar.png";
+import ProfileImages from "./ProfileImages";
 
 interface Props {
   userValues: UseQueryResult<User, unknown>;
@@ -33,20 +32,11 @@ const ProfileInfo = ({ userValues, onFollow, onUnfollow }: Props) => {
   const joinedDate = format(parseISO(created_at), "MMMM yyyy");
   return (
     <div className="border-neutral">
-      <div
-        className="relative h-32 md:h-48"
-        style={{
-          backgroundImage: `url(${cover_image_url})`,
-          backgroundPosition: "center",
-          backgroundColor: "gray",
-        }}
-      >
-        <img
-          className="absolute border-2 border-bg bg-bg z-10 left-4 bottom-[-3rem] md:bottom-[-4rem] w-24 h-24 md:w-32 md:h-32 rounded-full"
-          src={profile_image_url || fallbackImg}
-          alt={name}
-        />
-      </div>
+      <ProfileImages
+        profile_image_url={profile_image_url}
+        cover_image_url={cover_image_url}
+        user={data}
+      />
 
       <ProfileBtn user={data} onFollow={onFollow} onUnfollow={onUnfollow} />
 

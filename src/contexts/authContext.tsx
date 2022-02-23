@@ -9,6 +9,7 @@ export interface AuthContextInterface {
   login: (userParams: loginParams) => Promise<any>;
   signUp: (userParams: signUpParams) => Promise<any>;
   logOut: () => void;
+  updateUser: (user: User) => void;
 }
 
 const AuthContext = React.createContext<AuthContextInterface | null>(null);
@@ -55,12 +56,19 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     setUser(null);
   };
 
+  const updateUser = (user: User) => {
+    if (!currentUser || currentUser.id !== user.id || !user.authentication_token)
+      throw new Error("Cannot Update User");
+    setUser(user);
+  };
+
   const providerValue = {
     currentUser,
     isLoading,
     login,
     signUp,
     logOut,
+    updateUser,
   };
   return (
     <AuthContext.Provider value={providerValue}>

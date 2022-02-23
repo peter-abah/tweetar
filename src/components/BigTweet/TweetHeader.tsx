@@ -17,7 +17,7 @@ const TweetUser = ({ tweet, deleteTweet }: Props) => {
         to={`/profile/${user.username}`}
       >
         <img
-          className="w-12 h-12 rounded-full"
+          className="w-12 h-12 rounded-full object-cover"
           src={user.profile_image_url || fallbackImg}
           alt={user.name}
         />

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { InfiniteData } from "react-query";
 import { ListResponse } from "../api";
 
@@ -44,4 +45,10 @@ export const getUpdatedData = <T>(
   pages.splice(pageIndex, 1, page);
 
   return { ...dataList, pages };
+};
+
+export const urlToFile = async (url: string) => {
+  const res = await fetch(url);
+  const blob = await res.blob();
+  return new File([blob], 'image', { type: blob.type });
 };

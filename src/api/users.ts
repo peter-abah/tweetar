@@ -3,11 +3,14 @@ import { Client, Params, headers } from ".";
 export interface User {
   id: string;
   name: string;
+  first_name: string;
+  last_name: string;
   username: string;
+  bio: string;
   email: string;
   profile_image_url: string;
   cover_image_url: string;
-  authentication_token: string;
+  authentication_token?: string;
   followers_count: number;
   followed_users_count: number;
   created_at: string;
@@ -23,6 +26,16 @@ export interface UsersResponse {
   total_pages: number;
   size: number;
 }
+
+export const updateUserProfile = async (currentUser: User, formData: FormData) => {
+  const { data } = await Client.patch(`/users/${currentUser.id}`, formData, {
+    headers: { ...headers(currentUser), "Content-Type": "multipart/form-data" },
+  });
+
+  if (data.error) throw data;
+
+  return data as User;
+};
 
 export const getUser = async (
   currentUser: User | null,

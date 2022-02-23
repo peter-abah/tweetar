@@ -10,6 +10,7 @@ import {
   Retweets,
   Likes,
   Search,
+  EditProfile,
 } from "./routes";
 import Wrapper from "./components/Wrapper";
 import AllProviders from "./contexts";
@@ -24,6 +25,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/search/*" element={<Search />} />
             <Route path="/profile/:username/*" element={<Profile />} />
+            <Route path="profile/:username/edit" element={<EditProfile />} />
             <Route path="/new" element={<NewTweet />} />
             <Route path="/tweet/:tweet_id" element={<Tweet />} />{" "}
             <Route path="/likes/:tweetId" element={<Likes />} />

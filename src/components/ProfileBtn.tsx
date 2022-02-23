@@ -17,7 +17,7 @@ const ProfileBtn = ({ user, onFollow, onUnfollow }: Props) => {
 
   if (user.id === currentUser.id) {
     return (
-      <Link className={className} to="/editProfile">
+      <Link className={className} to="edit">
         Edit Profile
       </Link>
     );
