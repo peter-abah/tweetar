@@ -35,7 +35,6 @@ export const updateUserProfile = async (currentUser: User, formData: FormData) =
   });
 
   if (data.error) throw data;
-  debugger
   return data as User;
 };
 

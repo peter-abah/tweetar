@@ -8,7 +8,8 @@ import Loader from "./Loader";
 import ErrorPage from "./Error";
 import ProfileImages from "./ProfileImages";
 
-import { MdOutlineLocationOn } from 'react-icons/md';
+import { MdOutlineLocationOn } from "react-icons/md";
+import { FaCalendarDay, FaLink } from "react-icons/fa";
 
 interface Props {
   userValues: UseQueryResult<User, unknown>;
@@ -46,13 +47,29 @@ const ProfileInfo = ({ userValues, onFollow, onUnfollow }: Props) => {
 
       <ProfileBtn user={data} onFollow={onFollow} onUnfollow={onUnfollow} />
 
-      <div className="mt-4 p-4">
-        <h2 className="text-xl font-bold">{name}</h2>
-        <small className="text-neutral-700">@{username}</small>
-        {bio && <p className="py-2">{bio}</p>}
-        <p>
-          <MdOutlineLocationOn /> Joined {joinedDate}
-        </p>
+      <div className="md:mt-4 p-4">
+        <h2 className="text-lg md:text-xl font-bold">{name}</h2>
+        <small className="text-neutral-700 text-sm">@{username}</small>
+        {bio && <p className="my-2">{bio}</p>}
+
+        <div className="flex my-2 flex-wrap">
+          {location && (
+            <span className="flex mr-3 items-center">
+              <MdOutlineLocationOn className="mr-1" /> {location}
+            </span>
+          )}
+
+          {website && (
+            <span className="flex mr-3 items-center">
+              <FaLink className="mr-1" /> {website}
+            </span>
+          )}
+
+          <span className="flex items-center">
+            <FaCalendarDay className="mr-1" /> Joined {joinedDate}
+          </span>
+        </div>
+
         <div className="flex gap-4">
           {followed_users_count > 0 && (
             <Link to="users/following">
