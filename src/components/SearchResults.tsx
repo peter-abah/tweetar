@@ -6,8 +6,10 @@ import { AuthContextInterface, useAuth } from "../contexts/authContext";
 import { getUsers } from "../api/users";
 import { getTweets } from "../api/tweets";
 
+
 import Users from "../components/Users";
 import Tweets from "../components/Tweets";
+import HorizNav from "./HorizNav";
 
 const SearchResults = ({ query }: { query: string }) => {
   const { currentUser } = useAuth() as AuthContextInterface;
@@ -36,23 +38,14 @@ const SearchResults = ({ query }: { query: string }) => {
 
   if (!query) return null;
 
+  const links = [
+    { title: "People", link: "users" },
+    { title: "Tweets", link: "tweets" },
+  ];
+
   return (
     <>
-      <nav className="px-2 py-3 border-b border-neutral">
-        <ul className="flex gap-4">
-          <li>
-            <Link className="block px-6 py-1" to="users">
-              People
-            </Link>
-          </li>
-
-          <li>
-            <Link className="block px-6 py-1" to="tweets">
-              Tweets
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <HorizNav links={links} />
       <Outlet />
 
       <Routes>
