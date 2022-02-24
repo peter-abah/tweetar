@@ -11,7 +11,7 @@ import ProfileInfo from "../components/ProfileInfo";
 import Tweets from "../components/Tweets";
 import ProfileUsers from "../components/ProfileUsers";
 import Header from "../components/Header";
-import ProfileNav from "../components/ProfileNav";
+import HorizNav from "../components/HorizNav";
 import { getUserLikes } from "../api/tweetActions";
 
 const Profile = () => {
@@ -63,7 +63,11 @@ const Profile = () => {
   );
 
   const { follow, unfollow } = useFollowUser(userQueryKey);
-
+  const navLinks = [
+    { title: "Tweets", link: "tweets" },
+    { title: "Likes", link: "likes" },
+    { title: "Media", link: "media" },
+  ];
   return (
     <>
       <Header title={userValues.data?.name} backLink />
@@ -72,7 +76,7 @@ const Profile = () => {
         onFollow={follow}
         onUnfollow={unfollow}
       />
-      <ProfileNav />
+      <HorizNav links={navLinks} />
       <Outlet />
 
       <Routes>

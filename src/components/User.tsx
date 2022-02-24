@@ -3,7 +3,7 @@ import { User as Iuser } from "../api/users";
 
 import ProfileBtn from "./ProfileBtn";
 
-import fallbackImg from '../assets/defaultAvatar.png';
+import fallbackImg from "../assets/defaultAvatar.png";
 
 interface Props {
   user: Iuser;
@@ -13,7 +13,7 @@ interface Props {
 const User = (props: Props) => {
   const { user, onFollow, onUnfollow } = props;
   return (
-    <div className="flex items-start p-4">
+    <div className="flex px-2 py-4 md:p-4 text-sm">
       <Link
         className="w-fit h-fit mr-2 shrink-0"
         to={`/profile/${user.username}`}
@@ -25,12 +25,17 @@ const User = (props: Props) => {
         />
       </Link>
 
-      <Link to={`/profile/${user.username}`} className="flex flex-col">
-        <span className="font-bold">{user.name}</span>
-        <span className="">@{user.username}</span>
-      </Link>
+      <div className="grow">
+        <div className="flex items-start w-full gap-4">
+          <Link to={`/profile/${user.username}`} className="flex flex-col">
+            <span className="font-bold">{user.name}</span>
+            <span className="">@{user.username}</span>
+          </Link>
 
-      <ProfileBtn user={user} onFollow={onFollow} onUnfollow={onUnfollow} />
+          <ProfileBtn user={user} onFollow={onFollow} onUnfollow={onUnfollow} />
+        </div>
+        <p>{user.bio}</p>
+      </div>
     </div>
   );
 };

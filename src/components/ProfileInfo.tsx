@@ -45,7 +45,7 @@ const ProfileInfo = ({ userValues, onFollow, onUnfollow }: Props) => {
         user={data}
       />
 
-      <ProfileBtn user={data} onFollow={onFollow} onUnfollow={onUnfollow} />
+      <ProfileBtn className="mt-2 mr-2" user={data} onFollow={onFollow} onUnfollow={onUnfollow} />
 
       <div className="md:mt-4 p-4">
         <h2 className="text-lg md:text-xl font-bold">{name}</h2>
