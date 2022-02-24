@@ -12,6 +12,7 @@ import {
   Search,
   EditProfile,
   ProfileUsers,
+  Connect,
 } from "./routes";
 import Wrapper from "./components/Wrapper";
 import AllProviders from "./contexts";
@@ -25,6 +26,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/search/*" element={<Search />} />
+            <Route path="/connect/" element={<Connect />} />
             <Route path="/profile/:username/*" element={<Profile />} />
             <Route path="profile/:username/edit" element={<EditProfile />} />
             <Route

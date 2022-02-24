@@ -19,8 +19,9 @@ const SideBar = () => {
   let links = [
     { name: "Home", link: "/home", id: 1 },
     { name: "Search", link: "/search", id: 2 },
-    { name: "Profile", link: profileLink, id: 3 },
-    { name: "Tweet", link: "/new", id: 4 },
+    { name: "Connect", link: "/connect", id: 3 },
+    { name: "Profile", link: profileLink, id: 4 },
+    { name: "Tweet", link: "/new", id: 5 },
   ];
 
   const logOutUser = () => {

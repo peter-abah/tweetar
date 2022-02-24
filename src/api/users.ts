@@ -29,7 +29,10 @@ export interface UsersResponse {
   size: number;
 }
 
-export const updateUserProfile = async (currentUser: User, formData: FormData) => {
+export const updateUserProfile = async (
+  currentUser: User,
+  formData: FormData
+) => {
   const { data } = await Client.patch(`/users/${currentUser.id}`, formData, {
     headers: { ...headers(currentUser), "Content-Type": "multipart/form-data" },
   });
@@ -88,6 +91,22 @@ export const getFollowing = async (
     params,
     headers: headers(currentUser),
   });
+  if (data.error) throw data;
+
+  return data as UsersResponse;
+};
+
+export const getRecommendedFollows = async (
+  currentUser: User | null,
+  params: Params = {}
+) => {
+  const { data } = await Client.get(
+    `/users/${currentUser?.id}/recommended_follows`,
+    {
+      params,
+      headers: headers(currentUser),
+    }
+  );
   if (data.error) throw data;
 
   return data as UsersResponse;

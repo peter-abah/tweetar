@@ -10,3 +10,4 @@ export { default as Retweets } from './Retweets';
 export { default as Search } from './Search';
 export { default as EditProfile } from './EditProfile';
 export { default as ProfileUsers } from './ProfileUsers';
+export { default as Connect } from './Connect';
