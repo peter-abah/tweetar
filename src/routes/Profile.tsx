@@ -9,7 +9,6 @@ import { useFollowUser } from "../hooks";
 
 import ProfileInfo from "../components/ProfileInfo";
 import Tweets from "../components/Tweets";
-import ProfileUsers from "../components/ProfileUsers";
 import Header from "../components/Header";
 import HorizNav from "../components/HorizNav";
 import { getUserLikes } from "../api/tweetActions";
@@ -57,7 +56,7 @@ const Profile = () => {
         page: pageParam,
       }),
     {
-      getNextPageParam: (lastPage) => lastPage.next_page ,
+      getNextPageParam: (lastPage) => lastPage.next_page,
       enabled: !!user,
     }
   );
@@ -106,12 +105,6 @@ const Profile = () => {
             <Tweets tweetsValues={mediaValues} queryKey={mediaQueryKey} />
           }
         />
-        {userValues.data && (
-          <Route
-            path="users/*"
-            element={<ProfileUsers user={userValues.data} />}
-          />
-        )}
       </Routes>
     </>
   );

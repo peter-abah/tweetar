@@ -11,6 +11,7 @@ import {
   Likes,
   Search,
   EditProfile,
+  ProfileUsers,
 } from "./routes";
 import Wrapper from "./components/Wrapper";
 import AllProviders from "./contexts";
@@ -26,6 +27,10 @@ function App() {
             <Route path="/search/*" element={<Search />} />
             <Route path="/profile/:username/*" element={<Profile />} />
             <Route path="profile/:username/edit" element={<EditProfile />} />
+            <Route
+              path="profile/:username/users/*"
+              element={<ProfileUsers />}
+            />
             <Route path="/new" element={<NewTweet />} />
             <Route path="/tweet/:tweet_id" element={<Tweet />} />{" "}
             <Route path="/likes/:tweetId" element={<Likes />} />
