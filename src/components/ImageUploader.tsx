@@ -1,6 +1,5 @@
 import ImageUploading, { ImageListType } from "react-images-uploading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { FaImage } from "react-icons/fa";
 import TweetImages from "./TweetImages";
 
 interface Props {
@@ -27,7 +26,7 @@ const ImageUploader = ({ images, onChange }: Props) => {
               type="button"
               onClick={onImageUpload}
             >
-              <FontAwesomeIcon className="text-3xl" icon={faImage} />
+              <FaImage className="text-3xl" />
               <span>Images</span>
             </button>
             <button

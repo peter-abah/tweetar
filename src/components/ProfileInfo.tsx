@@ -3,9 +3,12 @@ import { format, parseISO } from "date-fns";
 import ProfileBtn from "./ProfileBtn";
 import { Link } from "react-router-dom";
 import { UseQueryResult } from "react-query";
+
 import Loader from "./Loader";
 import ErrorPage from "./Error";
 import ProfileImages from "./ProfileImages";
+
+import { MdOutlineLocationOn } from 'react-icons/md';
 
 interface Props {
   userValues: UseQueryResult<User, unknown>;
@@ -22,6 +25,9 @@ const ProfileInfo = ({ userValues, onFollow, onUnfollow }: Props) => {
   const {
     username,
     name,
+    bio,
+    website,
+    location,
     followers_count,
     followed_users_count,
     created_at,
@@ -43,7 +49,10 @@ const ProfileInfo = ({ userValues, onFollow, onUnfollow }: Props) => {
       <div className="mt-4 p-4">
         <h2 className="text-xl font-bold">{name}</h2>
         <small className="text-neutral-700">@{username}</small>
-        <p className="">Joined {joinedDate}</p>
+        {bio && <p className="py-2">{bio}</p>}
+        <p>
+          <MdOutlineLocationOn /> Joined {joinedDate}
+        </p>
         <div className="flex gap-4">
           {followed_users_count > 0 && (
             <Link to="users/following">

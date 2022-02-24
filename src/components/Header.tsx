@@ -1,10 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faArrowLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { MdArrowBack, MdMenu } from 'react-icons/md'
 import { useSettings } from "../contexts/settingsContext";
 
 interface Iprops {
@@ -18,22 +14,22 @@ const Header = (props: Iprops) => {
   const navigate = useNavigate();
 
   return (
-    <header className="flex items-center sticky top-0 z-20 h-16 px-4 py-2 bg-bg/60 backdrop-blur-md">
+    <header className="flex gap-6 items-center sticky top-0 z-20 h-16 px-4 py-2 bg-bg/60 backdrop-blur-md">
       {props.backLink && (
-        <button className="mr-8" onClick={() => navigate(-1)}>
-          <FontAwesomeIcon icon={faArrowLeft} />
+        <button onClick={() => navigate(-1)}>
+          <MdArrowBack className="text-2xl" />
         </button>
       )}
 
-      <h1 className="text-xl font-bold">{title}</h1>
+      <h1 className="text-lg font-bold whitespace-nowrap overflow-hidden">{title}</h1>
 
       <button
-        className="md:hidden w-fit ml-auto"
+        className="md:hidden w-fit ml-auto shrink-0"
         onClick={toggleNav}
         type="button"
         
       >
-        {!isNavOpen && <FontAwesomeIcon icon={faBars} />}
+        {!isNavOpen && <MdMenu className="text-2xl" />}
       </button>
     </header>
   );

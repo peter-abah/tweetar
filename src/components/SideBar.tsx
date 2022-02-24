@@ -3,8 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import { useSettings } from "../contexts/settingsContext";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { MdClose } from "react-icons/md";
 import { useRef } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
@@ -65,7 +64,7 @@ const SideBar = () => {
       <nav ref={ref} className={navClassName}>
         <div className="h-16 py-2 px-4 w-full flex items-center md:hidden">
           <button onClick={toggleNav} className="ml-auto">
-            <FontAwesomeIcon className="text-lg" icon={faTimes} />
+            <MdClose className="text-2xl" />
           </button>
         </div>
 

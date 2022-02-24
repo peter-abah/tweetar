@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { User } from "../api/users";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPortrait, faImage } from "@fortawesome/free-solid-svg-icons";
+import { FaImage, FaPortrait } from "react-icons/fa";
 import FullscreenImageViewer from "./FullscreenImageViewer";
 
 import fallbackImg from "../assets/defaultAvatar.png";
@@ -46,7 +45,7 @@ const ProfileImages = (props: Props) => {
       {handleCoverImgChange && (
         <>
           <label htmlFor="cover-img" className={btnClassNames}>
-            <FontAwesomeIcon className="text-2xl text-bg" icon={faImage} />
+            <FaImage className="text-2xl text-bg" />
           </label>
           <input
             className={fileClassNames}
@@ -62,7 +61,7 @@ const ProfileImages = (props: Props) => {
         {handleProfileImgChange && (
           <>
             <label htmlFor="profile-img" className={btnClassNames}>
-              <FontAwesomeIcon className="text-2xl text-bg" icon={faPortrait} />
+              <FaPortrait className="text-2xl text-bg" />
             </label>
             <input
               className={fileClassNames}

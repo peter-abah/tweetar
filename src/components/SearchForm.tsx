@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { MdArrowBack, MdSearch } from "react-icons/md";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -24,7 +23,7 @@ const SearchForm = ({ onSubmit }: Props) => {
     >
       <Form className="sticky top-0 flex items-center gap-2 px-4 py-3 bg-bg/60 backdrop-blur-md">
         <button type="button" className="mr-8" onClick={() => navigate(-1)}>
-          <FontAwesomeIcon icon={faArrowLeft} />
+          <MdArrowBack className="text-2xl" />
         </button>
         <div className="flex relative grow">
           <Field
@@ -34,10 +33,7 @@ const SearchForm = ({ onSubmit }: Props) => {
             placeholder="Search"
           />
           <button className="absolute top-0 bottom-0 right-4" type="submit">
-            <FontAwesomeIcon
-              className="!text-xl text-neutral"
-              icon={faSearch}
-            />
+            <MdSearch className="text-2xl" />
           </button>
         </div>
       </Form>

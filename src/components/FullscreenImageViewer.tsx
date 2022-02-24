@@ -1,8 +1,7 @@
 import { useRef } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { MdClose } from "react-icons/md";
 
 const FullscreenImageViewer = ({
   image,
@@ -22,7 +21,7 @@ const FullscreenImageViewer = ({
           onClick={handleClose}
           type="button"
         >
-          <FontAwesomeIcon icon={faTimes} />
+          <MdClose />
         </button>
       </nav>
       <div className="grow flex items-center justify-center">

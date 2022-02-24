@@ -4,8 +4,7 @@ import { useBoolean } from "usehooks-ts";
 
 import FullscreenImageViewer from "./FullscreenImageViewer";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { MdClose } from "react-icons/md";
 
 interface Props {
   images: string[];
@@ -56,7 +55,7 @@ const Images = ({ images, removable, onRemove }: Props) => {
                 className="absolute bg-bg/50 top-2 right-2 flex items-center justify-center rounded-full w-8 h-8"
                 onClick={() => onRemove && onRemove(i)}
               >
-                <FontAwesomeIcon icon={faTimes} className="text-xl text-red" />
+                <MdClose className="text-xl text-red" />
               </button>
             )}
           </div>

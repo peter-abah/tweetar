@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { MdMoreHoriz } from "react-icons/md";
 
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
@@ -18,8 +17,8 @@ const TweetOptions = ({ values }: Props) => {
   return (
     <Menu
       menuButton={
-        <button className="ml-auto text-base rounded-full w-8 h-8 hover:bg-slate-900/10 text-slate-900">
-          <FontAwesomeIcon icon={faEllipsisH} />
+        <button className="shrink-0 ml-auto pl-2 grid place-items-center rounded-full w-8 h-8 hover:bg-slate-900/10 text-slate-900">
+          <MdMoreHoriz className="text-2xl" />
         </button>
       }
     >

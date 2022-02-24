@@ -30,14 +30,14 @@ const TweetBody = (props: Props) => {
         to={`/profile/${user.username}`}
       >
         <img
-          className="w-12 h-12 rounded-full object-cover"
+          className="w-12 h-12 mt-2 rounded-full object-cover"
           src={user.profile_image_url || fallbackImg}
           alt={user.name}
         />
       </Link>
 
       <div className="grow overflow-hidden">
-        <div className="flex gap-3">
+        <div className="flex">
           <div className="max-w-full overflow-hidden shrink whitespace-nowrap text-ellipsis flex gap-2 items-center">
             <Link
               className="flex gap-2 shrink"

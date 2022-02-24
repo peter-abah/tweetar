@@ -1,9 +1,7 @@
 import classnames from "classnames";
 import { Tweet } from "../../api/tweets";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRetweet } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { AiFillHeart, AiOutlineHeart, AiOutlineRetweet } from "react-icons/ai";
 
 interface Props {
   tweet: Tweet;
@@ -25,7 +23,7 @@ const TweetBtns = (props: Props) => {
         )}
         onClick={props.toggleRetweet}
       >
-        <FontAwesomeIcon icon={faRetweet} />
+        <AiOutlineRetweet />
       </button>
 
       <button
@@ -37,7 +35,7 @@ const TweetBtns = (props: Props) => {
         )}
         onClick={props.toggleLike}
       >
-        <FontAwesomeIcon icon={faHeart} />
+        {liked_by_user ? <AiFillHeart /> : <AiOutlineHeart />}
       </button>
     </div>
   );
