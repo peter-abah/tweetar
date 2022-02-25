@@ -3,9 +3,13 @@ import { User } from "./users";
 import { Tweet, TweetsResponse } from "./tweets";
 
 export const bookmarkTweet = async (currentUser: User, tweetId: string) => {
-  const { data } = await Client.post(`/tweets/${tweetId}/bookmarks/`, {
-    headers: headers(currentUser),
-  });
+  const { data } = await Client.post(
+    `/tweets/${tweetId}/bookmarks/`,
+    {},
+    {
+      headers: headers(currentUser),
+    }
+  );
 
   if (data.error) throw data;
 

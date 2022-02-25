@@ -7,9 +7,12 @@ interface Props {
   toggleLike: (tweet: Itweet) => void;
   toggleRetweet: (tweet: Itweet) => void;
   deleteTweet: (tweet: Itweet) => void;
+  toggleBookmark: (tweet: Itweet) => void;
 }
 
-const Tweet = ({ tweet, toggleLike, toggleRetweet, deleteTweet }: Props) => {
+const Tweet = (props: Props) => {
+  const { tweet, toggleLike, toggleRetweet, deleteTweet, toggleBookmark } =
+    props;
   return (
     <div className="px-4 py-2 w-full border-b border-neutral">
       <TweetInfo {...tweet} />
@@ -18,6 +21,7 @@ const Tweet = ({ tweet, toggleLike, toggleRetweet, deleteTweet }: Props) => {
         toggleLike={() => toggleLike(tweet)}
         toggleRetweet={() => toggleRetweet(tweet)}
         deleteTweet={() => deleteTweet(tweet)}
+        toggleBookmark={() => toggleBookmark(tweet)}
       />
     </div>
   );

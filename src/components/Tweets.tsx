@@ -7,7 +7,7 @@ import Loader from "./Loader";
 import ErrorPage from "./Error";
 import { concatInfiniteQueryData } from "../helpers";
 
-import { useLikeTweet, useRetweetTweet, useDeleteTweet } from "../hooks";
+import { useLikeTweet, useRetweetTweet, useDeleteTweet, useBookmarkTweet } from "../hooks";
 import NoTweets from "./NoTweets";
 
 interface Props {
@@ -20,6 +20,7 @@ const Tweets = (props: Props) => {
 
   const { toggleLike } = useLikeTweet(queryKey);
   const { toggleRetweet } = useRetweetTweet(queryKey);
+  const { toggleBookmark } = useBookmarkTweet(queryKey);
   const deleteTweet = useDeleteTweet(queryKey);
 
   if (isLoading) return <Loader />;
@@ -45,6 +46,7 @@ const Tweets = (props: Props) => {
             deleteTweet={deleteTweet}
             toggleLike={toggleLike}
             toggleRetweet={toggleRetweet}
+            toggleBookmark={toggleBookmark}
           />
         ))}
     </InfiniteScroll>

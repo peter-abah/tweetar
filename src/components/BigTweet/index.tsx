@@ -10,7 +10,12 @@ import TweetBtns from "./TweetBtns";
 import Loader from "../Loader";
 import ErrorPage from "../Error";
 
-import { useLikeTweet, useRetweetTweet, useDeleteTweet } from "../../hooks";
+import {
+  useLikeTweet,
+  useRetweetTweet,
+  useDeleteTweet,
+  useBookmarkTweet,
+} from "../../hooks";
 
 interface Props {
   tweetValues: UseQueryResult<Itweet>;
@@ -23,6 +28,7 @@ const Tweet = ({ tweetValues, queryKey }: Props) => {
 
   const { toggleLike } = useLikeTweet(queryKey);
   const { toggleRetweet } = useRetweetTweet(queryKey);
+  const { toggleBookmark } = useBookmarkTweet(queryKey);
   const deleteTweet = useDeleteTweet(queryKey);
 
   if (isLoading) return <Loader />;
@@ -44,6 +50,7 @@ const Tweet = ({ tweetValues, queryKey }: Props) => {
         tweet={tweet}
         toggleLike={() => toggleLike(tweet)}
         toggleRetweet={() => toggleRetweet(tweet)}
+        toggleBookmark={() => toggleBookmark(tweet)}
       />
     </div>
   );

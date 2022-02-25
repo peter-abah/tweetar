@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { Tweet } from "../../api/tweets";
 
 import { AiFillHeart, AiOutlineHeart, AiOutlineRetweet } from "react-icons/ai";
-import { FaRegComment } from "react-icons/fa";
+import { FaRegComment, FaBookmark, FaRegBookmark } from "react-icons/fa";
 
 interface Props {
   tweet: Tweet;
   toggleLike: () => void;
   toggleRetweet: () => void;
+  toggleBookmark: () => void;
 }
 
 const TweetBtns = (props: Props) => {
@@ -18,6 +19,7 @@ const TweetBtns = (props: Props) => {
     replies_count,
     retweeted_by_user,
     liked_by_user,
+    bookmarked_by_user,
   } = props.tweet.tweet;
 
   const className =
@@ -65,6 +67,20 @@ const TweetBtns = (props: Props) => {
           <AiOutlineHeart className="text-lg" />
         )}
         {likes_count > 0 && <span className="pl-1 text-sm">{likes_count}</span>}
+      </button>
+
+      <button
+        title="Save"
+        className={classnames(className, "hover:bg-blue/10 hover:text-blue", {
+          "text-blue": bookmarked_by_user,
+        })}
+        onClick={props.toggleBookmark}
+      >
+        {bookmarked_by_user ? (
+          <FaBookmark className="" />
+        ) : (
+          <FaRegBookmark className="" />
+        )}
       </button>
     </div>
   );

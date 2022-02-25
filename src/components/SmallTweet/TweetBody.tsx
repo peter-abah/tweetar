@@ -14,11 +14,12 @@ interface Props {
   toggleLike: () => void;
   toggleRetweet: () => void;
   deleteTweet: () => void;
+  toggleBookmark: () => void;
 }
 
 const TweetBody = (props: Props) => {
   const { currentUser } = useAuth();
-  const { tweet, toggleLike, toggleRetweet, deleteTweet } = props;
+  const { tweet, toggleLike, toggleRetweet, deleteTweet, toggleBookmark } = props;
   const { id, body, user, updated_at, image_urls } = tweet.tweet;
 
   const tweetTime = formatDistanceToNow(parseISO(updated_at));
@@ -62,6 +63,7 @@ const TweetBody = (props: Props) => {
           tweet={tweet}
           toggleLike={toggleLike}
           toggleRetweet={toggleRetweet}
+          toggleBookmark={toggleBookmark}
         />
       </div>
     </div>
