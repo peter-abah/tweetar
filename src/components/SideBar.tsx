@@ -19,9 +19,10 @@ const SideBar = () => {
   let links = [
     { name: "Home", link: "/home", id: 1 },
     { name: "Search", link: "/search", id: 2 },
-    { name: "Connect", link: "/connect", id: 3 },
-    { name: "Profile", link: profileLink, id: 4 },
-    { name: "Tweet", link: "/new", id: 5 },
+    { name: "Saved", link: "/saved", id: 2 },
+    { name: "Connect", link: "/connect", id: 4 },
+    { name: "Profile", link: profileLink, id: 5 },
+    { name: "Tweet", link: "/new", id: 6 },
   ];
 
   const logOutUser = () => {
@@ -44,9 +45,11 @@ const SideBar = () => {
   );
 
   // Filter links to profile and new tweet is user is not logged in
-  links = currentUser
-    ? links
-    : links.filter(({ name }) => name !== "Tweet" && name !== "Profile");
+  if (!currentUser) {
+    links = links.filter(({ name }) =>
+      ["Tweet", "Profile", "Saved", "Connect"].includes(name)
+    );
+  }
 
   const navClassName = classnames(
     "scale-x-0 top-0 bottom-0 h-screen bg-bg fixed w-full max-w-xs z-40",

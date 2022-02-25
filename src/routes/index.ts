@@ -11,3 +11,4 @@ export { default as Search } from './Search';
 export { default as EditProfile } from './EditProfile';
 export { default as ProfileUsers } from './ProfileUsers';
 export { default as Connect } from './Connect';
+export { default as Saved } from './Saved';

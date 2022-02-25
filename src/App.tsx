@@ -13,6 +13,7 @@ import {
   EditProfile,
   ProfileUsers,
   Connect,
+  Saved,
 } from "./routes";
 import Wrapper from "./components/Wrapper";
 import AllProviders from "./contexts";
@@ -27,6 +28,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/search/*" element={<Search />} />
             <Route path="/connect/" element={<Connect />} />
+            <Route path="/saved/" element={<Saved />} />
             <Route path="/profile/:username/*" element={<Profile />} />
             <Route path="profile/:username/edit" element={<EditProfile />} />
             <Route
