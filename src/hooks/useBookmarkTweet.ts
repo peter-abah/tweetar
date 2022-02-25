@@ -6,30 +6,27 @@ import {
 } from "react-query";
 import { useAuth } from "../contexts/authContext";
 import { Tweet, TweetsResponse } from "../api/tweets";
-import { retweetTweet, deleteTweetRetweet } from "../api/tweetActions";
+import { bookmarkTweet, deleteTweetBookmark } from "../api/bookmarks";
 import { getUpdatedData } from "../helpers";
 
-const useRetweetTweet = (queryKey: QueryKey) => {
+const useBookmarkTweet = (queryKey: QueryKey) => {
   const { currentUser } = useAuth();
   const queryClient = useQueryClient();
 
   const getUpdatedTweet = (
     tweet: Tweet,
-    { retweeted_by_user }: { retweeted_by_user: boolean }
+    { bookmarked_by_user }: { bookmarked_by_user: boolean }
   ) => {
-    const retweets_count = retweeted_by_user
-      ? tweet.tweet.retweets_count + 1
-      : tweet.tweet.retweets_count - 1;
     return {
       ...tweet,
-      tweet: { ...tweet.tweet, retweeted_by_user, retweets_count },
+      tweet: { ...tweet.tweet, bookmarked_by_user },
     };
   };
 
-  const { mutate: retweet } = useMutation(
+  const { mutate: bookmark } = useMutation(
     (data: Tweet) => {
       if (!currentUser) throw new Error();
-      return retweetTweet(currentUser, data.tweet.id);
+      return bookmarkTweet(currentUser, data.tweet.id);
     },
     {
       onMutate: async (tweet: Tweet) => {
@@ -37,9 +34,7 @@ const useRetweetTweet = (queryKey: QueryKey) => {
         const prevData = queryClient.getQueryData<
           InfiniteData<TweetsResponse> | Tweet
         >(queryKey);
-        const updatedTweet = getUpdatedTweet(tweet, {
-          retweeted_by_user: true,
-        });
+        const updatedTweet = getUpdatedTweet(tweet, { bookmarked_by_user: true });
 
         if (!prevData) return { prevData };
 
@@ -72,10 +67,10 @@ const useRetweetTweet = (queryKey: QueryKey) => {
     }
   );
 
-  const { mutate: deleteRetweet } = useMutation(
+  const { mutate: deleteBookmark } = useMutation(
     (data: Tweet) => {
       if (!currentUser) throw new Error();
-      return deleteTweetRetweet(currentUser, data.tweet.id);
+      return deleteTweetBookmark(currentUser, data.tweet.id);
     },
     {
       onMutate: async (tweet: Tweet) => {
@@ -83,9 +78,7 @@ const useRetweetTweet = (queryKey: QueryKey) => {
         const prevData = queryClient.getQueryData<
           InfiniteData<TweetsResponse> | Tweet
         >(queryKey);
-        const updatedTweet = getUpdatedTweet(tweet, {
-          retweeted_by_user: false,
-        });
+        const updatedTweet = getUpdatedTweet(tweet, { bookmarked_by_user: false });
 
         if (!prevData) return { prevData };
 
@@ -118,10 +111,12 @@ const useRetweetTweet = (queryKey: QueryKey) => {
     }
   );
 
-  const toggleRetweet = (tweet: Tweet) =>
-    tweet.tweet.retweeted_by_user ? deleteRetweet(tweet) : retweet(tweet);
+  const toggleBookmark = (tweet: Tweet) => {
+    if (!currentUser) return;
+    return tweet.tweet.bookmarked_by_user ? deleteBookmark(tweet) : bookmark(tweet);
+  };
 
-  return { retweet, deleteRetweet, toggleRetweet };
+  return { bookmark, deleteBookmark, toggleBookmark };
 };
 
-export default useRetweetTweet;
+export default useBookmarkTweet;

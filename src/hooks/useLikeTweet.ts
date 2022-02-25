@@ -29,7 +29,7 @@ const useLikeTweet = (queryKey: QueryKey) => {
   const { mutate: like } = useMutation(
     (data: Tweet) => {
       if (!currentUser) throw new Error();
-      return likeTweet(currentUser, data.id);
+      return likeTweet(currentUser, data.tweet.id);
     },
     {
       onMutate: async (tweet: Tweet) => {
@@ -73,7 +73,7 @@ const useLikeTweet = (queryKey: QueryKey) => {
   const { mutate: deleteLike } = useMutation(
     (data: Tweet) => {
       if (!currentUser) throw new Error();
-      return deleteTweetLike(currentUser, data.id);
+      return deleteTweetLike(currentUser, data.tweet.id);
     },
     {
       onMutate: async (tweet: Tweet) => {
