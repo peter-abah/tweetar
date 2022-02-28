@@ -1,33 +1,42 @@
-import classnames from "classnames";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/authContext";
-import { useSettings } from "../contexts/settingsContext";
+import { useEffect } from 'react';
+import classnames from 'classnames';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/authContext';
+import { useSettings } from '../contexts/settingsContext';
 
-import { MdClose } from "react-icons/md";
-import { useRef } from "react";
-import { useOnClickOutside } from "usehooks-ts";
+import { MdClose } from 'react-icons/md';
+import { useRef } from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
 
 const SideBar = () => {
   const { currentUser, logOut } = useAuth();
-  const navigate = useNavigate();
   const { isNavOpen, toggleNav, setNavOpen } = useSettings();
+  const navigate = useNavigate();
 
   const ref = useRef(null);
   useOnClickOutside(ref, () => setNavOpen(false));
 
-  const profileLink = currentUser ? `/profile/${currentUser.username}` : "";
+  const profileLink = currentUser ? `/profile/${currentUser.username}` : '';
   let links = [
-    { name: "Home", link: "/home", id: 1 },
-    { name: "Search", link: "/search", id: 2 },
-    { name: "Saved", link: "/saved", id: 2 },
-    { name: "Connect", link: "/connect", id: 4 },
-    { name: "Profile", link: profileLink, id: 5 },
-    { name: "Tweet", link: "/new", id: 6 },
+    { name: 'Home', link: '/home', id: 1 },
+    { name: 'Search', link: '/search', id: 2 },
+    { name: 'Saved', link: '/saved', id: 2 },
+    { name: 'Connect', link: '/connect', id: 4 },
+    { name: 'Profile', link: profileLink, id: 5 },
+    { name: 'Tweet', link: '/new', id: 6 },
   ];
+
+  useEffect(() => {
+    if (!currentUser) {
+      links = links.filter(
+        ({ name }) => !['Tweet', 'Profile', 'Saved', 'Connect'].includes(name)
+      );
+    }
+  }, [currentUser]);
 
   const logOutUser = () => {
     logOut();
-    navigate("/login");
+    navigate('/login');
   };
 
   const logOutBtn = (
@@ -38,6 +47,7 @@ const SideBar = () => {
       Logout
     </button>
   );
+
   const login = (
     <Link className="block p-3 rounded-full w-fit text-xl" to="/login">
       Login
@@ -46,22 +56,22 @@ const SideBar = () => {
 
   // Filter links to profile and new tweet is user is not logged in
   if (!currentUser) {
-    links = links.filter(({ name }) =>
-      ["Tweet", "Profile", "Saved", "Connect"].includes(name)
+    links = links.filter(
+      ({ name }) => !['Tweet', 'Profile', 'Saved', 'Connect'].includes(name)
     );
   }
 
   const navClassName = classnames(
-    "scale-x-0 top-0 bottom-0 h-screen bg-bg fixed w-full max-w-xs z-40",
-    "col-span-1 md:scale-x-100 md:block md:max-w-none md:sticky",
-    "overflow-auto transition-transform duration-500 origin-top-left",
-    { "!block fixed !scale-x-100": isNavOpen }
+    'scale-x-0 top-0 bottom-0 h-screen bg-bg fixed w-full max-w-xs z-40',
+    'col-span-1 md:scale-x-100 md:block md:max-w-none md:sticky',
+    'overflow-auto transition-transform duration-500 origin-top-left',
+    { '!block fixed !scale-x-100': isNavOpen }
   );
   return (
     <>
       <div
-        className={classnames("absolute w-0 h-0 top-[-9999px]", {
-          "!fixed !w-full !h-full !top-0 !left-0 right-0 bottom-0 bg-primary/10 z-30 md:w-0 md:top-[9999px]":
+        className={classnames('absolute w-0 h-0 top-[-9999px]', {
+          '!fixed !w-full !h-full !top-0 !left-0 right-0 bottom-0 bg-primary/10 z-30 md:w-0 md:top-[9999px]':
             isNavOpen,
         })}
       />
@@ -77,7 +87,7 @@ const SideBar = () => {
             <li key={id}>
               <NavLink
                 style={({ isActive }) => {
-                  return { borderBottom: isActive ? "3px solid" : "none" };
+                  return { borderBottom: isActive ? '3px solid' : 'none' };
                 }}
                 className="block p-3 w-fit text-xl hover:translate-y-[-4px] active:translate-y-0 transition-transform"
                 to={link}
