@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useBoolean, useLocalStorage } from "usehooks-ts";
 import { loginUser, signUpUser, signUpParams, loginParams } from "../api/auth";
 import { User } from "../api/users";

@@ -1,4 +1,4 @@
-import { deleteTweet, Tweet as Itweet } from "../../api/tweets";
+import { Tweet as Itweet } from "../../api/tweets";
 import TweetInfo from "..//TweetInfo";
 import TweetBody from "./TweetBody";
 

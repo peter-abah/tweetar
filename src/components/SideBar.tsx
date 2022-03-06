@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import classnames from 'classnames';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/authContext';
@@ -26,13 +25,11 @@ const SideBar = () => {
     { name: 'Tweet', link: '/new', id: 6 },
   ];
 
-  useEffect(() => {
-    if (!currentUser) {
-      links = links.filter(
-        ({ name }) => !['Tweet', 'Profile', 'Saved', 'Connect'].includes(name)
-      );
-    }
-  }, [currentUser]);
+  if (!currentUser) {
+    links = links.filter(
+      ({ name }) => !['Tweet', 'Profile', 'Saved', 'Connect'].includes(name)
+    );
+  }
 
   const logOutUser = () => {
     logOut();
