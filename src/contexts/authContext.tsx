@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
   useEffect(() => {
     if (!currentUser?.authentication_token) setUser(null);
-  }, [currentUser]);
+  }, [currentUser, setUser]);
 
   const login = async (userParams: loginParams) => {
     setIsLoading(true);
