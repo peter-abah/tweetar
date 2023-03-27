@@ -51,9 +51,5 @@ This will start the app on server on port 3000
 ### Edit Profile
 ![Edit profile](assets/edit_profile_desktop.webp)
 
-### Mobile
-![Login mobile](assets/login_mobile.webp)
-![Home mobile](assets/home_mobile.webp)
-
 ## Contact
 - Twitter [@obekpa__](https://twitter.com/obekpa__)
