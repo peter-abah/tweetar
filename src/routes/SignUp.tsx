@@ -39,9 +39,6 @@ const SignUp = () => {
         first_name: Yup.string()
           .min(3, "First name must be 3 characters or more.")
           .required("Enter your first name."),
-        last_name: Yup.string()
-          .min(3, "Last name must be 3 characters or more.")
-          .required("Enter your last name."),
         username: Yup.string()
           .min(3, "Must be 3 characters or more.")
           .required("Enter your username."),

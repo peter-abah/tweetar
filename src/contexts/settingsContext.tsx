@@ -22,7 +22,7 @@ export const SettingsProvider = ({
     setValue: setNavOpen,
   } = useBoolean(false);
 
-  useEffect(() => setNavOpen(false), [location.pathname]);
+  useEffect(() => setNavOpen(false), [location.pathname, setNavOpen]);
 
   const providerValues = { isNavOpen, toggleNav, setNavOpen };
   return (

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { InfiniteData } from "react-query";
 import { ListResponse } from "../api";
 

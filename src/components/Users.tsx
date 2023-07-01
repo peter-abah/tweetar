@@ -1,5 +1,5 @@
 import { QueryKey, UseInfiniteQueryResult } from "react-query";
-import { UsersResponse, User as Iuser } from "../api/users";
+import { UsersResponse } from "../api/users";
 import { concatInfiniteQueryData } from "../helpers";
 import { useFollowUser } from "../hooks";
 import ErrorPage from "./Error";

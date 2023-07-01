@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useBoolean, useLocalStorage } from "usehooks-ts";
 import { loginUser, signUpUser, signUpParams, loginParams } from "../api/auth";
 import { User } from "../api/users";
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
 
   useEffect(() => {
     if (!currentUser?.authentication_token) setUser(null);
-  }, [currentUser]);
+  }, [currentUser, setUser]);
 
   const login = async (userParams: loginParams) => {
     setIsLoading(true);

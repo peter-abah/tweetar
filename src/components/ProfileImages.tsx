@@ -35,6 +35,7 @@ const ProfileImages = (props: Props) => {
       <img
         onClick={() => setShowCoverImg(true)}
         className="object-cover relative w-full aspect-[3/1] md:h-48 cursor-pointer"
+        alt=""
         style={{
           backgroundImage: `url(${cover_image_url})`,
           backgroundPosition: "center",

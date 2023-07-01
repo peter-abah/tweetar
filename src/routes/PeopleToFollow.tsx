@@ -23,7 +23,7 @@ const PeopleToFollow = () => {
 
   const isConnectRoute = () => /^\/connect/.test(pathname);
 
-  if (isConnectRoute()) return <></>;
+  if (isConnectRoute() || !currentUser) return <></>;
 
   return (
     <div className="hidden lg:block sticky scrollbar-hide h-screen overflow-scroll top-0 right-0 bottom-0">

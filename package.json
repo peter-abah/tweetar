@@ -1,6 +1,6 @@
 {
   "name": "tweeter",
-  "homepage": "https://peter-abah.github.io/tweeter",
+  "homepage": "https://tweetar.vercel.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

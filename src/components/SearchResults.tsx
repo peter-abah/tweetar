@@ -1,4 +1,4 @@
-import { Outlet, Routes, Route, Link } from "react-router-dom";
+import { Outlet, Routes, Route } from "react-router-dom";
 import { useInfiniteQuery } from "react-query";
 
 import { AuthContextInterface, useAuth } from "../contexts/authContext";
