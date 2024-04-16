@@ -2,7 +2,7 @@
 This is clone of [Twitter](https://twitter.com) built with React
 frontend and [Rails](https://github.com/peter-abah/tweetar-api) backend.
 
-[**Live Here**](https://tweetar.vercel.app)
+_**Demo no longer active**_
 
 ## Features
 ### User Profile
